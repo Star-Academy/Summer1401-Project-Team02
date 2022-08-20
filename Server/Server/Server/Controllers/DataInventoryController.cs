@@ -5,11 +5,6 @@ namespace Server.Controllers;
 [ApiController]
 public class DataInventoryController : Controller
 {
-    // GET
-    // public IActionResult Index()
-    // {
-    //     return View();
-    // }
 
     [HttpPost]
     public IActionResult UploadFile(string data)
@@ -17,4 +12,18 @@ public class DataInventoryController : Controller
         return default;
         //returns table_name
     }
+    
+    public IActionResult AddDestination(string name)
+    {
+        return default;
+        //returns table_name
+    }
+
+    public IActionResult DownlaodFile(string tableName, string fileFormat)
+    {
+        // service:
+        return default;
+    }
+
+
 }
