@@ -18,14 +18,10 @@ public class DataInventoryController : Controller
     [HttpPost]
     public IActionResult UploadFile(string fileName)
     {
-        try
-        {
+        try {
             return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files.GetFile(fileName)));
         }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        catch (Exception e) { return BadRequest(e.Message); }
     }
     //
     // public IActionResult AddDestination(string name)
