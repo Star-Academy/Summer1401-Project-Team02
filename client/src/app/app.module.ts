@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {HomeModule} from './pages/home/home.module';
+import {PipelineModule} from './pages/pipeline/pipeline.module';
 import {NZ_I18N} from 'ng-zorro-antd/i18n';
 import {en_US} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
@@ -17,7 +17,7 @@ registerLocaleData(en);
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, HomeModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
+    imports: [BrowserModule, AppRoutingModule, PipelineModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
     providers: [{provide: NZ_I18N, useValue: en_US}],
     bootstrap: [AppComponent],
 })
