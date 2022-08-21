@@ -1,5 +1,6 @@
 using System.Data;
 using System.Text;
+using Server.Controllers;
 using Server.ExtensionMethods;
 using Server.Models.Database;
 using Server.Models.Parsers;
@@ -9,15 +10,18 @@ namespace Server.Services;
 public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
-    public DataInventoryService(IDatabase database)
+    private readonly ILogger _logger;
+
+    public DataInventoryService(IDatabase database, ILogger<DataInventoryService> logger)
     {
         _database = database;
+        _logger = logger;
     }
     public string UploadFile(IFormFile? file)
     {
         var parser = MapToParser(file.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        
+        _logger.LogInformation("simpel logging test");
         return $"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
                $"dataTable:\n{ConvertDataTableToString(dataTable)}";
     }
