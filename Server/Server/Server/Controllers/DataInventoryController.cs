@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Server.Controllers;
 
 [ApiController]
+[Route("[controller]/[Action]")]
 public class DataInventoryController : Controller
 {
 
     [HttpPost]
-    public IActionResult UploadFile(string data)
+    public IActionResult UploadFile()
     {
         return default;
         //returns table_name
@@ -18,7 +19,7 @@ public class DataInventoryController : Controller
         return default;
         //returns table_name
     }
-
+    
     public IActionResult DownlaodFile(string tableName, string fileFormat)
     {
         // service:
