@@ -21,9 +21,9 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _logger.LogInformation("simpel logging test");
-        return $"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
-               $"dataTable:\n{ConvertDataTableToString(dataTable)}";
+        _logger.LogInformation($"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
+                               $"dataTable:\n{ConvertDataTableToString(dataTable)}");
+        return file.FileName;
     }
 
 
