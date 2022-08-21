@@ -8,15 +8,15 @@ namespace Server.Services;
 public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
-
     public DataInventoryService(IDatabase database)
     {
         _database = database;
     }
-    public string UploadFile()
+    public string UploadFile(IFormFile? file)
     {
+        
         // we have a raw data that we parse it to a DataTable based on file format and then we will import that dataTable to our database
-        return default;
+        return "filename :)";
     }
 
     public string AddDestination(string name)

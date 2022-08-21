@@ -16,23 +16,29 @@ public class DataInventoryController : Controller
     }
 
     [HttpPost]
-    public IActionResult UploadFile()
+    public IActionResult UploadFile(string fileName)
     {
-        return Ok();
-        //returns table_name
+        try
+        {
+            return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files.GetFile(fileName)));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-    
-    public IActionResult AddDestination(string name)
-    {
-        return default;
-        //returns table_name
-    }
-    
-    public IActionResult DownlaodFile(string tableName, string fileFormat)
-    {
-        // service:
-        return default;
-    }
+    //
+    // public IActionResult AddDestination(string name)
+    // {
+    //     return default;
+    //     //returns table_name
+    // }
+    //
+    // public IActionResult DownlaodFile(string tableName, string fileFormat)
+    // {
+    //     // service:
+    //     return default;
+    // }
 
 
 }
