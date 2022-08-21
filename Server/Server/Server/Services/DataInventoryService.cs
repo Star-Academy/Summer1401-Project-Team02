@@ -17,8 +17,9 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        return $"name: {file.Name}\ntype:{file.ContentType}\ncontent:{file.ReadAll()}\n" +
-               $"dataTable:{ConvertDataTableToString(dataTable)}";
+        
+        return $"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
+               $"dataTable:\n{ConvertDataTableToString(dataTable)}";
     }
 
 
@@ -34,6 +35,7 @@ public class DataInventoryService :  IDataInventoryService
         switch (fileType)
         {
             case "text/csv": return new CsvParser();
+            case "application/json": return new JsonParser();
             default: throw new Exception("not supported file format");
         }
         return default;
