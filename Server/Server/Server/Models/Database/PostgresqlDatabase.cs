@@ -11,7 +11,8 @@ public class PostgresqlDatabase : IDatabase
 
     public void CreateTable(string tableName)
     {
-        throw new NotImplementedException();
+        DataTable dataTable = new DataTable(tableName);
+        ImportDataTable(dataTable, tableName);
     }
 
     public void RunQuery(string query)
