@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models.Database;
 using Server.Models.Parsers;
@@ -20,8 +21,9 @@ public class DataInventoryService :  IDataInventoryService
 
     public string AddDestination(string name)
     {
-        //returns table_name
-        return default;
+        string tableName = name + "_" + System.DateTime.Now;
+        new PostgresqlDatabase().CreateTable(tableName);
+        return tableName;
     }
 
     private IParser MapToParser(string data)
