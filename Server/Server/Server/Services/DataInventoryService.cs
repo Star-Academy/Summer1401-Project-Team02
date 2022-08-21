@@ -1,5 +1,6 @@
 using System.Data;
 using System.Text;
+using Server.Controllers;
 using Server.ExtensionMethods;
 using Server.Models.Database;
 using Server.Models.Parsers;
@@ -9,16 +10,20 @@ namespace Server.Services;
 public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
-    public DataInventoryService(IDatabase database)
+    private readonly ILogger _logger;
+
+    public DataInventoryService(IDatabase database, ILogger<DataInventoryService> logger)
     {
         _database = database;
+        _logger = logger;
     }
     public string UploadFile(IFormFile? file)
     {
         var parser = MapToParser(file.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        return $"name: {file.Name}\ntype:{file.ContentType}\ncontent:{file.ReadAll()}\n" +
-               $"dataTable:{ConvertDataTableToString(dataTable)}";
+        _logger.LogInformation($"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
+                               $"dataTable:\n{ConvertDataTableToString(dataTable)}");
+        return file.FileName;
     }
 
 
@@ -35,6 +40,8 @@ public class DataInventoryService :  IDataInventoryService
         {
             case "text/csv": return new CsvParser();
             case "csv": return new CsvParser();
+            case "application/json": return new JsonParser();
+            case "json": return new JsonParser();
             default: throw new Exception("not supported file format");
         }
         return default;
