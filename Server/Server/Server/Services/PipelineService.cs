@@ -2,7 +2,7 @@ using Server.Models;
 
 namespace Server.Services;
 
-public class PipelineService
+public class PipelineService : IPipelineService
 {
     public void Execute(Pipeline pipeline)
     {

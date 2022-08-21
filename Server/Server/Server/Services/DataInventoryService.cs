@@ -4,7 +4,7 @@ using Server.Models.Parsers;
 
 namespace Server.Services;
 
-public class DataInventoryService
+public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
 
@@ -12,7 +12,7 @@ public class DataInventoryService
     {
         _database = database;
     }
-    public string UploadFile(string data)
+    public string UploadFile()
     {
         // we have a raw data that we parse it to a DataTable based on file format and then we will import that dataTable to our database
         return default;

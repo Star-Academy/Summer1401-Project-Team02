@@ -1,4 +1,6 @@
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Server.Services;
 
 namespace Server.Controllers;
 
@@ -6,11 +8,17 @@ namespace Server.Controllers;
 [Route("[controller]/[Action]")]
 public class DataInventoryController : Controller
 {
+    private readonly IDataInventoryService _dataInventoryService;
+
+    public DataInventoryController(IDataInventoryService dataInventoryService)
+    {
+        _dataInventoryService = dataInventoryService;
+    }
 
     [HttpPost]
     public IActionResult UploadFile()
     {
-        return default;
+        return Ok();
         //returns table_name
     }
     
