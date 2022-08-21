@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Server.Services;
@@ -27,18 +28,19 @@ public class DataInventoryController : Controller
             return BadRequest(e.Message);
         }
     }
-    //
+    
     // public IActionResult AddDestination(string name)
     // {
     //     return default;
     //     //returns table_name
     // }
     //
-    // public IActionResult DownlaodFile(string tableName, string fileFormat)
-    // {
-    //     // service:
-    //     return default;
-    // }
+    
+    [HttpGet]
+    public IActionResult DownloadFile(string tableName, string fileFormat)
+    {
+        return File(_dataInventoryService.Download(tableName, fileFormat), "text/" + fileFormat);
+    }
 
 
 }

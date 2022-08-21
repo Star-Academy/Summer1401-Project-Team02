@@ -22,7 +22,7 @@ public class DataInventoryService :  IDataInventoryService
     public string AddDestination(string name)
     {
         string tableName = name + "_" + System.DateTime.Now;
-        new PostgresqlDatabase().CreateTable(tableName);
+        _database.CreateTable(tableName);
         return tableName;
     }
 
@@ -32,9 +32,13 @@ public class DataInventoryService :  IDataInventoryService
     }
 
         
-    public string Download(string tableName, string format)
+    public FileStream Download(string tableName, string format)
     {
-        // get data from database -> map to appropriate parser -> return result.
-        return default;
+        DataTable dataTable = _database.GetTable(tableName);
+        IParser parser = MapToParser(format);
+        string csvString = parser.ParseFromDataTable(dataTable);
+        string temporaryPath = "temp" + System.DateTime.Now + "." + format;
+        File.WriteAllText(temporaryPath, csvString);
+        return new FileStream(temporaryPath, new FileStreamOptions());
     }
 }
