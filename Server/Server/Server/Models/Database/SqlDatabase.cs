@@ -15,12 +15,17 @@ public class PostgresqlDatabase : IDatabase
         ImportDataTable(dataTable, tableName);
     }
 
-    public void RunQuery(string query)
+    public DataTable RunQuery(string query)
     {
         throw new NotImplementedException();
     }
 
     public DataTable GetTable(string tableName)
+    {
+        return RunQuery($"SELECT * FROM {tableName}");
+    }
+
+    public IEnumerable<string> GetAllTabled()
     {
         throw new NotImplementedException();
     }

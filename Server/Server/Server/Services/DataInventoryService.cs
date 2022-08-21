@@ -34,6 +34,7 @@ public class DataInventoryService :  IDataInventoryService
         switch (fileType)
         {
             case "text/csv": return new CsvParser();
+            case "csv": return new CsvParser();
             default: throw new Exception("not supported file format");
         }
         return default;
