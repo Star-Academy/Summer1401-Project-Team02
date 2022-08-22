@@ -1,6 +1,5 @@
 using System.Data;
 using System.Data.SqlClient;
-using Server.Controllers;
 using Server.Services;
 
 namespace Server.Models.Database;
@@ -27,6 +26,7 @@ public class PostgresqlDatabase : IDatabase
         bulkCopy.WriteToServer(dataTable);
         connection.Close();
     }
+    
 
     public DataTable RunQuery(string query)
     {
@@ -60,25 +60,7 @@ public class PostgresqlDatabase : IDatabase
     {
         throw new NotImplementedException();
     }
-
-
-    public bool DbTableExists(string strTableNameAndSchema, string strConnection)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            string strCheckTable =
-                String.Format(
-                    "IF OBJECT_ID('{0}', 'U') IS NOT NULL SELECT 'true' ELSE SELECT 'false'",
-                    strTableNameAndSchema);
-
-            SqlCommand command = new SqlCommand(strCheckTable, connection);
-            command.CommandType = CommandType.Text;
-            connection.Open();
-
-            return Convert.ToBoolean(command.ExecuteScalar());
-        }
-    }
-
+    
     public string GenerateCreateTableQuery(string tableName, DataTable table)
     {
         string sql = $"CREATE TABLE [{tableName}] (\n";
