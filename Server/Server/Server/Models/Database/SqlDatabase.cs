@@ -53,6 +53,11 @@ public class PostgresqlDatabase : IDatabase
 
     public DataTable GetTable(string tableName)
     {
+        return RunQuery($"SELECT * FROM {tableName}");
+    }
+
+    public IEnumerable<string> GetAllTabled()
+    {
         throw new NotImplementedException();
     }
 

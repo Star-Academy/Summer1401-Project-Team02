@@ -29,7 +29,7 @@ public class DataInventoryService :  IDataInventoryService
     }
 
 
-        public string AddDestination(string name)
+    public string AddDestination(string name)
     {
         string tableName = name + "_" + System.DateTime.Now;
         // _database.CreateTable(tableName);
@@ -41,7 +41,9 @@ public class DataInventoryService :  IDataInventoryService
         switch (fileType)
         {
             case "text/csv": return new CsvParser();
+            case "csv": return new CsvParser();
             case "application/json": return new JsonParser();
+            case "json": return new JsonParser();
             default: throw new Exception("not supported file format");
         }
         return default;
