@@ -2,8 +2,10 @@
     nzType="drag"
     nzFileType="text/csv"
     nzAccept="text/csv"
+    [nzHeaders]="uploadH"
     [nzMultiple]="true"
     (nzChange)="handleChange($event)"
+    nzAction="https://localhost:7113/DataInventory/AddSourceByFile"
 >
     <p class="ant-upload-drag-icon">
         <i nz-icon nzType="inbox"></i>

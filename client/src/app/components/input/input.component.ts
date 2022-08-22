@@ -10,8 +10,12 @@ import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
 export class InputComponent {
     public constructor(private msg: NzMessageService) {}
 
+    public uploadH = {
+        accept: 'text/plain',
+    };
     public handleChange({file, fileList}: NzUploadChangeParam): void {
         const status = file.status;
+
         if (status !== 'uploading') {
             console.log(file, fileList);
         }
