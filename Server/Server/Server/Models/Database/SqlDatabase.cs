@@ -6,6 +6,7 @@ namespace Server.Models.Database;
 
 public class PostgresqlDatabase : IDatabase
 {
+    // TODO: general refactoring needed.
     public PostgresqlDatabase(ILogger<IDatabase> logger)
     {
         _logger = logger;
