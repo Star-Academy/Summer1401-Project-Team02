@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Server.ExtensionMethods;
 
@@ -13,6 +14,11 @@ public static class MyExtensionMethods
                 result.AppendLine(reader.ReadLine()); 
         }
         return result;
+    } 
+    
+    public static string Hash(this IFormFile file)
+    {
+        return file.FileName.Replace(".", "_");
     } 
     
 }

@@ -19,15 +19,15 @@ public class DataInventoryService :  IDataInventoryService
     }
     public string UploadFile(IFormFile? file)
     {
-        // TODO: refactor hashing function
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _database.CreateTable(dataTable, file.GetHashCode().ToString());
-        _database.ImportDataTable(dataTable, file.GetHashCode().ToString());
-        return file.GetHashCode().ToString();
+        _database.CreateTable(dataTable, file.Hash());
+        _database.ImportDataTable(dataTable, file.Hash());
+        return file.Hash();
     }
 
 
+    
     public string AddDestination(string name)
     {
         string tableName = name + "_" + System.DateTime.Now;
