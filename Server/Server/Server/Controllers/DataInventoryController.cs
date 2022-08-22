@@ -10,19 +10,25 @@ namespace Server.Controllers;
 public class DataInventoryController : Controller
 {
     private readonly IDataInventoryService _dataInventoryService;
+    private readonly ILogger<IDataInventoryService> _logger;
 
-    public DataInventoryController(IDataInventoryService dataInventoryService)
+    public DataInventoryController(IDataInventoryService dataInventoryService, ILogger<IDataInventoryService> logger)
     {
         _dataInventoryService = dataInventoryService;
+        _logger = logger;
     }
 
     [HttpPost]
     public IActionResult AddSourceByFile()
     {
-        try {
+        try
+        {
             return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files[0]));
         }
-        catch (Exception e) { return BadRequest(e.Message); }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpPost]
