@@ -51,6 +51,16 @@ public class PostgresqlDatabase : IDatabase
         connection.Close();
     }
 
+    public void CreateTable(string name)
+    {
+        var connection = new SqlConnection(_connectionString);
+        connection.Open();
+        var command = new SqlCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);",
+            connection);
+        command.ExecuteNonQuery();  
+        connection.Close();
+    }
+
     public DataTable GetTable(string tableName)
     {
         return RunQuery($"SELECT * FROM {tableName}");

@@ -1,6 +1,5 @@
 using System.Data;
 using System.Text;
-using Server.Controllers;
 using Server.ExtensionMethods;
 using Server.Models.Database;
 using Server.Models.Parsers;
@@ -19,21 +18,18 @@ public class DataInventoryService :  IDataInventoryService
     }
     public string UploadFile(IFormFile? file)
     {
-        var parser = MapToParser(file.ContentType);
+        var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         _database.CreateTable(dataTable, "test");
         _database.ImportDataTable(dataTable, "test");
-        // _logger.LogInformation($"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
-                               // $"dataTable:\n{ConvertDataTableToString(dataTable)}");
         return file.FileName;
     }
 
 
     public string AddDestination(string name)
     {
-        string tableName = name + "_" + System.DateTime.Now;
-        // _database.CreateTable(tableName);
-        return tableName;
+        _database.CreateTable(name);
+        return name;
     }
 
     private IParser MapToParser(string fileType)
@@ -50,14 +46,12 @@ public class DataInventoryService :  IDataInventoryService
     }
 
         
-    public FileStream Download(string tableName, string format)
+    public MemoryStream Download(string tableName, string format)
     {
         DataTable dataTable = _database.GetTable(tableName);
         IParser parser = MapToParser(format);
         string csvString = parser.ParseFromDataTable(dataTable);
-        string temporaryPath = "temp" + System.DateTime.Now + "." + format;
-        File.WriteAllText(temporaryPath, csvString);
-        return new FileStream(temporaryPath, new FileStreamOptions());
+        return new MemoryStream(System.Text.Encoding.ASCII.GetBytes(csvString));
     }
     
     
