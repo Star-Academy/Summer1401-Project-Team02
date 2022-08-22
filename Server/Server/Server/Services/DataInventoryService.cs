@@ -27,7 +27,7 @@ public class DataInventoryService :  IDataInventoryService
     }
 
 
-        public string AddDestination(string name)
+    public string AddDestination(string name)
     {
         string tableName = name + "_" + System.DateTime.Now;
         _database.CreateTable(tableName);

@@ -25,12 +25,19 @@ public class DataInventoryController : Controller
         catch (Exception e) { return BadRequest(e.Message); }
     }
     
-    // public IActionResult AddDestination(string name)
-    // {
-    //     return default;
-    //     //returns table_name
-    // }
-    //
+    [HttpPost]
+    public IActionResult AddDestination(string name)
+    {
+        try
+        {
+            return Ok(_dataInventoryService.AddDestination(name));
+        }
+        catch (Exception e)
+        {
+            return Problem(detail: e.Message);
+        }
+    }
+    
     
     [HttpGet]
     public IActionResult DownloadFile(string tableName, string fileFormat)
