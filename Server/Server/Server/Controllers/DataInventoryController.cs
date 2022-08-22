@@ -1,6 +1,9 @@
 using System.Net.Mime;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Server.Models;
+using Server.Models.Nodes;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -27,7 +30,6 @@ public class DataInventoryController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
     }

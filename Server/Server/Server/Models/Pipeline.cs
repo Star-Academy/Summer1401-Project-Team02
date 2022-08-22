@@ -1,11 +1,14 @@
+using System.IO.Pipelines;
+using Newtonsoft.Json;
 using Server.Enums;
 using Server.Models.Nodes;
 
 namespace Server.Models;
 
+[JsonObject(MemberSerialization.Fields)]
 public class Pipeline
 {
-    //<id, object>
+    [JsonProperty]
     private Dictionary<string, Node> _nodes;
 
     //<node, query string>

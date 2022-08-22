@@ -1,4 +1,6 @@
+using System.IO.Pipelines;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Server.Models;
 using Server.Services;
 
@@ -16,11 +18,16 @@ public class PipelineController : Controller
     }
 
     [HttpPost]
-    public IActionResult Execute(Pipeline pipeline)
+    public IActionResult Execute(string jsonString)
     {
+        var p = JsonConvert.DeserializeObject<Pipeline>(jsonString, new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        });
+        
         try
         {
-            _pipelineService.Execute(pipeline);
+            _pipelineService.Execute(p);
             return Ok();
         }
         catch (Exception e)
