@@ -5,7 +5,7 @@ namespace Server.Models.Nodes;
 public class DestinationNode : Node
 {
     private string _previousNode;
-    private string tableName;
+    public string tableName { get; }
 
     public override NodeType _NodeType
     {

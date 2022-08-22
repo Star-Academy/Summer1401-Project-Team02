@@ -10,11 +10,11 @@ public class Pipeline
 
     //<node, query string>
     
-    public Dictionary<Node, string> Execute(ExecutionType executionType)
+    public Dictionary<DestinationNode, string> Execute(ExecutionType executionType)
     {
         // iterate over output nodes and execute them. add the string result to the dictionary.
-        Dictionary<Node, string> answerToReturn = new Dictionary<Node, string>();
-        List<Node> destinationNodes = FindDestinationNodes();
+        Dictionary<DestinationNode, string> answerToReturn = new Dictionary<DestinationNode, string>();
+        List<DestinationNode> destinationNodes = FindDestinationNodes();
         foreach (var destinationNode in destinationNodes)
         {
             string queryString = destinationNode.Execute(executionType, _nodes);
@@ -23,15 +23,15 @@ public class Pipeline
         return answerToReturn;
     }
 
-    private List<Node> FindDestinationNodes()
+    private List<DestinationNode> FindDestinationNodes()
     {
-        List<Node> destinationNodes = new List<Node>(); 
+        List<DestinationNode> destinationNodes = new List<DestinationNode>(); 
         foreach (var keyValuePair in _nodes)
         {
             Node node = keyValuePair.Value;
             if (node._NodeType == NodeType.DestinationNode)
             {
-                destinationNodes.Add(node);
+                destinationNodes.Add((DestinationNode) node);
             }
         }
         return destinationNodes;
