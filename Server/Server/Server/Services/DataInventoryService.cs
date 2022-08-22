@@ -21,8 +21,10 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _logger.LogInformation($"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
-                               $"dataTable:\n{ConvertDataTableToString(dataTable)}");
+        _database.CreateTable(dataTable, file.FileName);
+        _database.ImportDataTable(dataTable, file.FileName);
+        // _logger.LogInformation($"name: {file.Name}\ntype:{file.ContentType}\ncontent:\n{file.ReadAll().ToString().Substring(0, 100)}\n" +
+                               // $"dataTable:\n{ConvertDataTableToString(dataTable)}");
         return file.FileName;
     }
 
@@ -30,7 +32,7 @@ public class DataInventoryService :  IDataInventoryService
         public string AddDestination(string name)
     {
         string tableName = name + "_" + System.DateTime.Now;
-        _database.CreateTable(tableName);
+        // _database.CreateTable(tableName);
         return tableName;
     }
 
