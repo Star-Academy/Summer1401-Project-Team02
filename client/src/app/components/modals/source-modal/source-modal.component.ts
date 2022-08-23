@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ModalService} from '../../../services/modal.service';
 
 @Component({
@@ -13,13 +13,12 @@ export class SourceModalComponent {
         display: 'grid',
         placeItems: 'center',
     };
-    public constructor(public changeDetectorRef: ChangeDetectorRef, public modalService: ModalService) {
+    public constructor(public modalService: ModalService) {
         this.modalService.initSourceComponent(this);
     }
 
     public showModal(): void {
         this.isVisible = true;
-        this.changeDetectorRef.detectChanges();
     }
 
     public handleOk(): void {
