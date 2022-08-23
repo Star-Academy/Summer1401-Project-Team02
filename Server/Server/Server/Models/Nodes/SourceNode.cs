@@ -1,22 +1,16 @@
+using Newtonsoft.Json;
 using Server.Enums;
 
 namespace Server.Models.Nodes;
 
+[JsonObject]
 public class SourceNode : Node
 {
-    private string tableName;
-
-    public override NodeType _NodeType
-    {
-        get { return NodeType.SourceNode; }
-    }
-    public SourceNode(string id, string tableName) : base(id)
-    {
-        this.tableName = tableName;
-    }
+    [JsonProperty]
+    public string tableName;
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
-        throw new NotImplementedException();
+        return $"select * from {tableName}";
     }
 }
