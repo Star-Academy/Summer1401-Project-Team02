@@ -23,14 +23,14 @@ public class DataInventoryService :  IDataInventoryService
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         _database.CreateTable(dataTable, file.Hash());
         _database.ImportDataTable(dataTable, file.Hash());
-        return file.Hash();
+        return $"{{ \"tableName\" : {file.Hash()} }}";
     }
 
 
     public string AddDestination(string name)
     {
         _database.CreateTable(name);
-        return name;
+        return $"{{ \"tableName\" : {name} }}";
     }
 
     private IParser MapToParser(string fileType)
@@ -43,7 +43,6 @@ public class DataInventoryService :  IDataInventoryService
             case "json": return new JsonParser();
             default: throw new Exception("not supported file format");
         }
-        return default;
     }
 
         
