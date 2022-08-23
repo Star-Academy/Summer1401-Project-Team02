@@ -67,7 +67,7 @@ public class PostgresqlDatabase : IDatabase
         return RunQuery($"SELECT * FROM {tableName}");
     }
 
-    public IEnumerable<string> GetAllTabled()
+    public IEnumerable<string> GetAllTables()
     {
         throw new NotImplementedException();
     }

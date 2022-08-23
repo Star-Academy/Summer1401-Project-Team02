@@ -51,7 +51,7 @@ public class DataInventoryService :  IDataInventoryService
         DataTable dataTable = _database.GetTable(tableName);
         IParser parser = MapToParser(format);
         string csvString = parser.ParseFromDataTable(dataTable);
-        return new MemoryStream(System.Text.Encoding.ASCII.GetBytes(csvString));
+        return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
     }
     
     

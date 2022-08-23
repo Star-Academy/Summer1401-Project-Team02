@@ -10,5 +10,6 @@ public interface IDatabase
     public void CreateTable(string tableName);
     public DataTable RunQuery(string query);
     public DataTable GetTable(string tableName);
-    
+    public IEnumerable<string> GetAllTables();
+
 }
