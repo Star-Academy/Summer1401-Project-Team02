@@ -26,7 +26,7 @@ export class SourceModalComponent {
         this.isVisible = false;
     }
 
-    public handleCancel(): void {
+    public handleHide(): void {
         this.isVisible = false;
     }
 }

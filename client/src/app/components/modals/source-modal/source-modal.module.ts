@@ -5,11 +5,11 @@ import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {InputModule} from './components/input/input.module';
+import {UploadInputModule} from './components/input/upload-input.module';
 
 @NgModule({
     declarations: [SourceModalComponent],
-    imports: [CommonModule, NzModalModule, NzButtonModule, NzUploadModule, NzIconModule, InputModule],
+    imports: [CommonModule, NzModalModule, NzButtonModule, NzUploadModule, NzIconModule, UploadInputModule],
     exports: [SourceModalComponent],
 })
 export class SourceModalModule {}

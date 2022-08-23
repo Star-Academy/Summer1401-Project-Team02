@@ -5,7 +5,7 @@
     [nzContent]="modalContent"
     nzTitle="Source"
     [nzFooter]="modalFooter"
-    (nzOnCancel)="handleCancel()"
+    (nzOnCancel)="handleHide()"
 >
     <ng-template #modalContent>
         <ng-container>
@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #modalFooter>
-        <button nz-button nzType="link" (click)="handleCancel()">cancel</button>
+        <button nz-button nzType="link" (click)="handleHide()">cancel</button>
         <button nz-button nzType="primary" (click)="handleOk()">ok</button>
     </ng-template>
 </nz-modal>

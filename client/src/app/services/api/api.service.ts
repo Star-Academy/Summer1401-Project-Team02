@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {GetRequestOptions, PostRequestOptions, RequestOptions} from '../models/request-option.model';
-import {DEFAULT_POST_REQUEST_INIT} from '../utils/api.utils';
+import {GetRequestOptions, PostRequestOptions, RequestOptions} from '../../models/request-option.model';
+import {DEFAULT_POST_REQUEST_INIT} from '../../utils/api.utils';
 
 @Injectable({
     providedIn: 'root',

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
-import {FileModal} from '../models/file.modal';
-import {API_UPLOAD_FILE} from '../utils/api.utils';
+import {FileModal} from '../../models/file.modal';
+import {API_UPLOAD_FILE} from '../../utils/api.utils';
 
 @Injectable({
     providedIn: 'root',

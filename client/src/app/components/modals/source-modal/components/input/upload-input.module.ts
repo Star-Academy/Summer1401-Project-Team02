@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {InputComponent} from './input.component';
+import {UploadInputComponent} from './upload-input.component';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
 @NgModule({
-    declarations: [InputComponent],
+    declarations: [UploadInputComponent],
     imports: [CommonModule, NzUploadModule, NzIconModule],
     providers: [{provide: NzMessageService}],
-    exports: [InputComponent],
+    exports: [UploadInputComponent],
 })
-export class InputModule {}
+export class UploadInputModule {}

@@ -4,10 +4,10 @@ import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
 
 @Component({
     selector: 'app-input',
-    templateUrl: './input.component.html',
-    styleUrls: ['./input.component.scss'],
+    templateUrl: './upload-input.component.html',
+    styleUrls: ['./upload-input.component.scss'],
 })
-export class InputComponent {
+export class UploadInputComponent {
     public constructor(private msg: NzMessageService) {}
 
     public uploadH = {
