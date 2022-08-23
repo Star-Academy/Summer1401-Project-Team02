@@ -93,7 +93,6 @@ public class PostgresqlDatabase : IDatabase
         //     }
         //     sql = sql.TrimEnd(new char[] { ',' }) + "))\n";
         // }
-        _logger.LogInformation("\n\n\n\n\n" + sql);
         return sql;
     }
 
@@ -110,7 +109,8 @@ public class PostgresqlDatabase : IDatabase
         switch (type.ToString())
         {
             case "System.String":
-                return "VARCHAR(" + ((columnSize == -1) ? 255 : columnSize) + ")";
+                return "TEXT";
+                // return "VARCHAR(" + ((columnSize == -1) ? 255 : columnSize) + ")";
 
             case "System.Decimal":
                 if (numericScale > 0)
