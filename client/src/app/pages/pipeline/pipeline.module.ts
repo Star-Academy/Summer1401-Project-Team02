@@ -3,10 +3,9 @@ import {CommonModule} from '@angular/common';
 
 import {PipelineComponent} from './pipeline.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
-import {ModalModule} from '../../components/modal/modal.module';
 
 @NgModule({
     declarations: [PipelineComponent],
-    imports: [CommonModule, NzButtonModule, ModalModule],
+    imports: [CommonModule, NzButtonModule],
 })
 export class PipelineModule {}

@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {ModalComponent} from '../../components/modal/modal.component';
+import {Component} from '@angular/core';
 import {ModalService} from '../../services/modal.service';
 
 @Component({
@@ -7,19 +6,6 @@ import {ModalService} from '../../services/modal.service';
     templateUrl: './pipeline.component.html',
     styleUrls: ['./pipeline.component.scss'],
 })
-export class PipelineComponent implements AfterViewInit {
-    @ViewChild('modal') public modalRef!: ModalComponent;
-    public constructor(private modalService: ModalService) {}
-
-    public ngAfterViewInit(): void {
-        this.modalService.initComponent(this.modalRef);
-    }
-
-    public showSource(): void {
-        this.modalService.showSource();
-    }
-
-    public showDestination(): void {
-        this.modalService.showDestination();
-    }
+export class PipelineComponent {
+    public constructor(public modalService: ModalService) {}
 }

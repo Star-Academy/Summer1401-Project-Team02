@@ -1,21 +1,27 @@
 import {Injectable} from '@angular/core';
-import {ModalComponent} from '../components/modal/modal.component';
+import {SourceModalComponent} from '../components/modals/source-modal/source-modal.component';
+import {DestinationModalComponent} from '../components/modals/destination-modal/destination-modal.component';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ModalService {
-    private sourceModalComponent!: ModalComponent;
+    private sourceModalComponent!: SourceModalComponent;
+    private destinationModalComponent!: DestinationModalComponent;
 
-    public initComponent(sourceModalComponent: ModalComponent): void {
+    public initSourceComponent(sourceModalComponent: SourceModalComponent): void {
         this.sourceModalComponent = sourceModalComponent;
     }
 
+    public initDestinationComponent(destinationModalComponent: DestinationModalComponent): void {
+        this.destinationModalComponent = destinationModalComponent;
+    }
+
     public showSource(): void {
-        this.sourceModalComponent?.showSourceModal();
+        this.sourceModalComponent?.showModal();
     }
 
     public showDestination(): void {
-        this.sourceModalComponent?.showDestinationModal();
+        this.destinationModalComponent?.showModal();
     }
 }

@@ -1,0 +1,20 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Destination"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <app-destination-input></app-destination-input>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="link" (click)="handleCancel()">cancel</button>
+        <button nz-button nzType="primary" (click)="handleOk()">ok</button>
+    </ng-template>
+</nz-modal>

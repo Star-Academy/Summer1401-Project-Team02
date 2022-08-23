@@ -3,17 +3,13 @@
     nzCentered
     [(nzVisible)]="isVisible"
     [nzContent]="modalContent"
-    [nzTitle]="title"
+    nzTitle="Source"
     [nzFooter]="modalFooter"
     (nzOnCancel)="handleCancel()"
 >
     <ng-template #modalContent>
-        <ng-container *ngIf="isSource">
+        <ng-container>
             <app-input></app-input>
-        </ng-container>
-
-        <ng-container *ngIf="!isSource">
-            <app-destination-input></app-destination-input>
         </ng-container>
     </ng-template>
 
