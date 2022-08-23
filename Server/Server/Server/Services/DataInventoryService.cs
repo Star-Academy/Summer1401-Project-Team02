@@ -1,5 +1,6 @@
 using System.Data;
 using System.Text;
+using Server.Controllers;
 using Server.ExtensionMethods;
 using Server.Models.Database;
 using Server.Models.Parsers;
@@ -20,9 +21,9 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _database.CreateTable(dataTable, "test");
-        _database.ImportDataTable(dataTable, "test");
-        return file.FileName;
+        _database.CreateTable(dataTable, file.Hash());
+        _database.ImportDataTable(dataTable, file.Hash());
+        return file.Hash();
     }
 
 

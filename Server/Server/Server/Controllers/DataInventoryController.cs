@@ -53,6 +53,4 @@ public class DataInventoryController : Controller
     {
         return File(_dataInventoryService.Download(tableName, fileFormat), "text/" + fileFormat);
     }
-
-
 }

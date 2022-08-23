@@ -6,13 +6,14 @@ namespace Server.Models.Database;
 
 public class PostgresqlDatabase : IDatabase
 {
+    // TODO: general refactoring needed.
     public PostgresqlDatabase(ILogger<IDatabase> logger)
     {
         _logger = logger;
     }
 
     private string _connectionString =
-        $"Server={Configue.Server};Database={Configue.DataBase};User Id={Configue.Id};Password={Configue.Password};";
+        $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
 
     private readonly ILogger<IDatabase> _logger;
 

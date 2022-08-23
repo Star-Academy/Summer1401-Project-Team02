@@ -12,12 +12,11 @@ public class JsonParser : IParser
 {
     public DataTable ParseToDataTable(string data)
     {
-        
         return (DataTable)JsonConvert.DeserializeObject(data, typeof(DataTable))!;
     }
 
     public string ParseFromDataTable(DataTable dataTable)
     {
-        throw new NotImplementedException();
+        return JsonConvert.SerializeObject(dataTable, Formatting.Indented);
     }
 }

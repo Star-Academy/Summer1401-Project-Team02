@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Server.ExtensionMethods;
 
@@ -14,4 +15,10 @@ public static class MyExtensionMethods
         }
         return result;
     } 
+    
+    public static string Hash(this IFormFile file)
+    {
+        return file.FileName.Replace(".", "_");
+    } 
+    
 }
