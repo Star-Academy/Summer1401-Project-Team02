@@ -17,6 +17,6 @@ public class CustomNode : ProcessorNode
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
         return
-            $"SELECT {_selectionString} FROM {nodes.GetValueOrDefault(_previousNodes.First()).Execute(executionType, nodes)} {_operationString}";
+            $"SELECT {_selectionString} FROM ({nodes.GetValueOrDefault(_previousNodes.First()).Execute(executionType, nodes)}) {_operationString}";
     }
 }
