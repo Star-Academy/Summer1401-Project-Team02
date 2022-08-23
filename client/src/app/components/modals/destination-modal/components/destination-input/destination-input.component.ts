@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {DatasetService} from '../../../../../services/api/dataset.service';
+import {FileModal} from '../../../../../models/file.modal';
 
 @Component({
     selector: 'app-destination-input',
@@ -6,5 +8,13 @@ import {Component} from '@angular/core';
     styleUrls: ['./destination-input.component.scss'],
 })
 export class DestinationInputComponent {
-    public value?: string;
+    public file: FileModal = {
+        tableName: '',
+    };
+    public constructor(public datasetService: DatasetService) {}
+
+    public async submitForm(): Promise<void> {
+        console.log(typeof this.file.tableName);
+        await this.datasetService.sendDestination(this.file);
+    }
 }

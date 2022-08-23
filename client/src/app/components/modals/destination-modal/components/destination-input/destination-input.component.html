@@ -1,4 +1,7 @@
-<label>
-    Name:
-    <input nz-input placeholder="Enter Destination Name" [(ngModel)]="value" />
-</label>
+<form (submit)="submitForm()">
+    <label for="tableName">Dataset Name: </label>
+    <div>
+        <input nz-input id="tableName" name="tableName" [(ngModel)]="file.tableName" />
+        <button nz-button nzType="primary" type="submit">Register</button>
+    </div>
+</form>
