@@ -4,7 +4,7 @@ namespace Server.Models.Nodes;
 
 public class DestinationNode : Node
 {
-    private string _previousNode;
+    private string _previousNodeId;
     public string tableName { get; }
 
     public override NodeType _NodeType
@@ -17,6 +17,6 @@ public class DestinationNode : Node
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
-        return $"{nodes.GetValueOrDefault(_previousNode).Execute(executionType, nodes)};";
+        return $"{nodes.GetValueOrDefault(_previousNodeId).Execute(executionType, nodes)};";
     }
 }
