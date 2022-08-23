@@ -1,0 +1,16 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Process Menu"
+    nzFooter=" "
+    (nzOnCancel)="handleHide()"
+    nzWidth="80rem"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <app-process-menu></app-process-menu>
+        </ng-container>
+    </ng-template>
+</nz-modal>
