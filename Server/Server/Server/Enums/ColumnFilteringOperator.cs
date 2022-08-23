@@ -5,5 +5,6 @@ public enum ColumnFilteringOperation
     MathematicalOperators,
     Contains,
     Matches,
-    IsEmpty
+    IsEmpty,
+    IsNull
 }
