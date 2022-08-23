@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {HomeComponent} from './pages/home/home.component';
+import {PipelineComponent} from './pages/pipeline/pipeline.component';
 
 const routes: Routes = [
-    {path: '', pathMatch: 'full', component: HomeComponent},
+    {path: '', pathMatch: 'full', component: PipelineComponent},
     {path: '**', redirectTo: ''},
 ];
 
