@@ -12,12 +12,21 @@ import en from '@angular/common/locales/en';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HeaderModule} from './components/header/header.module';
 
 registerLocaleData(en);
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, HomeModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HomeModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        HeaderModule,
+    ],
     providers: [{provide: NZ_I18N, useValue: en_US}],
     bootstrap: [AppComponent],
 })

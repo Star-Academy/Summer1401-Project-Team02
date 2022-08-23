@@ -7,6 +7,7 @@
     --danger-hue: 0;
 
     --color-gray-98: hsl(0, 0%, 98%);
+    --color-gray-95: hsl(0, 0%, 95%);
     --color-gray-90: hsl(0, 0%, 90%);
     --color-gray-80: hsl(0, 0%, 80%);
     --color-gray-70: hsl(0, 0%, 70%);
@@ -189,12 +190,7 @@ svg {
 
 // MAIN
 body {
-    background-color: var(--color--body-background);
-    color: var(--color--body-foreground);
-
     width: 100%;
-
-    padding-inline: var(--full-width-padding-inline);
 
     font-size: 1.6rem;
 }

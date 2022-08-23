@@ -1,0 +1,24 @@
+nz-page-header {
+    background-color: var(--color-gray-95);
+
+    nz-page-header-extra {
+        display: flex;
+        align-items: center;
+
+        nz-space {
+            > a {
+                block-size: fit-content;
+            }
+
+            > button {
+                block-size: fit-content;
+
+                font-size: 2rem;
+            }
+        }
+
+        &:nth-child(3) {
+            inline-size: 10.5rem;
+        }
+    }
+}
