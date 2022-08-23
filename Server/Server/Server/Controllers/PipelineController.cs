@@ -25,7 +25,7 @@ public class PipelineController : Controller
     public IActionResult Execute(string jsonString)
     {
         // this is a json test string. you can use it for test :)
-        // {"_nodes":{"source":{"tableName":"csvjson_json","_NodeType":2,"_id":"source"},"dest":{"_previousNode":"source","_NodeType":0,"_id":"dest","tableName":"result"}}}
+        // {"_nodes":{"source":{"tableName":"A","_NodeType":2,"},"dest":{"_previousNode":"source","_NodeType":0,"tableName":"B"}}}
         
         try
         {
