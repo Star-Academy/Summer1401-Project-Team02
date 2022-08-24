@@ -9,8 +9,20 @@ public class SourceNode : Node
     [JsonProperty]
     public string tableName;
 
-    public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
+    public override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes)
     {
-        return $"select * from {tableName}";
+        switch (executionType)
+        {
+            case ExecutionType.FullExecution:
+                return $"SELECT * FROM {tableName}";
+            case ExecutionType.Heading:
+                return $"SELECT TOP (0) * FROM {tableName}";
+            case ExecutionType.Preview:
+                return $"SELECT TOP (50) * FROM {tableName}";
+            //will implement later
+            case ExecutionType.Validation:
+                throw new NotImplementedException();
+        }
+        return default;
     }
 }
