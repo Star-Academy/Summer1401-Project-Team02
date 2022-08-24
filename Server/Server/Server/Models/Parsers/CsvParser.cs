@@ -1,5 +1,10 @@
 using System.Data;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using Aspose.Cells;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Server.Models.Parsers;
 
@@ -7,13 +12,13 @@ public class CsvParser : IParser
 {
     public DataTable ParseToDataTable(string data)
     {
-        var dataTable = new DataTable();
-        var rowStrings = data.Split("\r\n".ToCharArray(), StringSplitOptions.TrimEntries);
-        var header = from col in rowStrings[0].Split(",") select new DataColumn(col);
-        dataTable.Columns.AddRange(header.ToArray());
-        (from st in rowStrings.Skip(1)
-            select dataTable.Rows.Add(st.Split(",".ToCharArray()))).ToList();
-        return dataTable;
+        var workBook = new Workbook(new MemoryStream(Encoding.ASCII.GetBytes(data)));
+        string temporaryPath = "temporaryJsonFile.json";
+        workBook.Save(temporaryPath);
+        string json = File.ReadAllText(temporaryPath);
+        var answer = new JsonParser().ParseToDataTable(json);
+        File.Delete(temporaryPath);
+        return answer;
     }
 
     public string ParseFromDataTable(DataTable dataTable)
