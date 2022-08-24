@@ -110,7 +110,7 @@ public class PostgresqlDatabase : IDatabase
         switch (type.ToString())
         {
             case "System.String":
-                return "VARCHAR(" + ((columnSize == -1) ? 255 : columnSize) + ")";
+                return "TEXT";
 
             case "System.Decimal":
                 if (numericScale > 0)
