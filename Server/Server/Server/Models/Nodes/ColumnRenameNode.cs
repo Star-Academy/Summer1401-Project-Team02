@@ -5,13 +5,7 @@ namespace Server.Models.Nodes;
 public class ColumnRenameNode : ProcessorNode
 {
     private readonly Dictionary<string, string> _oldAndNewNames;
-
-    public ColumnRenameNode(string id, List<string> previousNodesIds,
-        Dictionary<string, string> oldAndNewNames) : base(id, previousNodesIds)
-    {
-        _oldAndNewNames = oldAndNewNames;
-    }
-
+    
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
         //Since we should specify the name of a singe table in the renaming query, we had to create a new table and
