@@ -16,10 +16,13 @@ public class ColumnRenameNode : ProcessorNode
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
-        //TODO
-        foreach (var oldNewName in nodes)
+        string renamingQuery = "";
+        foreach (var oldAndNewName in nodes)
         {
-            return "EXEC sp_rename 'old_name', 'new_name', 'COLUMN';";
+            renamingQuery = renamingQuery + $"sp_rename '{_tableName}.{oldAndNewName.Key}', '{oldAndNewName.Value}', 'COLUMN';" +
+                            "GO";
         }
+
+        return renamingQuery;
     }
 }
