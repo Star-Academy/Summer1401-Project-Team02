@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-    public dropDownText = 'hover me';
+    public dropDownText = 'select an app';
 
     public setDropDownText(text: string): void {
         this.dropDownText = text;
