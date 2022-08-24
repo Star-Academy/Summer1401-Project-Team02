@@ -9,7 +9,10 @@
 >
     <ng-template #modalContent>
         <ng-container>
-            <app-input></app-input>
+            <nz-tabset nzCentered>
+                <nz-tab nzTitle="Create Source"><app-input></app-input></nz-tab>
+                <nz-tab nzTitle="Connect to a source"><app-connection></app-connection></nz-tab>
+            </nz-tabset>
         </ng-container>
     </ng-template>
 
