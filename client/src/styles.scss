@@ -172,7 +172,7 @@ img {
 body {
     background-color: var(--color-body-background);
     color: var(--color-body-foreground);
-
+    overflow: hidden;
     width: 100%;
 
     font-size: 1.6rem;

@@ -149,9 +149,32 @@ export class CanvasService {
         );
 
         console.log(111);
+        let offset!: any;
+        if (this.graph) {
+            offset = this.graph.getScrollbarPosition();
+            this.graph.dispose();
+        }
         this.graph = new Graph({
-            container: doc.querySelector('#pipeLine') as HTMLElement,
-            grid: true,
+            container: doc.querySelector('#pipeline') as HTMLElement,
+            grid: {
+                size: 20,
+                visible: true,
+                type: 'mesh',
+                args: {
+                    thickness: 1,
+                },
+            },
+            // width: 100,
+            scroller: {
+                enabled: true,
+                // pageVisible: true,
+                // pageBreak: true,
+                autoResize: true,
+                // minVisibleWidth: 50,
+                width: 2000,
+                // minVisibleHeight: 20,
+                pannable: true,
+            },
             // ...canvas,
         });
     }
