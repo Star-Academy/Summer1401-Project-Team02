@@ -93,7 +93,6 @@ public class PostgresqlDatabase : IDatabase
         //     }
         //     sql = sql.TrimEnd(new char[] { ',' }) + "))\n";
         // }
-        _logger.LogInformation("\n\n\n\n\n" + sql);
         return sql;
     }
 
