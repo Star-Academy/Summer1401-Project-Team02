@@ -1,0 +1,24 @@
+<nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon="" nzTitle="Pipeline">
+    <nz-page-header-extra>
+        <nz-space>
+            <button nz-button nzType="primary" nzSize="large">
+                <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+                execute
+            </button>
+        </nz-space>
+    </nz-page-header-extra>
+    <nz-page-header-extra>
+        <nz-space>
+            <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                {{ dropDownText }}
+                <i nz-icon nzType="down"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                    <li nz-menu-item (click)="setDropDownText('Data Inventory')">Data Inventory</li>
+                    <li nz-menu-item (click)="setDropDownText('Pipeline')">Pipeline</li>
+                </ul>
+            </nz-dropdown-menu>
+        </nz-space>
+    </nz-page-header-extra>
+</nz-page-header>

@@ -159,14 +159,14 @@ img {
     display: block;
 }
 
-svg {
-    fill: currentcolor !important;
-
-    display: block;
-
-    width: 1em !important;
-    height: 1em !important;
-}
+//svg {
+//    fill: currentColor !important;
+//
+//    display: block;
+//
+//    width: 1em !important;
+//    height: 1em !important;
+//}
 
 // MAIN
 body {
@@ -174,8 +174,6 @@ body {
     color: var(--color-body-foreground);
 
     width: 100%;
-
-    padding-inline: var(--full-width-padding-inline);
 
     font-size: 1.6rem;
 }

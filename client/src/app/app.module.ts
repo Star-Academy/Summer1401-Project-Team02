@@ -15,6 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SourceModalModule} from './components/modals/source-modal/source-modal.module';
 import {DestinationModalModule} from './components/modals/destination-modal/destination-modal.module';
 import {MessageModule} from './components/message/message.module';
+import {HeaderModule} from './components/header/header.module';
 
 registerLocaleData(en);
 
@@ -30,6 +31,7 @@ registerLocaleData(en);
         SourceModalModule,
         DestinationModalModule,
         MessageModule,
+        HeaderModule,
     ],
     providers: [{provide: NZ_I18N, useValue: en_US}],
     bootstrap: [AppComponent],
