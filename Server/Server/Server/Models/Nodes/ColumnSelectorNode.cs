@@ -5,7 +5,7 @@ namespace Server.Models.Nodes;
 
 public class ColumnSelectorNode : ProcessorNode
 {
-    private readonly List<string> _columnNames;
+    public List<string> _columnNames;
     
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)

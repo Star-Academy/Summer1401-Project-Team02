@@ -26,6 +26,8 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new SourceNode();
                 case NodeType.DestinationNode:
                     return new DestinationNode();
+                case NodeType.Selector:
+                    return new ColumnSelectorNode();
                 default:
                     throw new NotImplementedException();
             }

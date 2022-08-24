@@ -3,6 +3,6 @@
 public enum NodeType
 {
     DestinationNode,
-    ProcessorNode,
-    SourceNode
+    SourceNode,
+    Selector
 }

@@ -48,15 +48,20 @@ public class PipelineController : Controller
     {
         var s = new SourceNode();
         var d = new DestinationNode();
+        var selection = new ColumnSelectorNode();
+        selection._NodeType = NodeType.Selector;
+        selection._columnNames = new List<string>(){ "age", "id"};
+        selection._previousNodesIds = new List<string>() { "source" };
         s.tableName = "people_json";
         d.tableName = "output1";
         s._NodeType = NodeType.SourceNode;
         d._NodeType = NodeType.DestinationNode;
-        d._previousNode = "source";
+        d._previousNode = "selector";
         var nodes = new Dictionary<string, Node>()
         {
             { "source", s },
-            { "dest", d }
+            { "dest", d },
+            { "selector", selection}
         };
         var p = new Pipeline();
         p.Nodes = nodes;
