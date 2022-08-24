@@ -108,6 +108,8 @@ public class PostgresqlDatabase : IDatabase
     {
         switch (type.ToString())
         {
+            case "System.Data.DataTable":
+            case "System.String[]":
             case "System.String":
                 return "TEXT";
 
@@ -118,6 +120,8 @@ public class PostgresqlDatabase : IDatabase
                     return "BIGINT";
                 else
                     return "INT";
+            case "System.Boolean":
+                return "BIT";
 
             case "System.Double":
             case "System.Single":
