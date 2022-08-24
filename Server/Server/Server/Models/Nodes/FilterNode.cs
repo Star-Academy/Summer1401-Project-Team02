@@ -19,18 +19,19 @@ public class FilterNode : ProcessorNode
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
         string firstPartOfQuery =
-            $"SELECT * FROM ({nodes.GetValueOrDefault(_previousNodesIds.First()).Execute(executionType, nodes)}) ";
+            $"SELECT * FROM ({nodes.GetValueOrDefault(_previousNodesIds.First()).Execute(executionType, nodes)}) AS temp ";
         string secondPartOfQuery;
         switch (_operator)
         {
+            //Just for strings ... for numbers it should be like year = 12 not year = '12' 
             case(ColumnFilteringOperation.MathematicalOperators):
-                secondPartOfQuery = $"WHERE {_columnName} {_operator} {value}";
+                secondPartOfQuery = $"WHERE {_columnName} {_operator} '{value}'";
                 break;
             case(ColumnFilteringOperation.Matches):
-                secondPartOfQuery = $"WHERE {_columnName} = {value}";
+                secondPartOfQuery = $"WHERE {_columnName} = '{value}'";
                 break;
             case(ColumnFilteringOperation.Contains):
-                secondPartOfQuery = $"WHERE {_columnName} LIKE %{value}%";
+                secondPartOfQuery = $"WHERE {_columnName} LIKE '%{value}%'";
                 break;
             case(ColumnFilteringOperation.IsEmpty):
                 secondPartOfQuery = $"WHERE {_columnName} LIKE ''";
