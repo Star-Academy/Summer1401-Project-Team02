@@ -15,6 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SourceModalModule} from './components/modals/source-modal/source-modal.module';
 import {DestinationModalModule} from './components/modals/destination-modal/destination-modal.module';
 import {HeaderModule} from './components/header/header.module';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 registerLocaleData(en);
 
@@ -31,7 +32,7 @@ registerLocaleData(en);
         DestinationModalModule,
         HeaderModule,
     ],
-    providers: [{provide: NZ_I18N, useValue: en_US}],
+    providers: [{provide: NZ_I18N, useValue: en_US}, NzMessageService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

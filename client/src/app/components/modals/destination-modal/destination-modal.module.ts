@@ -7,6 +7,8 @@ import {DestinationInputComponent} from './components/destination-input/destinat
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
+import {ConnectionModule} from '../../connection/connection.module';
 
 @NgModule({
     declarations: [DestinationModalComponent, DestinationInputComponent],
@@ -18,6 +20,8 @@ import {NzFormModule} from 'ng-zorro-antd/form';
         NzInputModule,
         ReactiveFormsModule,
         NzFormModule,
+        NzTabsModule,
+        ConnectionModule,
     ],
     exports: [DestinationModalComponent],
 })

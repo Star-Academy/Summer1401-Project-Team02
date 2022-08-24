@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {DatasetService} from '../../../../../services/api/dataset.service';
 import {FileModal} from '../../../../../models/file.modal';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-destination-input',
@@ -11,10 +12,12 @@ export class DestinationInputComponent {
     public file: FileModal = {
         tableName: '',
     };
-    public constructor(public datasetService: DatasetService) {}
+
+    public constructor(public datasetService: DatasetService, public messageService: NzMessageService) {}
 
     public async submitForm(): Promise<void> {
-        console.log(typeof this.file.tableName);
-        await this.datasetService.sendDestination(this.file);
+        const response = await this.datasetService.sendDestination(this.file);
+        if (response) this.messageService.create('success', 'success');
+        else if (!response) this.messageService.create('error', 'error');
     }
 }
