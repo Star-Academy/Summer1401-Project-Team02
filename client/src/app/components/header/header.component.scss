@@ -1,5 +1,7 @@
 nz-page-header {
     background-color: var(--color-gray-95);
+    box-shadow: var(--box-shadow-subtle);
+    padding-block: 1rem;
 
     nz-page-header-extra {
         display: flex;
@@ -18,7 +20,8 @@ nz-page-header {
         }
 
         &:nth-child(3) {
-            inline-size: 10.5rem;
+            inline-size: 14.5rem;
+            font-size: 2rem;
         }
     }
 }
