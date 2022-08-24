@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SourceModalModule} from './components/modals/source-modal/source-modal.module';
 import {DestinationModalModule} from './components/modals/destination-modal/destination-modal.module';
+import {MessageModule} from './components/message/message.module';
 
 registerLocaleData(en);
 
@@ -28,6 +29,7 @@ registerLocaleData(en);
         BrowserAnimationsModule,
         SourceModalModule,
         DestinationModalModule,
+        MessageModule,
     ],
     providers: [{provide: NZ_I18N, useValue: en_US}],
     bootstrap: [AppComponent],
