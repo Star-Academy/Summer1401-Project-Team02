@@ -4,5 +4,7 @@ namespace Server.Models.Nodes;
 
 public abstract class ProcessorNode : Node
 {
-    protected List<string> _previousNodesIds;
+    private List<string> _previousNodes;
+    
+    public abstract override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes);
 }
