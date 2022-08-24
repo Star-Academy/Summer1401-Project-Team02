@@ -2,6 +2,7 @@ using System.Data;
 using System.IO.Pipelines;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Server.Enums;
 using Server.Models;
 using Server.Models.Nodes;
 using Server.Models.Parsers;
@@ -25,16 +26,15 @@ public class PipelineController : Controller
     [HttpPost]
     public IActionResult Execute(string jsonString)
     {
-        // this is a json test string. you can use it for test :)
-        // {"_nodes":{"source":{"tableName":"A","_NodeType":2},"dest":{"_previousNode":"source","_NodeType":0,"tableName":"B"}}}
         
+        GeneratePipelineJson();
         try
         {
             var jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
             jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
 
-            _pipelineService.Execute(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!);
+            _pipelineService.Execute(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings));
             return Ok();
         }
         catch (Exception e)
@@ -42,6 +42,26 @@ public class PipelineController : Controller
             _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
+    }
+
+    private void GeneratePipelineJson()
+    {
+        var s = new SourceNode();
+        var d = new DestinationNode();
+        s.tableName = "people_json";
+        d.tableName = "output1";
+        s._NodeType = NodeType.SourceNode;
+        d._NodeType = NodeType.DestinationNode;
+        d._previousNode = "source";
+        var nodes = new Dictionary<string, Node>()
+        {
+            { "source", s },
+            { "dest", d }
+        };
+        var p = new Pipeline();
+        p.Nodes = nodes;
+        
+        _logger.LogInformation(JsonConvert.SerializeObject(p));
     }
     
     [HttpPost]
