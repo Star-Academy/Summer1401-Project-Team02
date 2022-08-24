@@ -1,4 +1,3 @@
-using System.IO.Pipelines;
 using Newtonsoft.Json;
 using Server.Enums;
 using Server.Models.Nodes;
@@ -9,18 +8,14 @@ namespace Server.Models;
 public class Pipeline
 {
     [JsonProperty]
-    private Dictionary<string, Node> _nodes;
+    public Dictionary<string, Node?>? Nodes;
 
-    //<node, query string>
-    
     public Dictionary<DestinationNode, string> Execute(ExecutionType executionType)
     {
-        // iterate over output nodes and execute them. add the string result to the dictionary.
-        Dictionary<DestinationNode, string> answerToReturn = new Dictionary<DestinationNode, string>();
-        List<DestinationNode> destinationNodes = FindDestinationNodes();
-        foreach (var destinationNode in destinationNodes)
+        var answerToReturn = new Dictionary<DestinationNode, string>();
+        foreach (var destinationNode in FindDestinationNodes())
         {
-            string queryString = destinationNode.Execute(executionType, _nodes);
+            var queryString = destinationNode.Execute(executionType, Nodes);
             answerToReturn.Add(destinationNode, queryString);
         }
         return answerToReturn;
@@ -28,15 +23,22 @@ public class Pipeline
 
     private List<DestinationNode> FindDestinationNodes()
     {
-        List<DestinationNode> destinationNodes = new List<DestinationNode>(); 
-        foreach (var keyValuePair in _nodes)
+        return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
+    }
+
+    public string Heading(ExecutionType executionType, Node? node)
+    {
+        return node.Execute(executionType, Nodes);
+    }
+
+    //it contains before and after tables
+    public Tuple<string, string> Preview(ExecutionType executionType, Node node)
+    {
+        if (node._NodeType == NodeType.SourceNode)
         {
-            Node node = keyValuePair.Value;
-            if (node._NodeType == NodeType.DestinationNode)
-            {
-                destinationNodes.Add((DestinationNode) node);
-            }
+            throw new Exception("Source node has not preview !");
         }
-        return destinationNodes;
+
+        throw new NotImplementedException();
     }
 }

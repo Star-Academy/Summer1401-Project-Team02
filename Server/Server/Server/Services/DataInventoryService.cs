@@ -23,14 +23,14 @@ public class DataInventoryService :  IDataInventoryService
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         _database.CreateTable(dataTable, file.Hash());
         _database.ImportDataTable(dataTable, file.Hash());
-        return $"{{ \"tableName\" : {file.Hash()} }}";
+        return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
 
 
     public string AddDestination(string name)
     {
         _database.CreateTable(name);
-        return $"{{ \"tableName\" : {name} }}";
+        return $"{{ \"tableName\" : \"{name}\" }}";
     }
 
     private IParser MapToParser(string fileType)
