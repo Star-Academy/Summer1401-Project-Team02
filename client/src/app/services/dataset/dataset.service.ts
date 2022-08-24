@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
+import {ApiService} from '../api/api.service';
 import {FileModal} from '../../models/file.modal';
 import {API_SEND_DESTINATION_NAME, API_UPLOAD_FILE} from '../../utils/api.utils';
 

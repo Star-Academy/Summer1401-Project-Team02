@@ -1,0 +1,28 @@
+.wrapper {
+    position: relative;
+
+    div {
+        background-color: var(--color-gray-98);
+        box-shadow: -0.3rem 0 0.5rem 0 var(--color-box-shadow-subtle);
+
+        position: absolute;
+        top: 5rem;
+        left: -6rem;
+
+        block-size: 5.6rem;
+        inline-size: 4rem;
+
+        padding: 1.5rem;
+
+        border-bottom-left-radius: 999rem;
+        border-top-left-radius: 999rem;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        i.collapsed {
+            transform: rotate(180deg);
+        }
+    }
+}

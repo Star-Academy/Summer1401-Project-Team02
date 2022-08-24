@@ -1,6 +1,15 @@
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showSource()"><span>Show Source modal</span></button>-->
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showProcess()"><span>Show process modal</span></button>-->
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showDestination()"><span>Show destination modal</span></button>-->
-<app-canvas></app-canvas>
-<app-destination-modal></app-destination-modal>
-<app-process-modal></app-process-modal>
+<div class="wrapper">
+    <app-sidebar (isCollapseChange)="isSidebarCollapse = $event" [class.collapse]="isSidebarCollapse"></app-sidebar>
+    <app-preview
+        (isCollapseChange)="isPreviewCollapse = $event"
+        [class.sidebar-collapse]="isSidebarCollapse"
+        [class.collapse]="isPreviewCollapse"
+    ></app-preview>
+    <app-canvas></app-canvas>
+
+    <app-destination-modal></app-destination-modal>
+    <app-process-modal></app-process-modal>
+</div>

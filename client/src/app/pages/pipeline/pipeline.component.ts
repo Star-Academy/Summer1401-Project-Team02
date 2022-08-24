@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ModalService} from '../../services/modal.service';
+import {ModalService} from '../../services/modal/modal.service';
 
 @Component({
     selector: 'app-pipeline',
@@ -7,5 +7,8 @@ import {ModalService} from '../../services/modal.service';
     styleUrls: ['./pipeline.component.scss'],
 })
 export class PipelineComponent {
+    public isSidebarCollapse = false;
+    public isPreviewCollapse = false;
+
     public constructor(public modalService: ModalService) {}
 }

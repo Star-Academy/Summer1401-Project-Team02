@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {DatasetService} from '../../../../../services/api/dataset.service';
+import {DatasetService} from '../../../../../services/dataset/dataset.service';
 import {FileModal} from '../../../../../models/file.modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
