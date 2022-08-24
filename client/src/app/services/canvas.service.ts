@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Graph} from '@antv/x6';
-import {CanvasComponent} from '../components/canvas/canvas.component';
+import {CanvasComponent} from '../pages/pipeline/components/canvas/canvas.component';
+import {ModalService} from './modal.service';
 
 @Injectable({
     providedIn: 'root',
@@ -8,6 +9,8 @@ import {CanvasComponent} from '../components/canvas/canvas.component';
 export class CanvasService {
     private canvasComponent!: CanvasComponent;
     public graph!: Graph;
+
+    public constructor(private modalService: ModalService) {}
 
     public initComponent(canvasComponent: CanvasComponent): void {
         this.canvasComponent = canvasComponent;
@@ -148,12 +151,6 @@ export class CanvasService {
             true
         );
 
-        console.log(111);
-        let offset!: any;
-        if (this.graph) {
-            offset = this.graph.getScrollbarPosition();
-            this.graph.dispose();
-        }
         this.graph = new Graph({
             container: doc.querySelector('#pipeline') as HTMLElement,
             grid: {
@@ -176,6 +173,79 @@ export class CanvasService {
                 pannable: true,
             },
             // ...canvas,
+        });
+
+        const source = this.graph.addNode({
+            shape: 'cylinder',
+            x: 220,
+            y: 120,
+            width: 80,
+            height: 120,
+            label: 'Source',
+            aref: 'ssss',
+            attrs: {
+                top: {
+                    fill: '#fe854f',
+                    fillOpacity: 0.5,
+                    cursor: 'pointer',
+                },
+                body: {
+                    fill: '#ED8A19',
+                    fillOpacity: 0.8,
+                    cursor: 'pointer',
+                },
+            },
+        });
+
+        const target = this.graph.addNode({
+            shape: 'cylinder',
+            x: 420,
+            y: 120,
+            width: 80,
+            height: 120,
+            label: 'Dest',
+            attrs: {
+                top: {
+                    fill: '#fe854f',
+                    fillOpacity: 0.5,
+                    cursor: 'pointer',
+                },
+                body: {
+                    fill: '#ED8A19',
+                    fillOpacity: 0.8,
+                    cursor: 'pointer',
+                },
+            },
+        });
+
+        const edge = this.graph.addEdge({
+            shape: 'org-edge',
+            source,
+            target,
+        });
+
+        this.graph.on('node:click', ({e, x, y, node, view}) => {
+            if (node === source) this.modalService.showSource();
+            else if (node === target) this.modalService.showDestination();
+        });
+
+        this.graph.on('node:mouseenter', ({node}) => {
+            if (node !== source) {
+                node.addTools({
+                    name: 'button-remove',
+                    args: {
+                        x: 0,
+                        y: 0,
+                        offset: {x: 10, y: 10},
+                    },
+                });
+            }
+        });
+
+        this.graph.on('node:mouseleave', ({node}) => {
+            if (node !== target) {
+                node.removeTools();
+            }
         });
     }
 
