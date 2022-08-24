@@ -1,0 +1,15 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Destination"
+    nzFooter=" "
+    (nzOnCancel)="handleHide()"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <app-destination-input></app-destination-input>
+        </ng-container>
+    </ng-template>
+</nz-modal>
