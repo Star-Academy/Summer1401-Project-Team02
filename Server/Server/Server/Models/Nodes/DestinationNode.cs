@@ -8,9 +8,8 @@ public class DestinationNode : Node
 {
     [JsonProperty]
     public string _previousNode;
-    
-    [JsonProperty]
-    public string tableName { get; set; }
+
+    [JsonProperty] public string tableName;
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes)
     {
@@ -24,8 +23,7 @@ public class DestinationNode : Node
                 throw new NotImplementedException();
             case ExecutionType.Validation:
                 throw new NotImplementedException();
+            default: return "";
         }
-
-        return null;
     }
 }

@@ -1,10 +1,8 @@
 using System.Data;
-using System.IO.Pipelines;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Server.Enums;
+using Newtonsoft.Json.Serialization;
 using Server.Models;
-using Server.Models.Nodes;
 using Server.Models.Parsers;
 using Server.Services;
 
@@ -24,69 +22,35 @@ public class PipelineController : Controller
     }
 
     [HttpPost]
-    public IActionResult Execute(string jsonString)
+    public IActionResult Execute([FromBody] string pipelineJson)
     {
+        //"{\"Nodes\":{\"source\":{\"tableName\":\"people_json\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"_previousNode\":\"selector\",\"tableName\":\"output1\",\"Id\":\"dest\",\"_NodeType\":0},\"selector\":{\"_columnNames\":[\"age\",\"id\"],\"_previousNodesIds\":[\"source\"],\"Id\":\"selector\",\"_NodeType\":2}}}"    
+        _logger.LogInformation(TempUtils.GeneratePipelineJson());
         
-        GeneratePipelineJson();
         try
-        {
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
-            jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
-
-            _pipelineService.Execute(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings));
-            return Ok();
+        { 
+            return Ok(_pipelineService.Execute(CustomPipelineDeserializer.Deserialize(pipelineJson)));
         }
         catch (Exception e)
         {
-            _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
     }
 
-    private void GeneratePipelineJson()
-    {
-        var s = new SourceNode();
-        var d = new DestinationNode();
-        var selection = new ColumnSelectorNode();
-        selection._NodeType = NodeType.Selector;
-        selection._columnNames = new List<string>(){ "age", "id"};
-        selection._previousNodesIds = new List<string>() { "source" };
-        s.tableName = "people_json";
-        d.tableName = "output1";
-        s._NodeType = NodeType.SourceNode;
-        d._NodeType = NodeType.DestinationNode;
-        d._previousNode = "selector";
-        var nodes = new Dictionary<string, Node>()
-        {
-            { "source", s },
-            { "dest", d },
-            { "selector", selection}
-        };
-        var p = new Pipeline();
-        p.Nodes = nodes;
-        
-        _logger.LogInformation(JsonConvert.SerializeObject(p));
-    }
     
-    [HttpPost]
-    public IActionResult Heading(string jsonString, string id)
+    [HttpGet]
+    public IActionResult GetHeading(string pipelineJson, string id)
     {
-        // this is a json test string. you can use it for test :)
-        // {"_nodes":{"source":{"tableName":"A","_NodeType":2,"},"dest":{"_previousNode":"source","_NodeType":0,"tableName":"B"}}}
-        
         try
         {
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
-            jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
-
-            DataTable dataTable = _pipelineService.Heading(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!, id);
-            return Ok(dataTable);
+            var dataTable = _pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id);
+            return Ok(dataTable.Columns
+                .Cast<DataColumn>()
+                .Select(x => x.ColumnName)
+                .ToList());
         }
         catch (Exception e)
         {
-            _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
     }
@@ -94,9 +58,6 @@ public class PipelineController : Controller
     [HttpPost]
     public IActionResult Preview(string jsonString, string id)
     {
-        // this is a json test string. you can use it for test :)
-        // {"_nodes":{"source":{"tableName":"A","_NodeType":2,"},"dest":{"_previousNode":"source","_NodeType":0,"tableName":"B"}}}
-        
         try
         {
             var jsonSerializerSettings = new JsonSerializerSettings();
@@ -108,8 +69,11 @@ public class PipelineController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogInformation(e.ToString());
+            
             return BadRequest(e.Message);
         }
     }
+
 }
+
+

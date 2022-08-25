@@ -32,5 +32,15 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     throw new NotImplementedException();
             }
         }
-    }
+
+        public static Pipeline Deserialize(string pipelineJson)
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
+            jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+
+            return JsonConvert.DeserializeObject<Pipeline>(pipelineJson, jsonSerializerSettings)!;
+
+        }
+}
     

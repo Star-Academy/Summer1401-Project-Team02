@@ -2,6 +2,7 @@ using System.Data;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
+using Server.Models.Parsers;
 
 namespace Server.Services;
 
@@ -9,40 +10,45 @@ public class PipelineService : IPipelineService
 {
     
     private readonly IDatabase _database;
-    private readonly ILogger<IPipelineService> _logger;
 
-    public PipelineService(IDatabase database, ILogger<IPipelineService> logger)
+    public PipelineService(IDatabase database)
     {
         _database = database;
-        _logger = logger;
     }
     
-    public void Execute(Pipeline pipeline) 
+    public Dictionary<string, string> Execute(Pipeline pipeline)
     {
-        var queries = pipeline.Execute(ExecutionType.FullExecution);
-        foreach (var keyValuePair in queries)
+        var result = new Dictionary<string, string>();
+        foreach (var query in pipeline.Execute(ExecutionType.FullExecution))
         {
-            var node = keyValuePair.Key;
-            var queryString = keyValuePair.Value;
-            var dataTable = _database.RunQuery(queryString);
+            var node = query.Key;
+            try
+            {
+                var dataTable = _database.RunQuery(query.Value);
 
-            _database.CreateTable(dataTable, node.tableName);
-            _database.ImportDataTable(dataTable, node.tableName);
+                _database.CreateTable(dataTable, node.tableName);
+                _database.ImportDataTable(dataTable, node.tableName);
+                result.Add(node.Id, "success");
+            }
+            catch (Exception e)
+            {
+                result.Add(node.Id, e.Message);
+            }
         }
+        return result;
     }
 
-    public DataTable Heading(Pipeline pipeline, string id)
+    public DataTable GetHeading(Pipeline pipeline, string id)
     {
-        string queryString = pipeline.Heading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
-        DataTable dataTable = _database.RunQuery(queryString);
-        return dataTable;
+        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
+        return _database.RunQuery(queryString);
     }
 
     public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
     {
-        Tuple<string, string> queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
-        DataTable dataTable1 = _database.RunQuery(queryString.Item1);
-        DataTable dataTable2 = _database.RunQuery(queryString.Item2);
+        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        var dataTable1 = _database.RunQuery(item1);
+        var dataTable2 = _database.RunQuery(item2);
         return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
     }
 
