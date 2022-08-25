@@ -3,7 +3,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzUploadChangeParam} from 'ng-zorro-antd/upload';
 
 @Component({
-    selector: 'app-input',
+    selector: 'app-upload-input',
     templateUrl: './upload-input.component.html',
     styleUrls: ['./upload-input.component.scss'],
 })
