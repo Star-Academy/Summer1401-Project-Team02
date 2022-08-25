@@ -6,8 +6,8 @@
         box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
 
         position: absolute;
-        top: -6rem;
-        left: 5rem;
+        inset-block-start: -6rem;
+        inset-inline-start: 5rem;
 
         block-size: 4rem;
         inline-size: 5.6rem;
