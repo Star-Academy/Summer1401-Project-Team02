@@ -1,0 +1,32 @@
+.wrapper {
+    position: relative;
+
+    div {
+        background-color: var(--color-gray-98);
+        box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
+
+        position: absolute;
+        inset-block-start: -6rem;
+        inset-inline-start: 5rem;
+
+        block-size: 4rem;
+        inline-size: 5.6rem;
+
+        padding: 1.1rem;
+
+        border-top-right-radius: 999rem;
+        border-top-left-radius: 999rem;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        i {
+            transform: rotate(90deg);
+
+            &.collapsed {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+}

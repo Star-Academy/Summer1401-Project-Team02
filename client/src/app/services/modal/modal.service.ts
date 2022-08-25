@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {SourceModalComponent} from '../components/modals/source-modal/source-modal.component';
-import {DestinationModalComponent} from '../components/modals/destination-modal/destination-modal.component';
-import {ProcessModalComponent} from '../components/modals/process-modal/process-modal.component';
+import {SourceModalComponent} from '../../components/modals/source-modal/source-modal.component';
+import {DestinationModalComponent} from '../../components/modals/destination-modal/destination-modal.component';
+import {ProcessModalComponent} from '../../components/modals/process-modal/process-modal.component';
 
 @Injectable({
     providedIn: 'root',

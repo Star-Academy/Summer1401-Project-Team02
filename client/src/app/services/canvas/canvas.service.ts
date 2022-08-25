@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Graph} from '@antv/x6';
-import {CanvasComponent} from '../pages/pipeline/components/canvas/canvas.component';
-import {ModalService} from './modal.service';
+import {CanvasComponent} from '../../pages/pipeline/components/canvas/canvas.component';
+import {ModalService} from '../modal/modal.service';
 
 @Injectable({
     providedIn: 'root',

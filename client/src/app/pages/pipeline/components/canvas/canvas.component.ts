@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {Graph} from '@antv/x6';
 import {canvas} from '../../../../utils/canvas.utils';
-import {CanvasService} from '../../../../services/canvas.service';
+import {CanvasService} from '../../../../services/canvas/canvas.service';
 
 @Component({
     selector: 'app-canvas',
