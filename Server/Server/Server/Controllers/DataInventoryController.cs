@@ -46,4 +46,17 @@ public class DataInventoryController : Controller
     {
         return File(_dataInventoryService.Download(tableName, fileFormat), "text/" + fileFormat);
     }
+    
+    [HttpGet]
+    public IActionResult GetAllTables()
+    {
+        try
+        {
+            return Ok(_dataInventoryService.GetAllTables());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
