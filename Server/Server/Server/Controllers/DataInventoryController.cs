@@ -51,6 +51,7 @@ public class DataInventoryController : Controller
     [HttpGet]
     public IActionResult DownloadFile(string tableName, string fileFormat)
     {
-        return File(_dataInventoryService.Download(tableName, fileFormat), "text/" + fileFormat);
+        return File(_dataInventoryService.Download(tableName, fileFormat), 
+            $"text/{fileFormat}", $"{tableName}.{fileFormat}");
     }
 }
