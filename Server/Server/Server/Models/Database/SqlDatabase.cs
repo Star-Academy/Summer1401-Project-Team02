@@ -4,7 +4,7 @@ using Server.Services;
 
 namespace Server.Models.Database;
 
-public class PostgresqlDatabase : IDatabase
+public class SqlDatabase : IDatabase
 {
     private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
