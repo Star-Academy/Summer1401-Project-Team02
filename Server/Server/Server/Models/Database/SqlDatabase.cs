@@ -4,22 +4,14 @@ using Server.Services;
 
 namespace Server.Models.Database;
 
-public class PostgresqlDatabase : IDatabase
+public class SqlDatabase : IDatabase
 {
-    // TODO: general refactoring needed.
-    public PostgresqlDatabase(ILogger<IDatabase> logger)
-    {
-        _logger = logger;
-    }
-
-    private string _connectionString =
+    private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
-
-    private readonly ILogger<IDatabase> _logger;
 
     public void ImportDataTable(DataTable dataTable, string tableName)
     {
-        var connection = new SqlConnection(_connectionString);
+        var connection = new SqlConnection(ConnectionString);
         connection.Open();
         var bulkCopy = new SqlBulkCopy(connection);
         foreach (DataColumn c in dataTable.Columns) bulkCopy.ColumnMappings.Add(c.ColumnName, c.ColumnName);
@@ -27,38 +19,36 @@ public class PostgresqlDatabase : IDatabase
         bulkCopy.WriteToServer(dataTable);
         connection.Close();
     }
-    
+
 
     public DataTable RunQuery(string query)
     {
         var result = new DataTable();
-        var connection = new SqlConnection(_connectionString);
+        var connection = new SqlConnection(ConnectionString);
         var command = new SqlCommand(query, connection);
         var adapter = new SqlDataAdapter(command);
         adapter.Fill(result);
         adapter.Dispose();
         connection.Close();
-        _logger.LogInformation(DataInventoryService.ConvertDataTableToString(result));
         return result;
     }
 
     public void CreateTable(DataTable dataTable, string tableName)
     {
-        var connection = new SqlConnection(_connectionString);
-        connection.Open();
-        var command = new SqlCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}",
-            connection);
-        command.ExecuteNonQuery();  
-        connection.Close();
+        ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
     }
 
     public void CreateTable(string name)
     {
-        var connection = new SqlConnection(_connectionString);
+        ExecuteCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);");
+    }
+
+    private void ExecuteCommand(string command)
+    {
+        var connection = new SqlConnection(ConnectionString);
+        var sqlCommand = new SqlCommand(command, connection);
         connection.Open();
-        var command = new SqlCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);",
-            connection);
-        command.ExecuteNonQuery();  
+        sqlCommand.ExecuteNonQuery();
         connection.Close();
     }
 
@@ -71,7 +61,7 @@ public class PostgresqlDatabase : IDatabase
     {
         throw new NotImplementedException();
     }
-    
+
     public string GenerateCreateTableQuery(string tableName, DataTable table)
     {
         string sql = $"CREATE TABLE [{tableName}] (\n";

@@ -12,13 +12,12 @@ public class Pipeline
 
     public Dictionary<DestinationNode, string> Execute(ExecutionType executionType)
     {
-        var answerToReturn = new Dictionary<DestinationNode, string>();
+        var result = new Dictionary<DestinationNode, string>();
         foreach (var destinationNode in FindDestinationNodes())
         {
-            var queryString = destinationNode.Execute(executionType, Nodes);
-            answerToReturn.Add(destinationNode, queryString);
+            result.Add(destinationNode, destinationNode.Execute(executionType, Nodes));
         }
-        return answerToReturn;
+        return result;
     }
 
     private List<DestinationNode> FindDestinationNodes()
@@ -26,12 +25,11 @@ public class Pipeline
         return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
     }
 
-    public string Heading(ExecutionType executionType, Node? node)
+    public string GetHeading(ExecutionType executionType, Node? node)
     {
         return node.Execute(executionType, Nodes);
     }
 
-    //it contains before and after tables
     public Tuple<string, string> Preview(ExecutionType executionType, Node node)
     {
         if (node._NodeType == NodeType.SourceNode)

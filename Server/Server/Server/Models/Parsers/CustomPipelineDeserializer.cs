@@ -26,9 +26,21 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new SourceNode();
                 case NodeType.DestinationNode:
                     return new DestinationNode();
+                case NodeType.Selector:
+                    return new ColumnSelectorNode();
                 default:
                     throw new NotImplementedException();
             }
         }
-    }
+
+        public static Pipeline Deserialize(string pipelineJson)
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
+            jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+
+            return JsonConvert.DeserializeObject<Pipeline>(pipelineJson, jsonSerializerSettings)!;
+
+        }
+}
     

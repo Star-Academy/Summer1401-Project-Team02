@@ -1,10 +1,6 @@
 using System.Data;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using Aspose.Cells;
-using Newtonsoft.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Server.Models.Parsers;
 
@@ -13,9 +9,9 @@ public class CsvParser : IParser
     public DataTable ParseToDataTable(string data)
     {
         var workBook = new Workbook(new MemoryStream(Encoding.ASCII.GetBytes(data)));
-        string temporaryPath = "temporaryJsonFile.json";
+        const string temporaryPath = "temporaryJsonFile.json";
         workBook.Save(temporaryPath);
-        string json = File.ReadAllText(temporaryPath);
+        var json = File.ReadAllText(temporaryPath);
         var answer = new JsonParser().ParseToDataTable(json);
         File.Delete(temporaryPath);
         return answer;
@@ -23,7 +19,7 @@ public class CsvParser : IParser
 
     public string ParseFromDataTable(DataTable dataTable)
     {
-        StringBuilder csv = new StringBuilder();
+        var csv = new StringBuilder();
         for (int i = 0; i < dataTable.Columns.Count; i++)
         {
             csv.Append(dataTable.Columns[i]);

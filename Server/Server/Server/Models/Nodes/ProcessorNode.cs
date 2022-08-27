@@ -4,7 +4,11 @@ namespace Server.Models.Nodes;
 
 public abstract class ProcessorNode : Node
 {
-    private List<string> _previousNodes;
-    
-    public abstract override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes);
+    public List<string> _previousNodesIds;
+
+    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
+    {
+        return nodes.GetValueOrDefault(_previousNodesIds.First()).Execute(executionType, nodes);
+    }
+
 }

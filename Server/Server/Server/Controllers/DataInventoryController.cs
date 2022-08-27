@@ -1,9 +1,4 @@
-using System.Net.Mime;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Server.Models;
-using Server.Models.Nodes;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -13,12 +8,10 @@ namespace Server.Controllers;
 public class DataInventoryController : Controller
 {
     private readonly IDataInventoryService _dataInventoryService;
-    private readonly ILogger<IDataInventoryService> _logger;
 
-    public DataInventoryController(IDataInventoryService dataInventoryService, ILogger<IDataInventoryService> logger)
+    public DataInventoryController(IDataInventoryService dataInventoryService)
     {
         _dataInventoryService = dataInventoryService;
-        _logger = logger;
     }
 
     [HttpPost]
@@ -35,7 +28,7 @@ public class DataInventoryController : Controller
     }
     
     [HttpPost]
-    public IActionResult AddDestination(string name)
+    public IActionResult AddDestination([FromBody] string name)
     {
         try
         {

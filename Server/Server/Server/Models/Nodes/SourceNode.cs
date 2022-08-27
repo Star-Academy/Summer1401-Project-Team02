@@ -11,19 +11,19 @@ public class SourceNode : Node
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes)
     {
-        switch (executionType)
+        return executionType switch
         {
-            case ExecutionType.FullExecution:
-                return $"SELECT * FROM {tableName}";
-            case ExecutionType.Heading:
-                return $"SELECT TOP (0) * FROM {tableName}";
-            case ExecutionType.Preview:
-                return $"SELECT TOP (50) * FROM {tableName}";
+            ExecutionType.FullExecution => $"SELECT * FROM {tableName}",
+            ExecutionType.Heading => $"SELECT TOP (0) * FROM {tableName}",
+            ExecutionType.Preview => $"SELECT TOP (50) * FROM {tableName}",
             //will implement later
-            case ExecutionType.Validation:
-                throw new NotImplementedException();
-        }
-        return default;
+            ExecutionType.Validation => throw new NotImplementedException()
+        };
+    }
+
+    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
+    {
+        throw new NotImplementedException();
     }
 
     public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
