@@ -1,7 +1,9 @@
 using System.Data;
 using System.Text;
+using Microsoft.VisualBasic;
 using Server.Controllers;
 using Server.ExtensionMethods;
+using Server.Models;
 using Server.Models.Database;
 using Server.Models.Parsers;
 
@@ -19,7 +21,8 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _database.CreateTable(dataTable, file.Hash());
+        var tableInfo = new TableInfo(file.Name, DateTime.Now, true);
+        _database.CreateTable(dataTable, file.Hash(), tableInfo);
         _database.ImportDataTable(dataTable, file.Hash());
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
@@ -27,7 +30,8 @@ public class DataInventoryService :  IDataInventoryService
 
     public string AddDestination(string name)
     {
-        _database.CreateTable(name);
+        var tableInfo = new TableInfo(name, DateTime.Now, false);
+        _database.CreateTable(name, tableInfo);
         return $"{{ \"tableName\" : \"{name}\" }}";
     }
 

@@ -33,14 +33,31 @@ public class PostgresqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, string tableName)
+    public void CreateTable(DataTable dataTable, string tableName, TableInfo tableInfo)
     {
         ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
+        try
+        {
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ({tableInfo._tableName}, {tableInfo._dateTime}, {tableInfo._isSource});");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
-    public void CreateTable(string name)
+    public void CreateTable(string name, TableInfo tableInfo)
     {
         ExecuteCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);");
+
+        try
+        {
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ({tableInfo._tableName}, {tableInfo._dateTime}, {tableInfo._isSource});");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     private void ExecuteCommand(string command)
