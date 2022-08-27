@@ -4,6 +4,7 @@ namespace Server.Models.Nodes;
 
 public abstract class Node
 {
+    public string Data;
     public string Id;
     public NodeType _NodeType;
 

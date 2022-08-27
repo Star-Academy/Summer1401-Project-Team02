@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Server.Services;
 
@@ -8,10 +10,12 @@ namespace Server.Controllers;
 public class DataInventoryController : Controller
 {
     private readonly IDataInventoryService _dataInventoryService;
+    private readonly ILogger<IDataInventoryService> _logger;
 
-    public DataInventoryController(IDataInventoryService dataInventoryService)
+    public DataInventoryController(IDataInventoryService dataInventoryService, ILogger<IDataInventoryService> logger)
     {
         _dataInventoryService = dataInventoryService;
+        _logger = logger;
     }
 
     [HttpPost]

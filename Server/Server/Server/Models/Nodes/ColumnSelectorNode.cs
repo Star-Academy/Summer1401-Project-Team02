@@ -5,10 +5,10 @@ namespace Server.Models.Nodes;
 
 public class ColumnSelectorNode : ProcessorNode
 {
-    public List<string> _columnNames;
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)
     {
-       return $"SELECT {string.Join(",",_columnNames)} FROM ({nodes.GetValueOrDefault(_previousNodesIds.First()).Execute(executionType, nodes)}) AS temp";
+        var data = new JsonObject(Data);
+       return $"SELECT {string.Join(",",data.GetJsonElement("columns").AsArray())} FROM ({nodes.GetValueOrDefault(data.GetString("previousNode")).Execute(executionType, nodes)}) AS temp";
     }    
 }
