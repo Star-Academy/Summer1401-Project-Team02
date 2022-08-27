@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
-builder.Services.AddSingleton<IDatabase, PostgresqlDatabase>();
+builder.Services.AddSingleton<IDatabase, SqlDatabase>();
 builder.Services.AddSingleton<IDataInventoryService, DataInventoryService>();
 builder.Services.AddSingleton<IPipelineService, PipelineService>();
 

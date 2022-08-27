@@ -4,7 +4,7 @@ using Server.Services;
 
 namespace Server.Models.Database;
 
-public class PostgresqlDatabase : IDatabase
+public class SqlDatabase : IDatabase
 {
     private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
@@ -136,6 +136,8 @@ public class PostgresqlDatabase : IDatabase
             case "System.Int16":
             case "System.Int32":
                 return "INT";
+            case "System.Boolean":
+                return "BIT";
 
             case "System.DateTime":
                 return "DATETIME";
