@@ -1,5 +1,7 @@
 using System.Data;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Newtonsoft.Json;
 using Server.Enums;
 using Server.Models;
@@ -18,18 +20,17 @@ public class TempUtils
         
         selection.Id = "selector";
         selection._NodeType = NodeType.Selector;
-        selection._columnNames = new List<string>(){ "age", "id"};
-        selection._previousNodesIds = new List<string>() { "source" };
+        selection.Data = @"{ ""columns"": [""age"", ""id"" ], ""previousNode"" : ""source"" }";
 
         s.Id = "source";
-        s.tableName = "people_json";
+        s.Data = @"{ ""tableName"": ""people_json""}";
         s._NodeType = NodeType.SourceNode;
 
         d.Id = "dest";
-        d.tableName = "output1";
-        d._NodeType = NodeType.DestinationNode;
-        d._previousNode = "selector";
+        d.Data = @"{ ""tableName"" : ""output2"" , ""previousNode"" : ""selector""}";
         
+        d._NodeType = NodeType.DestinationNode;
+
         var nodes = new Dictionary<string, Node>()
         {
             { "source", s },

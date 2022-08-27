@@ -24,7 +24,8 @@ public class PipelineController : Controller
     [HttpPost]
     public IActionResult Execute([FromBody] string pipelineJson)
     {
-        //"{\"Nodes\":{\"source\":{\"tableName\":\"people_json\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"_previousNode\":\"selector\",\"tableName\":\"output1\",\"Id\":\"dest\",\"_NodeType\":0},\"selector\":{\"_columnNames\":[\"age\",\"id\"],\"_previousNodesIds\":[\"source\"],\"Id\":\"selector\",\"_NodeType\":2}}}"    
+        // for testing:
+        // "{\"Nodes\":{\"source\":{\"Data\":\"{ \\\"tableName\\\": \\\"dataset_csv\\\"}\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"Data\":\"{ \\\"tableName\\\" : \\\"output2\\\" , \\\"previousNode\\\" : \\\"selector\\\"}\",\"Id\":\"dest\",\"_NodeType\":0},\"selector\":{\"Data\":\"{ \\\"columns\\\": [\\\"first_name\\\", \\\"id\\\" ], \\\"previousNode\\\" : \\\"source\\\" }\",\"Id\":\"selector\",\"_NodeType\":2}}}\n"
         _logger.LogInformation(TempUtils.GeneratePipelineJson());
         
         try
@@ -41,6 +42,7 @@ public class PipelineController : Controller
     [HttpGet]
     public IActionResult GetHeading(string pipelineJson, string id)
     {
+        // {"Nodes":{"source":{"Data":"{ \"tableName\": \"dataset_csv\"}","Id":"source","_NodeType":1},"dest":{"Data":"{ \"tableName\" : \"output2\" , \"previousNode\" : \"selector\"}","Id":"dest","_NodeType":0},"selector":{"_previousNodesIds":null,"Data":"{ \"columns\": [\"first_name\", \"id\" ], \"previousNode\" : \"source\" }","Id":"selector","_NodeType":2}}}
         try
         {
             var dataTable = _pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id);

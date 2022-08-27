@@ -6,18 +6,18 @@ namespace Server.Models.Nodes;
 [JsonObject]
 public class SourceNode : Node
 {
-    [JsonProperty]
-    public string tableName;
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes)
     {
+        var tableName = new JsonObject(Data).GetString(ConstantKeys.TableName);
         return executionType switch
         {
-            ExecutionType.FullExecution => $"SELECT * FROM {tableName}",
-            ExecutionType.Heading => $"SELECT TOP (0) * FROM {tableName}",
-            ExecutionType.Preview => $"SELECT TOP (50) * FROM {tableName}",
-            //will implement later
-            ExecutionType.Validation => throw new NotImplementedException()
+            ExecutionType.FullExecution => string.Format(QueryStrings.Source, tableName),
+            ExecutionType.Heading => string.Format(QueryStrings.SourceTop, Config.PreviewCapacity, tableName),
+            ExecutionType.Preview => string.Format(QueryStrings.SourceTop, 0, tableName),
+            // TODO: will implement later
+            ExecutionType.Validation => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(executionType), executionType, null)
         };
     }
 

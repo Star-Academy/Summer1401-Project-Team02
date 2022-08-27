@@ -119,6 +119,8 @@ public class SqlDatabase : IDatabase
             case "System.Int16":
             case "System.Int32":
                 return "INT";
+            case "System.Boolean":
+                return "BIT";
 
             case "System.DateTime":
                 return "DATETIME";
