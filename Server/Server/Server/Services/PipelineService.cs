@@ -1,4 +1,5 @@
 using System.Data;
+using System.Text.Json;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
@@ -26,8 +27,9 @@ public class PipelineService : IPipelineService
             {
                 var dataTable = _database.RunQuery(query.Value);
 
-                _database.CreateTable(dataTable, node.tableName);
-                _database.ImportDataTable(dataTable, node.tableName);
+                var data = new JsonObject(node.Data);
+                _database.CreateTable(dataTable, data.GetJsonElement("tableName").GetValue<string>());
+                _database.ImportDataTable(dataTable, data.GetJsonElement("tableName").GetValue<string>());
                 result.Add(node.Id, "success");
             }
             catch (Exception e)
