@@ -9,14 +9,15 @@ public class SourceNode : Node
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?>? nodes)
     {
-        var data = new JsonObject(Data);
+        var tableName = new JsonObject(Data).GetString(ConstantKeys.TableName);
         return executionType switch
         {
-            ExecutionType.FullExecution => $"SELECT * FROM {data.GetString("tableName")}",
-            ExecutionType.Heading => $"SELECT TOP (0) * FROM {data.GetString("tableName")}",
-            ExecutionType.Preview => $"SELECT TOP (50) * FROM {data.GetString("tableName")}",
-            //will implement later
-            ExecutionType.Validation => throw new NotImplementedException()
+            ExecutionType.FullExecution => string.Format(QueryStrings.Source, tableName),
+            ExecutionType.Heading => string.Format(QueryStrings.SourceTop, Config.PreviewCapacity, tableName),
+            ExecutionType.Preview => string.Format(QueryStrings.SourceTop, 0, tableName),
+            // TODO: will implement later
+            ExecutionType.Validation => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(executionType), executionType, null)
         };
     }
 }

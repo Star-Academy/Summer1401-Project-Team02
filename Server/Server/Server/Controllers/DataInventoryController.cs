@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
+using Server.Enums;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -21,6 +22,8 @@ public class DataInventoryController : Controller
     [HttpPost]
     public IActionResult AddSourceByFile()
     {
+        
+        
         try
         {
             return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files[0]));

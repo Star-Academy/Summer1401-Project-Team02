@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Server.Enums;
 
 namespace Server.Models;
 
@@ -26,4 +27,5 @@ public class JsonObject
     public string GetString(string key) => GetValue<string>(key);
 
 
+    public string GetPreviousNode() => GetString(ConstantKeys.PreviousNode);
 }
