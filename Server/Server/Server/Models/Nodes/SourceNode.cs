@@ -25,9 +25,4 @@ public class SourceNode : Node
     {
         throw new NotImplementedException();
     }
-
-    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
-    {
-        throw new NotImplementedException();
-    }
 }
