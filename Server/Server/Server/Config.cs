@@ -8,6 +8,6 @@ public static class Config
     public const string Id = "sa";
     public const string Password = "SuperSecureP4ssw0rd";
     
-    public const int PreviewCapacity = 50;
+    public const int PreviewCapacity = 5;
 
 }

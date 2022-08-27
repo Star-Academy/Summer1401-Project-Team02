@@ -13,8 +13,8 @@ public class SourceNode : Node
         return executionType switch
         {
             ExecutionType.FullExecution => string.Format(QueryStrings.Source, tableName),
-            ExecutionType.Heading => string.Format(QueryStrings.SourceTop, Config.PreviewCapacity, tableName),
-            ExecutionType.Preview => string.Format(QueryStrings.SourceTop, 0, tableName),
+            ExecutionType.Heading => string.Format(QueryStrings.SourceTop, 0, tableName),
+            ExecutionType.Preview => string.Format(QueryStrings.SourceTop, Config.PreviewCapacity, tableName),
             // TODO: will implement later
             ExecutionType.Validation => throw new NotImplementedException(),
             _ => throw new ArgumentOutOfRangeException(nameof(executionType), executionType, null)
@@ -23,6 +23,6 @@ public class SourceNode : Node
 
     public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
     {
-        throw new NotImplementedException();
+        return this.Execute(executionType, nodes);
     }
 }

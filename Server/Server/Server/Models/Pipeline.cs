@@ -27,18 +27,24 @@ public class Pipeline
 
     public string GetHeading(ExecutionType executionType, Node? node)
     {
-        return node.Execute(executionType, Nodes);
+        return node.GetPreviousQueryString(executionType, Nodes);
     }
 
     public Tuple<string, string> Preview(ExecutionType executionType, Node node)
     {
         if (node._NodeType == NodeType.SourceNode)
         {
-            throw new Exception("Source node has not preview !");
+            var dataTable = node.Execute(executionType, Nodes);
+            return new Tuple<string, string>(null, dataTable);
+        }
+        if (node._NodeType == NodeType.DestinationNode)
+        {
+            var dataTable = node.Execute(executionType, Nodes);
+            return new Tuple<string, string>(dataTable, dataTable);
         }
 
-        var dataTable1 = node.Execute(executionType, Nodes);
-        var dataTable2 = node.GetPreviousQueryString(executionType, Nodes);
+        var dataTable1 = node.GetPreviousQueryString(executionType, Nodes);
+        var dataTable2 = node.Execute(executionType, Nodes);
         return new Tuple<string, string>(dataTable1, dataTable2);
     }
 }
