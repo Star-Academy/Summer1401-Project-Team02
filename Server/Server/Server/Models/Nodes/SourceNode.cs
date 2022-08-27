@@ -25,4 +25,9 @@ public class SourceNode : Node
         }
         return default;
     }
+
+    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
+    {
+        throw new NotImplementedException();
+    }
 }

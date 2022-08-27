@@ -39,6 +39,8 @@ public class Pipeline
             throw new Exception("Source node has not preview !");
         }
 
-        throw new NotImplementedException();
+        var dataTable1 = node.Execute(executionType, Nodes);
+        var dataTable2 = node.GetPreviousQueryString(executionType, Nodes);
+        return new Tuple<string, string>(dataTable1, dataTable2);
     }
 }
