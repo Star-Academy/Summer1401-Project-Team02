@@ -6,6 +6,7 @@ import {ColumnSelectorNodeModel} from '../../models/column-selector-node.model';
 import {NodeType} from '../../enums/node-type';
 import {ApiService} from '../api/api.service';
 import {API_GET_COLUMNS_HEADING} from '../../utils/api.utils';
+import {CanvasService} from '../canvas/canvas.service';
 
 @Injectable({
     providedIn: 'root',
@@ -41,7 +42,7 @@ export class PipelineService {
             const node: DestinationNodeModel = {
                 _NodeType: NodeType.DestinationNode,
                 _previousNodesId: this.selectedPreviousNode,
-                data: {tableName: ''},
+                tableName: '',
                 id: Math.random().toString(),
             };
             return node;
@@ -56,7 +57,7 @@ export class PipelineService {
         });
         this.selectedIdNode = node.id;
         this.selectedTypeNode = node._NodeType;
-        this.nodes.push(node);
+        this.nodes.unshift(node);
     }
 
     public removeNode(id: string): void {

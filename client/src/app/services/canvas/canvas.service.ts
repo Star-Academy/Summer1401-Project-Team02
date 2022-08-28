@@ -293,7 +293,7 @@ export class CanvasService {
             _ID,
             type,
         });
-        this.canvasNodes.push(newNode);
+        this.canvasNodes.unshift(newNode);
         console.log(this.canvasNodes);
         return newNode;
     }
@@ -376,16 +376,21 @@ export class CanvasService {
         });
 
         this.graph.on('node:click', ({e, node}: any) => {
-            if (node.store.data.type === NodeType.SourceNode) this.modalService.showSource();
-            else if (node.store.data.type === NodeType.DestinationNode) this.modalService.showDestination();
+            if (node.store.data.type === NodeType.SourceNode) {
+                this.modalService.showSource();
+            } else if (node.store.data.type === NodeType.DestinationNode) this.modalService.showDestination();
             else {
                 this.pipelineService.selectedIdNode = node.store.data._ID;
+                this.pipelineService.selectedTypeNode = node.store.data.type;
             }
         });
 
         this.graph.on('node:mouseenter', ({node}: any) => {
             if (node.store.data.type !== NodeType.DestinationNode && node.store.data.type !== NodeType.SourceNode) {
-                node.attr('.btn > circle', {
+                node.attr('.btn.del > circle', {
+                    r: 10,
+                });
+                node.attr('.btn.add > circle', {
                     r: 10,
                 });
                 node.attr('.btn.add > text', {

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
+import {NodeType} from '../../../../enums/node-type';
 
 @Component({
     selector: 'app-sidebar',
@@ -8,9 +9,18 @@ import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 })
 export class SidebarComponent {
     public isCollapse = false;
-    public sideType = 1;
+    public NodeType = NodeType;
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
+
+    public get sideType(): number {
+        switch (this.pipelineService.selectedTypeNode) {
+            case NodeType.Selector:
+                return 1;
+            default:
+                return 0;
+        }
+    }
 
     public constructor(public pipelineService: PipelineService) {}
 
