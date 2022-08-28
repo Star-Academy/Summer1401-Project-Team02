@@ -35,22 +35,14 @@ public class SqlDatabase : IDatabase
 
     public void CreateTable(DataTable dataTable, TableInfo tableInfo, bool insertIntoAllTables)
     {
-            if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
-            ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
-
+        ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
+        if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
     }
 
     public void CreateTable(TableInfo tableInfo)
     {
-        try
-        {
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
             ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\nCreate Table {tableInfo._tableName} (dummy int);");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
     }
 
     private void ExecuteCommand(string command)
