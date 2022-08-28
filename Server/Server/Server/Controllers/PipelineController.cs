@@ -40,7 +40,7 @@ public class PipelineController : Controller
     [HttpGet]
     public IActionResult GetHeading(string pipelineJson, string id)
     {
-        // {"Nodes":{"source":{"Data":"{ \"tableName\": \"dataset_csv\"}","Id":"source","_NodeType":1},"dest":{"Data":"{ \"tableName\" : \"output2\" , \"previousNode\" : \"selector\"}","Id":"dest","_NodeType":0},"selector":{"_previousNodesIds":null,"Data":"{ \"columns\": [\"first_name\", \"id\" ], \"previousNode\" : \"source\" }","Id":"selector","_NodeType":2}}}
+        // {"Nodes":{"source":{"_tableName":"dataset_csv","Id":"source","_NodeType":1},"dest":{"_previousNode":"custom","tableName":"output1","Id":"dest","_NodeType":0},"custom":{"first":"[short bio]","second":" ","_previousNode":"source","Id":"custom","_NodeType":3}}}
         try
         {
             return Ok(_pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id));
