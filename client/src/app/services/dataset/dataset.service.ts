@@ -10,11 +10,14 @@ export class DatasetService {
     public constructor(private apiService: ApiService) {}
 
     public async sendDestination(file: FileModal): Promise<boolean> {
-        console.log(file.tableName);
-
         const response = await this.apiService.postRequest<FileModal>({
             url: API_SEND_DESTINATION_NAME,
-            body: file.tableName,
+            body: JSON.stringify(file.tableName),
+            init: {
+                headers: {
+                    'Content-Type': 'text/json',
+                },
+            },
         });
         if (!response) return false;
 
