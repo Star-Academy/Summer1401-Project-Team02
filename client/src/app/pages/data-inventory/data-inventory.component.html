@@ -1,0 +1,84 @@
+<div class="wrapper">
+    <app-header></app-header>
+    <button nz-button nzType="primary" (click)="modalService.showSource()"><span>Show Source modal</span></button>
+    <button nz-button (click)="addRow()" nzType="primary">Add</button>
+
+    <nz-table
+        #editRowTable
+        [nzData]="listOfDisplayData"
+        nzTableLayout="fixed"
+        [nzPageSize]="10"
+        nzPaginationType="default"
+    >
+        <thead>
+            <tr>
+                <th nzCustomFilter>
+                    Name
+                    <nz-filter-trigger
+                        [(nzVisible)]="visible"
+                        [nzActive]="searchValue.length > 0"
+                        [nzDropdownMenu]="menu"
+                    >
+                        <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                </th>
+                <th>Age</th>
+                <th>Address</th>
+                <th>Action</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of editRowTable.data" class="editable-row">
+                <td>
+                    <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
+                        {{ data.name }}
+                    </div>
+                    <input
+                        [hidden]="editId !== data.id"
+                        type="text"
+                        nz-input
+                        [(ngModel)]="data.name"
+                        (blur)="stopEdit()"
+                    />
+                </td>
+                <td>{{ data.age }}</td>
+                <td>{{ data.address }}</td>
+                <td>
+                    <button
+                        nz-button
+                        nzType="link"
+                        nz-popconfirm="true"
+                        nzPopconfirmTitle="Sure to delete?"
+                        (nzOnConfirm)="deleteRow(data.id)"
+                    >
+                        <span nz-icon nzType="delete" nzTheme="outline"></span>
+                    </button>
+                </td>
+
+                <td>
+                    <button nz-button nzType="link" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <span nz-icon nzType="download" nzTheme="outline"></span>
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>csv</li>
+                            <li nz-menu-item>json</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="ant-table-filter-dropdown">
+            <div class="search-box">
+                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+                <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+                    Search
+                </button>
+                <button nz-button nzSize="small" (click)="reset()">Reset</button>
+            </div>
+        </div>
+    </nz-dropdown-menu>
+</div>

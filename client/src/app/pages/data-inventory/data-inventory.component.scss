@@ -1,0 +1,61 @@
+.wrapper {
+    background-color: var(--color-gray-100);
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    block-size: 100vh;
+
+    :not(app-header) {
+        margin-inline: 3rem;
+    }
+
+    app-header {
+        width: 100%;
+    }
+
+    button {
+        align-self: start;
+
+        margin-inline: 3rem;
+    }
+
+    .search-box {
+        padding: 0.8rem;
+    }
+
+    .search-box input {
+        display: block;
+
+        inline-size: 18.8rem;
+
+        margin-block-end: 0.8rem;
+    }
+
+    .search-box button {
+        inline-size: 9rem;
+    }
+
+    .search-button {
+        margin-inline-end: 0.8rem;
+    }
+
+    .editable-cell {
+        position: relative;
+
+        padding: 0.5rem 1.2rem;
+
+        cursor: pointer;
+    }
+
+    .editable-row:hover .editable-cell {
+        padding: 0.4rem 1.1rem;
+
+        border: 0.1rem solid var(--color-gray-98);
+        border-radius: 0.4rem;
+    }
+}
