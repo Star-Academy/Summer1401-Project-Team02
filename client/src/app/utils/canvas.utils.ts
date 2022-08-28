@@ -8,7 +8,7 @@ export const stateOfScrolling = {
 
 export const canvas: any = {
     grid: {
-        size: 10,
+        size: 30,
         visible: true,
         type: 'dot',
         args: [
