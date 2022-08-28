@@ -18,7 +18,7 @@
 //         {
 //             renamingQuery = renamingQuery + $"sp_rename 'newTable.{oldAndNewName.Key}', '{oldAndNewName.Value}', 'COLUMN'" +
 //                             "GO";
-//         }
+//         }  
 //
 //         return creatingNewTable + renamingQuery;
 //     }
