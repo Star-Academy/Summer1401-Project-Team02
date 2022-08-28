@@ -16,26 +16,26 @@ public class TempUtils
     {
         var s = new SourceNode();
         var d = new DestinationNode();
-        var selection = new ColumnSelectorNode();
+        var custom = new CustomNode();
         
-        selection.Id = "selector";
-        selection._NodeType = NodeType.Selector;
-        selection.Data = @"{ ""columns"": [""age"", ""id"" ], ""previousNode"" : ""source"" }";
-
+        
+        custom.Id = "custom";
+        custom._NodeType = NodeType.Selector;
+        custom.first = "*";
+        custom.second = "";
         s.Id = "source";
-        s.Data = @"{ ""tableName"": ""people_json""}";
         s._NodeType = NodeType.SourceNode;
 
         d.Id = "dest";
-        d.Data = @"{ ""tableName"" : ""output2"" , ""previousNode"" : ""selector""}";
-        
+        d.tableName = "output1";
+        d._previousNode = "custom";
         d._NodeType = NodeType.DestinationNode;
 
         var nodes = new Dictionary<string, Node>()
         {
             { "source", s },
             { "dest", d },
-            { "selector", selection}
+            { "custom", custom}
         };
         var p = new Pipeline
         {

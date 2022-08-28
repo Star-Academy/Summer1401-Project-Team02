@@ -24,10 +24,8 @@ public class PipelineController : Controller
     [HttpPost]
     public IActionResult Execute([FromBody] string pipelineJson)
     {
-        // for testing:
-        // "{\"Nodes\":{\"source\":{\"Data\":\"{ \\\"tableName\\\": \\\"dataset_csv\\\"}\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"Data\":\"{ \\\"tableName\\\" : \\\"output2\\\" , \\\"previousNode\\\" : \\\"selector\\\"}\",\"Id\":\"dest\",\"_NodeType\":0},\"selector\":{\"Data\":\"{ \\\"columns\\\": [\\\"first_name\\\", \\\"id\\\" ], \\\"previousNode\\\" : \\\"source\\\" }\",\"Id\":\"selector\",\"_NodeType\":2}}}\n"
         _logger.LogInformation(TempUtils.GeneratePipelineJson());
-        
+        return Ok("not executed :)");
         try
         { 
             return Ok(_pipelineService.Execute(CustomPipelineDeserializer.Deserialize(pipelineJson)));
