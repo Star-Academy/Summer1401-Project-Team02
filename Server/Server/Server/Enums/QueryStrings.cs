@@ -6,4 +6,5 @@ public static class QueryStrings
     public const string SourceTop = $"select top({{0}}) * from {{1}}";
     
     public const string Selector = $"select {{0}} from ({{1}}) as dummy";
+    public const string Custom = $"select {{0}} from ({{1}}) as dummy {{2}}";
 }
