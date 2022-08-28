@@ -1,6 +1,14 @@
 .wrapper {
     position: relative;
 
+    block-size: 100%;
+
+    section {
+        overflow: auto;
+
+        block-size: 100%;
+    }
+
     div {
         background-color: var(--color-gray-98);
         box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);

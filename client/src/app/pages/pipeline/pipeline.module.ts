@@ -10,9 +10,18 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {PreviewComponent} from './components/preview/preview.component';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {FormsModule} from '@angular/forms';
+import {NzTableModule} from 'ng-zorro-antd/table';
 
 @NgModule({
     declarations: [PipelineComponent, CanvasComponent, SidebarComponent, PreviewComponent],
-    imports: [CommonModule, NzButtonModule, DestinationModalModule, ProcessModalModule, NzIconModule, FormsModule],
+    imports: [
+        CommonModule,
+        NzButtonModule,
+        DestinationModalModule,
+        ProcessModalModule,
+        NzIconModule,
+        FormsModule,
+        NzTableModule,
+    ],
 })
 export class PipelineModule {}
