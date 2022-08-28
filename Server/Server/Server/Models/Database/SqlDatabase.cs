@@ -99,7 +99,7 @@ public class SqlDatabase : IDatabase
         switch (type.ToString())
         {
             case "System.String":
-                return "TEXT";
+                return "nvarchar(max)";
 
             case "System.Decimal":
                 if (numericScale > 0)
