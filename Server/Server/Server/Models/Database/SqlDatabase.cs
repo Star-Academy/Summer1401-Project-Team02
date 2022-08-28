@@ -36,13 +36,13 @@ public class SqlDatabase : IDatabase
     public void CreateTable(DataTable dataTable, TableInfo tableInfo, bool insertIntoAllTables)
     {
         ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
-        if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
+        if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");}
     }
 
     public void CreateTable(TableInfo tableInfo)
     {
             ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\nCreate Table {tableInfo._tableName} (dummy int);");
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");
     }
 
     private void ExecuteCommand(string command)

@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Server.Enums;
+using Server.Models;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -56,12 +57,13 @@ public class DataInventoryController : Controller
     }
     
     [HttpGet]
-    public IActionResult GetAllTables()
+    public ActionResult<TableInfo> GetAllTables()
     {
-        _logger.LogInformation(TempUtils.GeneratePipelineJson());
         try
         {
-            return Ok(_dataInventoryService.GetAllTables());
+            Console.WriteLine(_dataInventoryService.GetAllTables()[1]?._tableName);
+            Console.WriteLine(_dataInventoryService.GetAllTables()[1]?._dateTime);
+            return _dataInventoryService.GetAllTables()[1];
         }
         catch (Exception e)
         {
