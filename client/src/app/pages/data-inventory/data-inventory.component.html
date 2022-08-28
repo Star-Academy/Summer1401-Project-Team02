@@ -1,6 +1,6 @@
 <div class="wrapper">
     <app-header></app-header>
-    <button nz-button nzType="primary" (click)="modalService.showSource()"><span>Show Source modal</span></button>
+    <button nz-button nzType="primary" (click)="modalService.showAddDataset()"><span>Show Source modal</span></button>
     <button nz-button (click)="addRow()" nzType="primary">Add</button>
 
     <nz-table
@@ -22,8 +22,7 @@
                         <i nz-icon nzType="search"></i>
                     </nz-filter-trigger>
                 </th>
-                <th>Age</th>
-                <th>Address</th>
+                <th>Format</th>
                 <th>Action</th>
                 <th>Download</th>
             </tr>
@@ -42,8 +41,7 @@
                         (blur)="stopEdit()"
                     />
                 </td>
-                <td>{{ data.age }}</td>
-                <td>{{ data.address }}</td>
+                <td>{{ data.format }}</td>
                 <td>
                     <button
                         nz-button
@@ -62,23 +60,23 @@
                     </button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <li nz-menu-item>csv</li>
-                            <li nz-menu-item>json</li>
+                            <a [href]="getDownloadUrl(data.name, 'csv')" download> <li nz-menu-item>csv</li></a>
+
+                            <li nz-menu-item><a [href]="getDownloadUrl(data.name, 'json')">json</a></li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>
             </tr>
         </tbody>
     </nz-table>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-                <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
-                    Search
-                </button>
-                <button nz-button nzSize="small" (click)="reset()">Reset</button>
-            </div>
-        </div>
-    </nz-dropdown-menu>
 </div>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+            <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+            <button nz-button nzSize="small" (click)="reset()">Reset</button>
+        </div>
+    </div>
+</nz-dropdown-menu>
+<app-add-dataset-modal></app-add-dataset-modal>

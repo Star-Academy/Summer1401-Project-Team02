@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../../services/modal/modal.service';
 import {DatasetService} from '../../services/dataset/dataset.service';
+import {API_DOWNLOAD_FILE} from '../../utils/api.utils';
 interface ItemData {
     id: string;
     name: string;
-    age: string;
-    address: string;
+    format: string;
 }
 @Component({
     selector: 'app-data-inventory',
@@ -36,8 +36,7 @@ export class DataInventoryComponent implements OnInit {
             {
                 id: `${this.i}`,
                 name: `Diba ${this.i}`,
-                age: '21',
-                address: `London, Park Lane no. ${this.i}`,
+                format: 'csv',
             },
         ];
         this.listOfDisplayData = this.listOfData;
@@ -60,5 +59,9 @@ export class DataInventoryComponent implements OnInit {
     public search(): void {
         this.visible = false;
         this.listOfDisplayData = this.listOfData.filter((item: ItemData) => item.name.indexOf(this.searchValue) !== -1);
+    }
+
+    public getDownloadUrl(fileName: string, fileFormat: string): string {
+        return `${API_DOWNLOAD_FILE}?tableName=${fileName}&fileFormat=${fileFormat}`;
     }
 }
