@@ -24,10 +24,8 @@ public class PipelineController : Controller
     [HttpPost]
     public IActionResult Execute([FromBody] string pipelineJson)
     {
-        // for testing:
-        // "{\"Nodes\":{\"source\":{\"Data\":\"{ \\\"tableName\\\": \\\"dataset_csv\\\"}\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"Data\":\"{ \\\"tableName\\\" : \\\"output2\\\" , \\\"previousNode\\\" : \\\"selector\\\"}\",\"Id\":\"dest\",\"_NodeType\":0},\"selector\":{\"Data\":\"{ \\\"columns\\\": [\\\"first_name\\\", \\\"id\\\" ], \\\"previousNode\\\" : \\\"source\\\" }\",\"Id\":\"selector\",\"_NodeType\":2}}}\n"
         _logger.LogInformation(TempUtils.GeneratePipelineJson());
-        
+        //  "{\"Nodes\":{\"source\":{\"_tableName\":\"dataset_csv\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"_previousNode\":\"custom\",\"tableName\":\"output1\",\"Id\":\"dest\",\"_NodeType\":0},\"custom\":{\"first\":\"[short bio]\",\"second\":\" \",\"_previousNode\":\"source\",\"Id\":\"custom\",\"_NodeType\":3}}}\n"
         try
         { 
             return Ok(_pipelineService.Execute(CustomPipelineDeserializer.Deserialize(pipelineJson)));
@@ -42,14 +40,10 @@ public class PipelineController : Controller
     [HttpGet]
     public IActionResult GetHeading(string pipelineJson, string id)
     {
-        // {"Nodes":{"source":{"Data":"{ \"tableName\": \"dataset_csv\"}","Id":"source","_NodeType":1},"dest":{"Data":"{ \"tableName\" : \"output2\" , \"previousNode\" : \"selector\"}","Id":"dest","_NodeType":0},"selector":{"_previousNodesIds":null,"Data":"{ \"columns\": [\"first_name\", \"id\" ], \"previousNode\" : \"source\" }","Id":"selector","_NodeType":2}}}
+        // {"Nodes":{"source":{"_tableName":"dataset_csv","Id":"source","_NodeType":1},"dest":{"_previousNode":"custom","tableName":"output1","Id":"dest","_NodeType":0},"custom":{"first":"[short bio]","second":" ","_previousNode":"source","Id":"custom","_NodeType":3}}}
         try
         {
-            var dataTable = _pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id);
-            return Ok(dataTable.Columns
-                .Cast<DataColumn>()
-                .Select(x => x.ColumnName)
-                .ToList());
+            return Ok(_pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id));
         }
         catch (Exception e)
         {

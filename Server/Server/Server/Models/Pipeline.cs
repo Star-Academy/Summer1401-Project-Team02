@@ -25,13 +25,25 @@ public class Pipeline
         return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
     }
 
-    public string GetHeading(ExecutionType executionType, Node? node)
+    public List<string> GetHeading(Node? node)
     {
-        return node.GetPreviousQueryString(executionType, Nodes);
+        return node._NodeType == NodeType.SourceNode ? node.Headers : Nodes[node._previousNode].Headers;
     }
 
     public string Preview(ExecutionType executionType, Node node)
     {
         return node.Execute(executionType, Nodes);
+    }
+
+    public IEnumerable<Node> GetNodesList()
+    {
+        var nodesList = new List<Node>();
+        var destinationNodes = FindDestinationNodes();
+        foreach (var destinationNode in destinationNodes)
+        {
+            nodesList.AddRange(destinationNode.GetPath(Nodes));
+        }
+
+        return nodesList;
     }
 }

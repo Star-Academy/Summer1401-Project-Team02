@@ -6,6 +6,5 @@ namespace Server.Services;
 public interface IPipelineService
 {
     public Dictionary<string, string> Execute(Pipeline pipeline);
-    public DataTable GetHeading(Pipeline pipeline, string id);
-    public DataTable Preview(Pipeline pipeline, string id);
-}
+    public List<string> GetHeading(Pipeline pipeline, string id);
+    public DataTable Preview(Pipeline pipeline, string id);}

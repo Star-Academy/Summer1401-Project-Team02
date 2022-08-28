@@ -35,12 +35,21 @@ public class CsvParser : IParser
                 if (!Convert.IsDBNull(row[i]))
                 {
                     var value = row[i].ToString();
-                    if (value.Contains(','))
+                    if (value.Contains(',') || value.Contains('\n') || value.Contains('"') || value.Contains("'"))
                     {
-                        value = "\\" + value + "\\";
+                        value = "\"" + value + "\"";
                     }
 
-                    csv.Append(row[i]);
+                    for (int j = 1; j + 1 < value.Length; j++)
+                    {
+                        if (value[j] == '"')
+                        {
+                            value = value.Insert(j, "\"");
+                            j++;
+                        }
+                    }
+
+                    csv.Append(value);
                 }
 
                 if (i + 1 < dataTable.Columns.Count) csv.Append(",");

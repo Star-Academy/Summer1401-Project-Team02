@@ -16,9 +16,24 @@ public class PipelineService : IPipelineService
     {
         _database = database;
     }
-    
+
+    private void Initialize(Pipeline pipeline)
+    {
+        var nodesList = pipeline.GetNodesList();
+        foreach (var node in nodesList)
+        {
+            var queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            var dataTable = _database.RunQuery(queryString);
+            node.Headers = dataTable.Columns
+                .Cast<DataColumn>()
+                .Select(x => x.ColumnName)
+                .ToList();
+        }
+    }
+
     public Dictionary<string, string> Execute(Pipeline pipeline)
     {
+        Initialize(pipeline);
         var result = new Dictionary<string, string>();
         foreach (var query in pipeline.Execute(ExecutionType.FullExecution))
         {
@@ -27,9 +42,8 @@ public class PipelineService : IPipelineService
             {
                 var dataTable = _database.RunQuery(query.Value);
 
-                var tableName = new JsonObject(node.Data).GetString(ConstantKeys.TableName);
-                _database.CreateTable(dataTable, tableName);
-                _database.ImportDataTable(dataTable, tableName);
+                _database.CreateTable(dataTable, node.tableName);
+                _database.ImportDataTable(dataTable, node.tableName);
                 result.Add(node.Id, ConstantKeys.Success);
             }
             catch (Exception e)
@@ -37,18 +51,20 @@ public class PipelineService : IPipelineService
                 result.Add(node.Id, e.Message);
             }
         }
+
         return result;
     }
 
-    public DataTable GetHeading(Pipeline pipeline, string id)
+    public List<string> GetHeading(Pipeline pipeline, string id)
     {
-        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
-        return _database.RunQuery(queryString);
+        Initialize(pipeline);
+        return pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
     }
 
     public DataTable Preview(Pipeline pipeline, string id)
     {
-        var queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        Initialize(pipeline);var queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
         return _database.RunQuery(queryString);
     }
+
 }
