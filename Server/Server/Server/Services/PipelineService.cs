@@ -52,11 +52,10 @@ public class PipelineService : IPipelineService
         return result;
     }
 
-    public DataTable GetHeading(Pipeline pipeline, string id)
+    public List<string> GetHeading(Pipeline pipeline, string id)
     {
         Initialize(pipeline);
-        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
-        return _database.RunQuery(queryString);
+        return pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
     }
 
     public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
