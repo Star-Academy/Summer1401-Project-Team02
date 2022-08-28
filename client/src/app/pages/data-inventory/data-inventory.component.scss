@@ -23,39 +23,39 @@
 
         margin-inline: 3rem;
     }
+}
 
-    .search-box {
-        padding: 0.8rem;
-    }
+.search-box {
+    padding: 0.8rem;
+}
 
-    .search-box input {
-        display: block;
+.search-box input {
+    display: block;
 
-        inline-size: 18.8rem;
+    inline-size: 18.8rem;
 
-        margin-block-end: 0.8rem;
-    }
+    margin-block-end: 0.8rem;
+}
 
-    .search-box button {
-        inline-size: 9rem;
-    }
+.search-box button {
+    inline-size: 9rem;
+}
 
-    .search-button {
-        margin-inline-end: 0.8rem;
-    }
+.search-button {
+    margin-inline-end: 0.8rem;
+}
 
-    .editable-cell {
-        position: relative;
+.editable-cell {
+    position: relative;
 
-        padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1.2rem;
 
-        cursor: pointer;
-    }
+    cursor: pointer;
+}
 
-    .editable-row:hover .editable-cell {
-        padding: 0.4rem 1.1rem;
+.editable-row:hover .editable-cell {
+    padding: 0.4rem 1.1rem;
 
-        border: 0.1rem solid var(--color-gray-98);
-        border-radius: 0.4rem;
-    }
+    border: 0.1rem solid var(--color-gray-98);
+    border-radius: 0.4rem;
 }

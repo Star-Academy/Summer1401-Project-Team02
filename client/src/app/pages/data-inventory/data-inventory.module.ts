@@ -9,6 +9,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {FormsModule} from '@angular/forms';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {HeaderModule} from '../../components/header/header.module';
+import {AddDatasetModalModule} from '../../components/modals/add-dataset-modal/add-dataset-modal.module';
 
 @NgModule({
     declarations: [DataInventoryComponent],
@@ -22,6 +23,7 @@ import {HeaderModule} from '../../components/header/header.module';
         FormsModule,
         NzPopconfirmModule,
         HeaderModule,
+        AddDatasetModalModule,
     ],
 })
 export class DataInventoryModule {}
