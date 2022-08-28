@@ -73,7 +73,12 @@ export class PipelineService {
         });
     }
 
-    public getData(): SourceNodeModel | DestinationNodeModel | ColumnSelectorNodeModel | FilterNodeModel | undefined {
+    public getSelectedNode():
+        | SourceNodeModel
+        | DestinationNodeModel
+        | ColumnSelectorNodeModel
+        | FilterNodeModel
+        | undefined {
         return this.nodes.find((node) => node.id === this.selectedIdNode);
     }
 

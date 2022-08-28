@@ -5,8 +5,11 @@ import {ModalService} from '../modal/modal.service';
 import dagre from 'dagre';
 import {insertCss} from 'insert-css';
 import {PipelineService} from '../pipeline/pipeline.service';
-import {iconCanvas} from '../../utils/icon-canvas';
+import {canvasUtils} from '../../utils/icon-canvas';
 import {NodeType} from '../../enums/node-type';
+import {SourceNodeModel} from '../../models/source-node.model';
+import {DestinationNodeModel} from '../../models/destination-node.model';
+import {REGISTER_EDGE, REGISTER_NODE} from '../../utils/canvas.utils';
 
 @Injectable({
     providedIn: 'root',
@@ -31,186 +34,9 @@ export class CanvasService {
             }
         `);
 
-        Graph.registerEdge(
-            'org-edge',
-            {
-                zIndex: -1,
-                markup: [
-                    {
-                        tagName: 'path',
-                        selector: 'line',
-                    },
+        Graph.registerEdge('org-edge', REGISTER_EDGE, true);
 
-                    {
-                        tagName: 'text',
-                        selector: 'offsetLabelMarker',
-                    },
-                ],
-                attrs: {
-                    line: {
-                        strokeWidth: 2,
-                        stroke: '#A2B1C3',
-                        sourceMarker: null,
-                        targetMarker: null,
-                        connection: true,
-                        fill: 'none',
-                    },
-                    offsetLabelMarker: {
-                        atConnectionRatio: 0.5,
-                        textAnchor: 'middle',
-                        textVerticalAnchor: 'middle',
-                        text: '+',
-                        fill: '#03a9f4',
-                        stroke: 'black',
-                        strokeWidth: 1,
-                        fontSize: 40,
-                        fontWeight: 'bold',
-                    },
-                },
-            },
-            true
-        );
-
-        Graph.registerNode(
-            'org-node',
-            {
-                width: 180,
-                height: 90,
-
-                markup: [
-                    {
-                        tagName: 'rect',
-
-                        attrs: {
-                            class: 'card',
-                        },
-                    },
-                    {
-                        tagName: 'image',
-                        attrs: {
-                            class: 'image',
-                        },
-                    },
-                    {
-                        tagName: 'text',
-                        attrs: {
-                            class: 'name',
-                        },
-                    },
-                    {
-                        tagName: 'g',
-                        attrs: {
-                            class: 'btn add',
-                        },
-                        children: [
-                            {
-                                tagName: 'circle',
-                                attrs: {
-                                    class: 'add',
-                                },
-                            },
-                            {
-                                tagName: 'text',
-                                attrs: {
-                                    class: 'add',
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        tagName: 'g',
-                        attrs: {
-                            class: 'btn del',
-                        },
-                        children: [
-                            {
-                                tagName: 'circle',
-                                attrs: {
-                                    class: 'del',
-                                },
-                            },
-                            {
-                                tagName: 'text',
-                                attrs: {
-                                    class: 'del',
-                                },
-                            },
-                        ],
-                    },
-                ],
-                attrs: {
-                    '.card': {
-                        rx: 5,
-                        ry: 5,
-                        refWidth: '100%',
-                        refHeight: '100%',
-                        fill: '#f3f3f3',
-                        stroke: '#bcbcbc',
-                        strokeWidth: 3,
-                        pointerEvents: 'visiblePainted',
-                    },
-                    '.image': {
-                        x: 60,
-                        y: 15,
-                        width: 60,
-                        height: 60,
-                        opacity: 0.7,
-                        xlinkHref:
-                            'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*kUy8SrEDp6YAAAAAAAAAAAAAARQnAQ',
-                    },
-                    '.name': {
-                        refX: 0.5,
-                        refY: 100,
-                        fill: '#000',
-                        fontFamily: 'Arial',
-                        fontSize: 14,
-                        fontWeight: '600',
-                        textAnchor: 'middle',
-                    },
-                    '.btn.add': {
-                        refDx: -16,
-                        refY: 16,
-                        event: 'node:add',
-                    },
-                    '.btn.del': {
-                        refDx: -44,
-                        refY: 16,
-                        event: 'node:delete',
-                    },
-                    '.btn > circle': {
-                        r: 0,
-                        strokeWidth: 1,
-                    },
-                    '.btn.add > circle': {
-                        fill: '#28a745',
-                        stroke: '#367845',
-                    },
-                    '.btn.del > circle': {
-                        fill: '#dc3545',
-                        stroke: '#8c323b',
-                    },
-                    '.btn.add > text': {
-                        fontSize: 0,
-                        fontWeight: 800,
-                        fill: '#fff',
-                        x: -5.5,
-                        y: 7,
-                        fontFamily: 'Times New Roman',
-                        text: '+',
-                    },
-                    '.btn.del > text': {
-                        fontSize: 0,
-                        fontWeight: 500,
-                        fill: '#fff',
-                        x: -4.5,
-                        y: 6,
-                        fontFamily: 'Times New Roman',
-                        text: '-',
-                    },
-                },
-            },
-            true
-        );
+        Graph.registerNode('org-node', REGISTER_NODE, true);
 
         this.graph = new Graph({
             container: doc.querySelector('#pipeline') as HTMLElement,
@@ -281,7 +107,7 @@ export class CanvasService {
     }
 
     public createNode(_ID: string, type: NodeType): any {
-        const {label, image} = iconCanvas[type];
+        const {label, image} = canvasUtils[type];
         const newNode = this.graph.createNode({
             shape: 'org-node',
             attrs: {
@@ -376,12 +202,15 @@ export class CanvasService {
         });
 
         this.graph.on('node:click', ({e, node}: any) => {
+            this.pipelineService.selectedIdNode = node.store.data._ID;
+            this.pipelineService.selectedTypeNode = node.store.data.type;
+
             if (node.store.data.type === NodeType.SourceNode) {
-                this.modalService.showSource();
-            } else if (node.store.data.type === NodeType.DestinationNode) this.modalService.showDestination();
-            else {
-                this.pipelineService.selectedIdNode = node.store.data._ID;
-                this.pipelineService.selectedTypeNode = node.store.data.type;
+                const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
+                if (!selectedPipelineNode?.tableName) this.modalService.showSource();
+            } else if (node.store.data.type === NodeType.DestinationNode) {
+                const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
+                if (!selectedPipelineNode?.tableName) this.modalService.showDestination();
             }
         });
 

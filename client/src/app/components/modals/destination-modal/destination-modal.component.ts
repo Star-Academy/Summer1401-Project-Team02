@@ -22,10 +22,6 @@ export class DestinationModalComponent {
         this.isVisible = true;
     }
 
-    public handleOk(): void {
-        this.isVisible = false;
-    }
-
     public handleHide(): void {
         this.isVisible = false;
     }
