@@ -30,21 +30,8 @@ public class Pipeline
         return node.GetPreviousQueryString(executionType, Nodes);
     }
 
-    public Tuple<string, string> Preview(ExecutionType executionType, Node node)
+    public string Preview(ExecutionType executionType, Node node)
     {
-        if (node._NodeType == NodeType.SourceNode)
-        {
-            var dataTable = node.Execute(executionType, Nodes);
-            return new Tuple<string, string>(null, dataTable);
-        }
-        if (node._NodeType == NodeType.DestinationNode)
-        {
-            var dataTable = node.Execute(executionType, Nodes);
-            return new Tuple<string, string>(dataTable, dataTable);
-        }
-
-        var dataTable1 = node.GetPreviousQueryString(executionType, Nodes);
-        var dataTable2 = node.Execute(executionType, Nodes);
-        return new Tuple<string, string>(dataTable1, dataTable2);
+        return node.Execute(executionType, Nodes);
     }
 }

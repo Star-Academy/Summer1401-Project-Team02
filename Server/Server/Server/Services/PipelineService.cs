@@ -46,12 +46,9 @@ public class PipelineService : IPipelineService
         return _database.RunQuery(queryString);
     }
 
-    public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
+    public DataTable Preview(Pipeline pipeline, string id)
     {
-        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
-        var dataTable1 = _database.RunQuery(item1);
-        var dataTable2 = _database.RunQuery(item2);
-        return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
+        var queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        return _database.RunQuery(queryString);
     }
-
 }

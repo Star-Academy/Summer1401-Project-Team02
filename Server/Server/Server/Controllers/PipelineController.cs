@@ -66,12 +66,9 @@ public class PipelineController : Controller
             jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
             jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
 
-            var dataTables = _pipelineService.Preview(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!, id);
-            //Console.WriteLine(dataTables);
+            var dataTable = _pipelineService.Preview(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!, id);
             JsonParser jsonParser = new JsonParser();
-            _logger.LogInformation(TempUtils.ConvertDataTableToString(dataTables.Item1));
-            _logger.LogInformation(TempUtils.ConvertDataTableToString(dataTables.Item2));
-            return Ok(new Tuple<string, string>(jsonParser.ParseFromDataTable(dataTables.Item1), jsonParser.ParseFromDataTable(dataTables.Item2)));
+            return Ok(jsonParser.ParseFromDataTable(dataTable));
         }
         catch (Exception e)
         {
