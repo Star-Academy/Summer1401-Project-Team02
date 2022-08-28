@@ -32,6 +32,14 @@ export class PipelineService {
                 id: Math.random().toString(),
             };
             return node;
+        } else if (nodeType === NodeType.DestinationNode) {
+            const node: DestinationNodeModel = {
+                _NodeType: NodeType.DestinationNode,
+                _previousNodesId: this.selectedPreviousNode,
+                data: {tableName: ''},
+                id: Math.random().toString(),
+            };
+            return node;
         }
     }
 
