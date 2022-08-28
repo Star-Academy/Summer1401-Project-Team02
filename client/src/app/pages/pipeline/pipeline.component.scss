@@ -1,11 +1,6 @@
 .wrapper {
     --sidebar-width: 30rem;
 
-    app-preview,
-    app-sidebar {
-        padding: 2rem;
-    }
-
     app-sidebar {
         --header-height: 6.9rem;
 
@@ -38,6 +33,8 @@
         z-index: 1;
 
         block-size: 30rem;
+
+        padding: 2rem;
 
         transition: transform ease-in-out var(--animation-duration-fast);
 

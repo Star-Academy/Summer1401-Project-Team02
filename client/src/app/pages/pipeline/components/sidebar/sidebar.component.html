@@ -2,5 +2,15 @@
     <div (click)="changeCollapseState()">
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
-    <p>sidebar works!</p>
+    <header>
+        <h1>Process Config</h1>
+    </header>
+    <section>
+        <app-select-remove *ngIf="sideType === 1"></app-select-remove>
+        <app-default *ngIf="sideType === 0"></app-default>
+    </section>
+    <footer *ngIf="sideType !== 0">
+        <button nz-button nzType="default" nzSize="large">reset</button>
+        <button nz-button nzType="primary" nzSize="large">save</button>
+    </footer>
 </div>
