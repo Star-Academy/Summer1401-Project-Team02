@@ -9,7 +9,6 @@ namespace Server.Services;
 
 public class PipelineService : IPipelineService
 {
-    
     private readonly IDatabase _database;
 
     public PipelineService(IDatabase database)
@@ -22,15 +21,15 @@ public class PipelineService : IPipelineService
         var nodesList = pipeline.GetNodesList();
         foreach (var node in nodesList)
         {
-            string queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
-            DataTable dataTable = _database.RunQuery(queryString);
-            foreach (var header in dataTable.Rows[0].ItemArray)
-            {
-                node.Headers.Add(header.ToString());
-            }
+            var queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            var dataTable = _database.RunQuery(queryString);
+            node.Headers = dataTable.Columns
+                .Cast<DataColumn>()
+                .Select(x => x.ColumnName)
+                .ToList();
         }
     }
-    
+
     public Dictionary<string, string> Execute(Pipeline pipeline)
     {
         Initialize(pipeline);
@@ -51,6 +50,7 @@ public class PipelineService : IPipelineService
                 result.Add(node.Id, e.Message);
             }
         }
+
         return result;
     }
 
@@ -69,5 +69,4 @@ public class PipelineService : IPipelineService
         var dataTable2 = _database.RunQuery(item2);
         return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
     }
-
 }

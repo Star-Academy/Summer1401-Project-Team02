@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Server.Enums;
 
 namespace Server.Models.Nodes;
@@ -6,7 +7,9 @@ public abstract class Node
 {
     public string Id;
     public NodeType _NodeType;
+    [JsonIgnore]
     public string? HeaderQueryString;
+    [JsonIgnore]
     public List<string> Headers = new List<string>();
     
     public abstract IEnumerable<Node> GetPath(Dictionary<string, Node?> nodes);
