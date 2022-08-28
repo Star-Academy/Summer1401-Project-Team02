@@ -18,7 +18,6 @@ public class TempUtils
         var d = new DestinationNode();
         var custom = new CustomNode();
         
-        
         custom.Id = "custom";
         custom._NodeType = NodeType.Custom;
         custom.first = "*";
