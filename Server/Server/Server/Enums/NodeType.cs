@@ -4,5 +4,6 @@ public enum NodeType
 {
     DestinationNode,
     SourceNode,
-    Selector
+    Selector,
+    Custom
 }

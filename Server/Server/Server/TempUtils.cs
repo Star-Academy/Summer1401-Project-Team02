@@ -20,12 +20,15 @@ public class TempUtils
         
         
         custom.Id = "custom";
-        custom._NodeType = NodeType.Selector;
+        custom._NodeType = NodeType.Custom;
         custom.first = "*";
-        custom.second = "";
+        custom.second = " ";
+        custom._previousNode = "source";
+        
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-
+        s._tableName = "dataset_csv";
+        
         d.Id = "dest";
         d.tableName = "output1";
         d._previousNode = "custom";
