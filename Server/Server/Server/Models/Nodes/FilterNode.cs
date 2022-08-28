@@ -38,4 +38,5 @@ public class FilterNode : ProcessorNode
         return firstPartOfQuery + secondPartOfQuery;
 
     }
+
 }

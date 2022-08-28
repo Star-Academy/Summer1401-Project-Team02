@@ -13,8 +13,8 @@ public class DestinationNode : Node
         return nodes!.GetValueOrDefault(_previousNode)!.Execute(executionType, nodes!);
     }
 
-    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
-    {
-        return this.Execute(executionType, nodes);
-    }
+    // public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
+    // {
+    //     return this.Execute(executionType, nodes);
+    // }
 }

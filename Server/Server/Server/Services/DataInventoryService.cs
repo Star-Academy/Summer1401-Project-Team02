@@ -23,7 +23,7 @@ public class DataInventoryService :  IDataInventoryService
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         
         var tableInfo = new TableInfo(file.Hash(), DateTime.Now.ToString(Config.DateTimeFormat));
-        _database.CreateTable(dataTable, tableInfo);
+        _database.CreateTable(dataTable, tableInfo, true);
         _database.ImportDataTable(dataTable, file.Hash());
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }

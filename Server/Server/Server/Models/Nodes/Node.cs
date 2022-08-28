@@ -9,5 +9,5 @@ public abstract class Node
 
     public abstract string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes);
 
-    public abstract string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes);
+    // public abstract string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes);
 }

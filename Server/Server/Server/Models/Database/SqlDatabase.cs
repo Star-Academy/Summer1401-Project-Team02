@@ -33,18 +33,11 @@ public class SqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, TableInfo tableInfo)
+    public void CreateTable(DataTable dataTable, TableInfo tableInfo, bool insertIntoAllTables)
     {
-        try
-        {
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
+            if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
             ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
 
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
     }
 
     public void CreateTable(TableInfo tableInfo)
