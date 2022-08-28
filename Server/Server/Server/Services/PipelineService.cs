@@ -1,9 +1,7 @@
 using System.Data;
-using System.Text.Json;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
-using Server.Models.Parsers;
 
 namespace Server.Services;
 
@@ -22,11 +20,11 @@ public class PipelineService : IPipelineService
         var nodesList = pipeline.GetNodesList();
         foreach (var node in nodesList)
         {
-            string queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            string queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes!);
             DataTable dataTable = _database.RunQuery(queryString);
             foreach (var header in dataTable.Rows[0].ItemArray)
             {
-                node.Headers.Add(header.ToString());
+                node.Headers.Add(header!.ToString()!);
             }
         }
     }
@@ -57,14 +55,14 @@ public class PipelineService : IPipelineService
     public DataTable GetHeading(Pipeline pipeline, string id)
     {
         Initialize(pipeline);
-        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
+        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes!.GetValueOrDefault(id));
         return _database.RunQuery(queryString);
     }
 
     public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
     {
         Initialize(pipeline);
-        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes!.GetValueOrDefault(id)!);
         var dataTable1 = _database.RunQuery(item1);
         var dataTable2 = _database.RunQuery(item2);
         return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
