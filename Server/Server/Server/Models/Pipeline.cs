@@ -39,4 +39,16 @@ public class Pipeline
 
         throw new NotImplementedException();
     }
+
+    public IEnumerable<Node> GetNodesList()
+    {
+        var nodesList = new List<Node>();
+        var destinationNodes = FindDestinationNodes();
+        foreach (var destinationNode in destinationNodes)
+        {
+            nodesList.AddRange(destinationNode.GetPath(Nodes));
+        }
+
+        return nodesList;
+    }
 }

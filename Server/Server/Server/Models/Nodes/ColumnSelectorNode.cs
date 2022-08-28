@@ -8,7 +8,10 @@ public class ColumnSelectorNode : ProcessorNode
     public List<string> _columns;
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes)
     {
-        return String.Format(QueryStrings.Selector, string.Join(", ", _columns),
+        if (executionType == ExecutionType.Heading && HeaderQueryString != null) return HeaderQueryString;
+        string answer = String.Format(QueryStrings.Selector, string.Join(", ", _columns),
             nodes.GetValueOrDefault(_previousNode)!.Execute(executionType, nodes!));
+        if (executionType == ExecutionType.Heading) HeaderQueryString = answer;
+        return answer;
     }
 }
