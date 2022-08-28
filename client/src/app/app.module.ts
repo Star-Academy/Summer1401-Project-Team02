@@ -16,6 +16,8 @@ import {SourceModalModule} from './components/modals/source-modal/source-modal.m
 import {DestinationModalModule} from './components/modals/destination-modal/destination-modal.module';
 import {HeaderModule} from './components/header/header.module';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
+import {AddDatasetModalModule} from './components/modals/add-dataset-modal/add-dataset-modal.module';
 
 registerLocaleData(en);
 
@@ -31,6 +33,8 @@ registerLocaleData(en);
         SourceModalModule,
         DestinationModalModule,
         HeaderModule,
+        DataInventoryModule,
+        AddDatasetModalModule,
     ],
     providers: [{provide: NZ_I18N, useValue: en_US}, NzMessageService],
     bootstrap: [AppComponent],

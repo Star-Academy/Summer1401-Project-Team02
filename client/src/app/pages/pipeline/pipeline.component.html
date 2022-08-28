@@ -1,6 +1,7 @@
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showSource()"><span>Show Source modal</span></button>-->
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showProcess()"><span>Show process modal</span></button>-->
 <!--<button nz-button [nzType]="'primary'" (click)="modalService.showDestination()"><span>Show destination modal</span></button>-->
+<app-header></app-header>
 <div class="wrapper">
     <app-sidebar (isCollapseChange)="isSidebarCollapse = $event" [class.collapse]="isSidebarCollapse"></app-sidebar>
     <app-preview
