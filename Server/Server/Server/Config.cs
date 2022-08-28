@@ -6,8 +6,8 @@ public static class Config
     public const string DataBase = "version1";
     public const string Id = "sa";
     public const string dataInventoryTableName = "sourceAndDestTables";
-    public const string Password = "SuperSecureP4ssw0rd";
+    public const string Password = "matin1380";
     
     public const int PreviewCapacity = 5;
-
+    public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 }

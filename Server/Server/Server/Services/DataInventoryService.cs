@@ -12,7 +12,7 @@ namespace Server.Services;
 public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
-
+    
     public DataInventoryService(IDatabase database)
     {
         _database = database;
@@ -21,8 +21,9 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        var tableInfo = new TableInfo(file.Name, DateTime.Now, true);
-        _database.CreateTable(dataTable, file.Hash(), tableInfo);
+        
+        var tableInfo = new TableInfo(file.Hash(), DateTime.Now.ToString(Config.DateTimeFormat));
+        _database.CreateTable(dataTable, tableInfo);
         _database.ImportDataTable(dataTable, file.Hash());
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
@@ -30,8 +31,8 @@ public class DataInventoryService :  IDataInventoryService
 
     public string AddDestination(string name)
     {
-        var tableInfo = new TableInfo(name, DateTime.Now, false);
-        _database.CreateTable(name, tableInfo);
+        var tableInfo = new TableInfo(name, DateTime.Now.ToString(Config.DateTimeFormat));
+        _database.CreateTable(tableInfo);
         return $"{{ \"tableName\" : \"{name}\" }}";
     }
 

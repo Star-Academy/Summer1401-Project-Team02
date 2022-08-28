@@ -33,12 +33,13 @@ public class SqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, string tableName, TableInfo tableInfo)
+    public void CreateTable(DataTable dataTable, TableInfo tableInfo)
     {
-        ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
         try
         {
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ({tableInfo._tableName}, {tableInfo._dateTime}, {tableInfo._isSource});");
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
+            ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
+
         }
         catch (Exception e)
         {
@@ -46,13 +47,12 @@ public class SqlDatabase : IDatabase
         }
     }
 
-    public void CreateTable(string name, TableInfo tableInfo)
+    public void CreateTable(TableInfo tableInfo)
     {
-        ExecuteCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);");
-
         try
         {
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ({tableInfo._tableName}, {tableInfo._dateTime}, {tableInfo._isSource});");
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
+            ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\nCreate Table {tableInfo._tableName} (dummy int);");
         }
         catch (Exception e)
         {

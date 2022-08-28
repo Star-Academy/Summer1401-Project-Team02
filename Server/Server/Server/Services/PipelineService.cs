@@ -28,7 +28,8 @@ public class PipelineService : IPipelineService
                 var dataTable = _database.RunQuery(query.Value);
 
                 var tableName = new JsonObject(node.Data).GetString(ConstantKeys.TableName);
-                _database.CreateTable(dataTable, tableName);
+                var tableInfo = new TableInfo(tableName, DateTime.Now.ToString(Config.DateTimeFormat));
+                _database.CreateTable(dataTable, tableInfo);
                 _database.ImportDataTable(dataTable, tableName);
                 result.Add(node.Id, ConstantKeys.Success);
             }
