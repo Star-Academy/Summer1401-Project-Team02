@@ -44,7 +44,10 @@ public class TempUtils
             Nodes = nodes!
         };
 
-        return JsonConvert.SerializeObject(p);
+        return JsonConvert.SerializeObject(p, new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
     
     
@@ -81,8 +84,10 @@ public class TempUtils
             Nodes = nodes!
         };
 
-        Console.Write(split.Execute(ExecutionType.FullExecution, nodes));
-        return JsonConvert.SerializeObject(p);
+        return JsonConvert.SerializeObject(p, new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
     
     public static string ConvertDataTableToString(DataTable dataTable)
