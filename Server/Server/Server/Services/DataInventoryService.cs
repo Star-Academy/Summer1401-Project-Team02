@@ -60,8 +60,7 @@ public class DataInventoryService :  IDataInventoryService
     public MemoryStream GetAllTables()
     {
         var dataTable = _database.GetTable(Config.dataInventoryTableName);
-        var parser = MapToParser("csv");
-        var csvString = parser.ParseFromDataTable(dataTable);
-        return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
+        var result = new JsonParser().ParseFromDataTable(dataTable);
+        return new MemoryStream(Encoding.ASCII.GetBytes(result));
     }
 }

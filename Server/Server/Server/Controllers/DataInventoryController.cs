@@ -51,8 +51,8 @@ public class DataInventoryController : Controller
     {
         try
         {
-            var stream = _dataInventoryService.Download(tableName, fileFormat);
-            return Ok(File(stream, $"text/{fileFormat}", $"{tableName}.{fileFormat}"));
+            return File(_dataInventoryService.Download(tableName, fileFormat), 
+                $"text/{fileFormat}", $"{tableName}.{fileFormat}");
         }
         catch (Exception e)
         {
