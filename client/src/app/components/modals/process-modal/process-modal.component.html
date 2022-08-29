@@ -9,8 +9,12 @@
     nzWidth="80rem"
 >
     <ng-template #modalContent>
-        <ng-container>
-            <app-process-menu></app-process-menu>
-        </ng-container>
+        <div class="grid">
+            <app-card
+                title="Select"
+                description="select or remove some columns from your dataset"
+                (click)="addNode(NodeType.Selector)"
+            ></app-card>
+        </div>
     </ng-template>
 </nz-modal>

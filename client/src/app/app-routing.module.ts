@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-
 import {PipelineComponent} from './pages/pipeline/pipeline.component';
+import {DataInventoryComponent} from './pages/data-inventory/data-inventory.component';
 
 const routes: Routes = [
     {path: '', pathMatch: 'full', component: PipelineComponent},
+    {path: 'data-inventory', component: DataInventoryComponent},
     {path: '**', redirectTo: ''},
 ];
 

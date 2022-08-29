@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CardComponent} from './card.component';
+import {AddDatasetModalComponent} from './add-dataset-modal.component';
 
-describe('CardComponent', () => {
-    let component: CardComponent;
-    let fixture: ComponentFixture<CardComponent>;
+describe('AddDatasetModalComponent', () => {
+    let component: AddDatasetModalComponent;
+    let fixture: ComponentFixture<AddDatasetModalComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [CardComponent],
+            declarations: [AddDatasetModalComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CardComponent);
+        fixture = TestBed.createComponent(AddDatasetModalComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

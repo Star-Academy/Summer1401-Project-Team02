@@ -23,6 +23,6 @@ import {ConnectionModule} from '../../connection/connection.module';
         NzTabsModule,
         ConnectionModule,
     ],
-    exports: [DestinationModalComponent],
+    exports: [DestinationModalComponent, DestinationInputComponent],
 })
 export class DestinationModalModule {}

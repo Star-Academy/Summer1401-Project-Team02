@@ -11,9 +11,20 @@ import {PreviewComponent} from './components/preview/preview.component';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {FormsModule} from '@angular/forms';
 import {NzTableModule} from 'ng-zorro-antd/table';
+import {HeaderModule} from '../../components/header/header.module';
+import {DefaultComponent} from './components/sidebar/component/default/default.component';
+import {SelectRemoveComponent} from './components/sidebar/component/select-remove/select-remove.component';
+import {NzSelectModule} from 'ng-zorro-antd/select';
 
 @NgModule({
-    declarations: [PipelineComponent, CanvasComponent, SidebarComponent, PreviewComponent],
+    declarations: [
+        PipelineComponent,
+        CanvasComponent,
+        SidebarComponent,
+        PreviewComponent,
+        DefaultComponent,
+        SelectRemoveComponent,
+    ],
     imports: [
         CommonModule,
         NzButtonModule,
@@ -22,6 +33,8 @@ import {NzTableModule} from 'ng-zorro-antd/table';
         NzIconModule,
         FormsModule,
         NzTableModule,
+        HeaderModule,
+        NzSelectModule,
     ],
 })
 export class PipelineModule {}

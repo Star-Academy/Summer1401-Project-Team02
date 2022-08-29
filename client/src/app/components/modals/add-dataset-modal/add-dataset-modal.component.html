@@ -1,0 +1,22 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Add new Dataset"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="handleHide()"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <nz-tabset nzCentered>
+                <nz-tab nzTitle="Upload dataset"><app-upload-input></app-upload-input></nz-tab>
+                <nz-tab nzTitle="Add dataset"><app-destination-input></app-destination-input></nz-tab>
+            </nz-tabset>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="handleOk()">ok</button>
+    </ng-template>
+</nz-modal>
