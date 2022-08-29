@@ -1,12 +1,15 @@
 using System.Data;
+using System.Text.Json;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
+using Server.Models.Parsers;
 
 namespace Server.Services;
 
 public class PipelineService : IPipelineService
 {
+    
     private readonly IDatabase _database;
 
     public PipelineService(IDatabase database)
@@ -64,12 +67,10 @@ public class PipelineService : IPipelineService
         return _database.RunQuery(query).Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
     }
 
-    public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
+    public DataTable Preview(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);
-        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
-        var dataTable1 = _database.RunQuery(item1);
-        var dataTable2 = _database.RunQuery(item2);
-        return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
+        Initialize(pipeline);var queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        return _database.RunQuery(queryString);
     }
+
 }

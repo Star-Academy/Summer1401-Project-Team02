@@ -35,14 +35,9 @@ public class Pipeline
         return Nodes[node._previousNode].Execute(ExecutionType.Heading, Nodes);
     }
 
-    public Tuple<string, string> Preview(ExecutionType executionType, Node node)
+    public string Preview(ExecutionType executionType, Node node)
     {
-        if (node._NodeType == NodeType.SourceNode)
-        {
-            throw new Exception("Source node has not preview !");
-        }
-
-        throw new NotImplementedException();
+        return node.Execute(executionType, Nodes);
     }
 
     public IEnumerable<Node> GetNodesList()

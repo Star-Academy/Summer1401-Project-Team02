@@ -7,5 +7,4 @@ public interface IPipelineService
 {
     public Dictionary<string, string> Execute(Pipeline pipeline);
     public List<string> GetHeading(Pipeline pipeline, string id);
-    public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id);
-}
+    public DataTable Preview(Pipeline pipeline, string id);}

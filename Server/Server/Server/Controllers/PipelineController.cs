@@ -58,7 +58,7 @@ public class PipelineController : Controller
         }
     }
     
-    [HttpPost]
+    [HttpGet]
     public IActionResult Preview(string jsonString, string id)
     {
         try
@@ -68,7 +68,8 @@ public class PipelineController : Controller
             jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
 
             var dataTable = _pipelineService.Preview(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!, id);
-            return Ok(dataTable);
+            JsonParser jsonParser = new JsonParser();
+            return Ok(jsonParser.ParseFromDataTable(dataTable));
         }
         catch (Exception e)
         {
