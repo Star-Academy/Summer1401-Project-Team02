@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 import {NodeType} from '../../../../enums/node-type';
+import {ColumnSelectorNodeModel} from '../../../../models/column-selector-node.model';
 
 @Component({
     selector: 'app-sidebar',
@@ -9,7 +10,8 @@ import {NodeType} from '../../../../enums/node-type';
 })
 export class SidebarComponent {
     public isCollapse = false;
-    public NodeType = NodeType;
+    public editedNode = this.pipelineService.getSelectedNode();
+    public isReset = false;
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
@@ -28,5 +30,14 @@ export class SidebarComponent {
         this.isCollapse = !this.isCollapse;
 
         this.isCollapseChange.emit(this.isCollapse);
+    }
+
+    public onSave(): void {
+        debugger;
+        if (this.editedNode) this.pipelineService.editNode(this.editedNode);
+    }
+
+    public onReset(): void {
+        this.isReset = true;
     }
 }
