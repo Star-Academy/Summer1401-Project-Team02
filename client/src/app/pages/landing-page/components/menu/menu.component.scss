@@ -1,9 +1,17 @@
 .container {
-    img {
-        filter: blur(2px);
+    display: grid;
+    grid-template-areas: "data-inventory pipeline";
 
-        inline-size: 57%;
-        aspect-ratio: 8/3;
+    padding: 2rem;
+
+    img {
+        width: 59%;
+    }
+
+    .data-inventory,
+    .pipeline {
+        display: grid;
+        place-items: center;
     }
 
     .data-inventory {
