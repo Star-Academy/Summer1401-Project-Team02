@@ -59,17 +59,12 @@ public class PipelineController : Controller
     }
     
     [HttpGet]
-    public IActionResult Preview(string jsonString, string id)
+    public IActionResult Preview(string pipelineJson, string id)
     {
         try
         {
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.Converters.Add(new CustomPipelineDeserializer());
-            jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
-
-            var dataTable = _pipelineService.Preview(JsonConvert.DeserializeObject<Pipeline>(jsonString, jsonSerializerSettings)!, id);
-            JsonParser jsonParser = new JsonParser();
-            return Ok(jsonParser.ParseFromDataTable(dataTable));
+            var dataTable = _pipelineService.Preview(CustomPipelineDeserializer.Deserialize(pipelineJson), id);
+            return Ok(new JsonParser().ParseFromDataTable(dataTable));
         }
         catch (Exception e)
         {

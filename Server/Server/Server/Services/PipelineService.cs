@@ -69,7 +69,9 @@ public class PipelineService : IPipelineService
 
     public DataTable Preview(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);var queryString = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
+        Initialize(pipeline);
+        var node = pipeline.Nodes.GetValueOrDefault(id);
+        var queryString = node.Execute(ExecutionType.Preview, pipeline.Nodes);
         return _database.RunQuery(queryString);
     }
 
