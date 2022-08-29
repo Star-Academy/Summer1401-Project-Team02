@@ -1,7 +1,9 @@
 using System.Data;
 using System.Text;
+using Microsoft.VisualBasic;
 using Server.Controllers;
 using Server.ExtensionMethods;
+using Server.Models;
 using Server.Models.Database;
 using Server.Models.Parsers;
 
@@ -10,7 +12,7 @@ namespace Server.Services;
 public class DataInventoryService :  IDataInventoryService
 {
     private readonly IDatabase _database;
-
+    
     public DataInventoryService(IDatabase database)
     {
         _database = database;
@@ -19,7 +21,9 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        _database.CreateTable(dataTable, file.Hash());
+        
+        var tableInfo = new TableInfo(file.Hash(), DateTime.Now.ToString(Config.DateTimeFormat));
+        _database.CreateTable(dataTable, tableInfo, true);
         _database.ImportDataTable(dataTable, file.Hash());
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
@@ -27,7 +31,8 @@ public class DataInventoryService :  IDataInventoryService
 
     public string AddDestination(string name)
     {
-        _database.CreateTable(name);
+        var tableInfo = new TableInfo(name, DateTime.Now.ToString(Config.DateTimeFormat));
+        _database.CreateTable(tableInfo);
         return $"{{ \"tableName\" : \"{name}\" }}";
     }
 
@@ -52,4 +57,11 @@ public class DataInventoryService :  IDataInventoryService
         return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
     }
 
+    public MemoryStream GetAllTables()
+    {
+        var dataTable = _database.GetTable(Config.dataInventoryTableName);
+        var parser = MapToParser("csv");
+        var csvString = parser.ParseFromDataTable(dataTable);
+        return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
+    }
 }

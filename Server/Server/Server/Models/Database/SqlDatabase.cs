@@ -40,14 +40,16 @@ public class SqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, string tableName)
+    public void CreateTable(DataTable dataTable, TableInfo tableInfo, bool insertIntoAllTables)
     {
-        ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
+        ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
+        if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
     }
 
-    public void CreateTable(string name)
+    public void CreateTable(TableInfo tableInfo)
     {
-        ExecuteCommand($"Drop Table if EXISTS {name};\nCreate Table {name} (dummy int);");
+            ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\nCreate Table {tableInfo._tableName} (dummy int);");
+            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
     }
 
     private void ExecuteCommand(string command)

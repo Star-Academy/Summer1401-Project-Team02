@@ -60,4 +60,18 @@ public class DataInventoryController : Controller
         }
 
     }
+    
+    [HttpGet]
+    public IActionResult GetAllTables()
+    {
+        _logger.LogInformation(TempUtils.GeneratePipelineJson());
+        try
+        {
+            return Ok(_dataInventoryService.GetAllTables());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
