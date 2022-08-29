@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Server.Enums;
+using Server.Models;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -62,9 +63,8 @@ public class DataInventoryController : Controller
     }
     
     [HttpGet]
-    public IActionResult GetAllTables()
+    public ActionResult<IEnumerable<TableInfo>> GetAllTables()
     {
-        _logger.LogInformation(TempUtils.GeneratePipelineJson());
         try
         {
             return Ok(_dataInventoryService.GetAllTables());
@@ -72,6 +72,19 @@ public class DataInventoryController : Controller
         catch (Exception e)
         {
             return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpPost]
+    public IActionResult deleteDataset([FromBody] string name)
+    {
+        try
+        {
+            return Ok(_dataInventoryService.deleteDataset(name));
+        }
+        catch (Exception e)
+        {
+            return Problem(detail: e.Message);
         }
     }
 }

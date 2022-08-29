@@ -40,16 +40,25 @@ public class SqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, TableInfo tableInfo, bool insertIntoAllTables)
+    public void CreateTable(DataTable dataTable, string tableName)
     {
-        ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\n{GenerateCreateTableQuery(tableInfo._tableName, dataTable)}");
-        if(insertIntoAllTables){ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");}
+        ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
     }
 
-    public void CreateTable(TableInfo tableInfo)
+    public void CreateTable(string tableName)
     {
-            ExecuteCommand($"Drop Table if EXISTS {tableInfo._tableName};\nCreate Table {tableInfo._tableName} (dummy int);");
-            ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime}');");
+            ExecuteCommand($"Drop Table if EXISTS {tableName};\nCreate Table {tableName} (dummy int);");
+    }
+
+    public void addToAllTablesInventory(TableInfo tableInfo)
+    {
+        ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");
+    }
+
+    public void deleteDataset(string name)
+    {
+        ExecuteCommand($"DROP TABLE [{name}]");
+        ExecuteCommand($"DELETE FROM {Config.dataInventoryTableName} WHERE tableName = '{name}';");
     }
 
     private void ExecuteCommand(string command)
@@ -64,11 +73,6 @@ public class SqlDatabase : IDatabase
     public DataTable GetTable(string tableName)
     {
         return RunQuery($"SELECT * FROM {tableName}");
-    }
-
-    public IEnumerable<string> GetAllTables()
-    {
-        throw new NotImplementedException();
     }
 
     public string GenerateCreateTableQuery(string tableName, DataTable table)

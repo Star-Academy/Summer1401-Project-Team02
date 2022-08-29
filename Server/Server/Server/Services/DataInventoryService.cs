@@ -22,17 +22,19 @@ public class DataInventoryService :  IDataInventoryService
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         
-        var tableInfo = new TableInfo(file.Hash(), DateTime.Now.ToString(Config.DateTimeFormat));
-        _database.CreateTable(dataTable, tableInfo, true);
+        var tableInfo = new TableInfo(file.Hash(), DateTime.Now);
+        _database.CreateTable(dataTable, file.Hash());
         _database.ImportDataTable(dataTable, file.Hash());
+        _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
 
 
     public string AddDestination(string name)
     {
-        var tableInfo = new TableInfo(name, DateTime.Now.ToString(Config.DateTimeFormat));
-        _database.CreateTable(tableInfo);
+        var tableInfo = new TableInfo(name, DateTime.Now);
+        _database.CreateTable(name);
+        _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableName\" : \"{name}\" }}";
     }
 
@@ -57,10 +59,17 @@ public class DataInventoryService :  IDataInventoryService
         return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
     }
 
-    public MemoryStream GetAllTables()
+    public List<TableInfo> GetAllTables()
     {
         var dataTable = _database.GetTable(Config.dataInventoryTableName);
-        var result = new JsonParser().ParseFromDataTable(dataTable);
-        return new MemoryStream(Encoding.ASCII.GetBytes(result));
+        var tablesList = (from row in dataTable.AsEnumerable()
+            select new TableInfo(Convert.ToString(row["tableName"]), Convert.ToDateTime(row["dateAndTime"]))).ToList();
+        return tablesList;
+    }
+
+    public string deleteDataset(string name)
+    {
+        _database.deleteDataset(name);
+        return $"{{ \"deleted table name\" : \"{name}\" }}";
     }
 }
