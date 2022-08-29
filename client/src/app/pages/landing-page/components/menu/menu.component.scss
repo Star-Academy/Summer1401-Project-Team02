@@ -1,0 +1,16 @@
+.container {
+    img {
+        filter: blur(2px);
+
+        inline-size: 57%;
+        aspect-ratio: 8/3;
+    }
+
+    .data-inventory {
+        grid-area: data-inventory;
+    }
+
+    .pipeline {
+        grid-area: pipeline;
+    }
+}

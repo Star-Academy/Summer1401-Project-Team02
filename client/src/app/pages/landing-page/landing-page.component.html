@@ -1,0 +1,33 @@
+<div class="wrapper">
+    <img class="landing-page-pic" src="assets/landing-page.webp" alt="home picture" />
+    <div class="box">
+        <nav>
+            <ul>
+                <li>
+                    <button nz-button nzType="link" (click)="goToStart()">Discover!</button>
+                </li>
+                <li>
+                    <button nz-button routerLink="/" nzType="link">home</button>
+                </li>
+                <li>
+                    <button nz-button nzType="link" (click)="goToTeam()">Our Team</button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="texts">
+            <h1>Your data room. <br />Your Toranj.</h1>
+
+            <p>
+                Trust the experts who provide the tools. The experience. The service. Security.<br />
+                Without healthy data, every decision is at risk
+            </p>
+
+            <button nz-button nzType="primary" (click)="goToStart()">Get started!</button>
+        </div>
+    </div>
+
+    <div class="menu" id="menu">
+        <app-menu></app-menu>
+    </div>
+</div>
