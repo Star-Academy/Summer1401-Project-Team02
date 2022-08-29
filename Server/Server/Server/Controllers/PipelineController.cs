@@ -47,6 +47,7 @@ public class PipelineController : Controller
         }
         catch (Exception e)
         {
+            _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
     }
