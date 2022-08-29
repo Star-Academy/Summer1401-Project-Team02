@@ -23,8 +23,9 @@ public class DataInventoryService :  IDataInventoryService
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
         
         var tableInfo = new TableInfo(file.Hash(), DateTime.Now);
-        _database.CreateTable(dataTable, tableInfo, true);
+        _database.CreateTable(dataTable, file.Hash());
         _database.ImportDataTable(dataTable, file.Hash());
+        _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
     }
 
@@ -32,7 +33,8 @@ public class DataInventoryService :  IDataInventoryService
     public string AddDestination(string name)
     {
         var tableInfo = new TableInfo(name, DateTime.Now);
-        _database.CreateTable(tableInfo);
+        _database.CreateTable(name);
+        _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableName\" : \"{name}\" }}";
     }
 
@@ -62,13 +64,6 @@ public class DataInventoryService :  IDataInventoryService
         var dataTable = _database.GetTable(Config.dataInventoryTableName);
         var tablesList = (from row in dataTable.AsEnumerable()
             select new TableInfo(Convert.ToString(row["tableName"]), Convert.ToDateTime(row["dateAndTime"]))).ToList();
-        // foreach (var tableInfo in tablesList)
-        // {
-        //     Console.WriteLine(tableInfo._tableName);
-        // }
         return tablesList;
-        // var parser = MapToParser("csv");
-        // var csvString = parser.ParseFromDataTable(dataTable);
-        // return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
     }
 }

@@ -44,8 +44,9 @@ public class PipelineService : IPipelineService
 
                 var tableName = node.tableName;
                 var tableInfo = new TableInfo(tableName, DateTime.Now);
-                _database.CreateTable(dataTable, tableInfo, false);
+                _database.CreateTable(dataTable, tableName);
                 _database.ImportDataTable(dataTable, tableName);
+                _database.addToAllTablesInventory(tableInfo);
                 result.Add(node.Id, ConstantKeys.Success);
             }
             catch (Exception e)
