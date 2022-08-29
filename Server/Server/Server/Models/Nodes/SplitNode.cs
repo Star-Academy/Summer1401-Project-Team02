@@ -6,34 +6,33 @@ public class SplitNode : ProcessorNode
 {
     public string _columnName;
     public string _delimeter;
-    public List<string> _newNames;
-
+    public int _numberOfParts;
+    public bool replace;
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes)
     {
         var heading = Headers.ToList();
-        var index = heading.IndexOf(_columnName);
-        heading.Remove(_columnName);
-
-        if (executionType == ExecutionType.Heading)
+        var index = Headers.Count;
+        if (replace)
         {
-            heading.AddRange(_newNames);
+            index = heading.IndexOf(_columnName);
+            heading.Remove(_columnName);
         }
-        else heading.InsertRange(index, GenerateSplitQuery());
 
-        return string.Format(QueryStrings.Split, string.Join(", ", heading.Select(x => $"[{x}]")), 
+        heading = heading.Select(x => $"[{x}]").ToList();
+        heading.InsertRange(index, GenerateSplitQuery());
+
+        return string.Format(QueryStrings.Split, string.Join(", ", heading), 
             nodes.GetValueOrDefault(_previousNode).Execute(executionType, nodes));
     }
 
     private IEnumerable<string> GenerateSplitQuery()
     {
         var result = new List<string>();
-        var index = 1;
-        foreach (var name in _newNames)
+        for (int i = 1; i <= _numberOfParts; i++)
         {
-            result.Add(string.Format(QueryStrings.SplitColumn, _columnName, _delimeter, index++, name));
+            result.Add(string.Format(QueryStrings.SplitColumn, _columnName, _delimeter, i, $"[{_columnName}_splited({i})]"));
         }
-
         return result;
     }
 }

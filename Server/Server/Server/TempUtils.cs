@@ -16,17 +16,16 @@ public class TempUtils
     {
         var s = new SourceNode();
         var d = new DestinationNode();
-        var custom = new CustomNode();
+        var custom = new ColumnSelectorNode();
         
         custom.Id = "custom";
-        custom._NodeType = NodeType.Custom;
-        custom.first = "*";
-        custom.second = " ";
+        custom._NodeType = NodeType.Selector;
+        custom._columns = new List<string>() { "name", "gender" };
         custom._previousNode = "source";
-        
+
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "dataset_csv";
+        s._tableName = "Iran_csv";
         
         d.Id = "dest";
         d.tableName = "output1";
@@ -61,12 +60,13 @@ public class TempUtils
         split._NodeType = NodeType.Split;
         split._delimeter = " ";
         split._columnName = "fullname";
-        split._newNames = new List<string>() { "firstName", "lastName" };
+        split._numberOfParts = 2;
         split._previousNode = "source";
-        
+        split.replace = false;
+
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "dataset_csv";
+        s._tableName = "Iran_csv";
         
         d.Id = "dest";
         d.tableName = "output1";

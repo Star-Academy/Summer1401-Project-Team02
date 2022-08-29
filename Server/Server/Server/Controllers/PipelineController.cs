@@ -39,8 +39,8 @@ public class PipelineController : Controller
     [HttpGet]
     public IActionResult RunRedundantly()
     {
+        _logger.LogInformation(TempUtils.GeneratePipelineJson2());
         // _logger.LogInformation(TempUtils.GeneratePipelineJson2());
-        _logger.LogInformation(TempUtils.GeneratePipelineJson());
         return Ok();
     }    
     [HttpGet]
