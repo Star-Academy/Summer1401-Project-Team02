@@ -16,5 +16,7 @@ public static class MathFunctionFormat
     public const string Log10 = $"LOG10({{0}}) AS {{1}}";
     public const string Log = $"LOG({{0}}, {{1}}) AS {{2}}";
     public const string Power = $"POWER({{0}}, {{1}}) AS {{2}}";
-    public const string Radians = $"POWER({{0}}) AS {{1}}";
+    public const string Round = $"POWER({{0}}, {{1}}) AS {{2}}";
+    public const string Radians = $"RADIANS({{0}}) AS {{1}}";
+    public const string Sign = $"SIGN({{0}}) AS {{1}}";
 }

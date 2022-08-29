@@ -40,7 +40,9 @@ public class MathNode : ProcessorNode
             MathFunction.Log10 => string.Format(MathFunctionFormat.Log10, ColumnName, $"{ColumnName}_LOG10"),
             MathFunction.Log => string.Format(MathFunctionFormat.Log, ColumnName, Second, $"{ColumnName}_LOG"),
             MathFunction.Power => string.Format(MathFunctionFormat.Power, ColumnName, Second, $"{ColumnName}_POWER"),
+            MathFunction.Round => string.Format(MathFunctionFormat.Round, ColumnName, Second, $"{ColumnName}_ROUND"),
             MathFunction.Radians => string.Format(MathFunctionFormat.Radians, ColumnName, $"{ColumnName}_RADIANS"),
+            MathFunction.Sign => string.Format(MathFunctionFormat.Sign, ColumnName, $"{ColumnName}Sign"),
             _ => throw new ArgumentOutOfRangeException(nameof(Function), Function, null)
         };
         if (NewColumn) newHeaders.Add(newColumnExpression);
