@@ -26,6 +26,7 @@ export class UploadInputComponent {
         }
         if (status === 'done') {
             this.msg.success(`${file.name} file uploaded successfully.`);
+            this.pipelineService.preview();
         } else if (status === 'error') {
             this.msg.error(`${file.name} file upload failed.`);
         }
