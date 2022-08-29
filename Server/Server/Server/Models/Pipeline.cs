@@ -25,9 +25,9 @@ public class Pipeline
         return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
     }
 
-    public string GetHeading(ExecutionType executionType, Node? node)
+    public List<string> GetHeading(Node? node)
     {
-        return node.Execute(executionType, Nodes);
+        return node._NodeType == NodeType.SourceNode ? node.Headers : Nodes[node._previousNode].Headers;
     }
 
     public Tuple<string, string> Preview(ExecutionType executionType, Node node)

@@ -1,10 +1,7 @@
 using System.Data;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
-using Server.Models.Parsers;
 
 namespace Server.Services;
 
@@ -42,11 +39,8 @@ public class PipelineService : IPipelineService
             {
                 var dataTable = _database.RunQuery(query.Value);
 
-                var tableName = node.tableName;
-                var tableInfo = new TableInfo(tableName, DateTime.Now);
-                _database.CreateTable(dataTable, tableName);
-                _database.ImportDataTable(dataTable, tableName);
-                _database.addToAllTablesInventory(tableInfo);
+                _database.CreateTable(dataTable, node.tableName);
+                _database.ImportDataTable(dataTable, node.tableName);
                 result.Add(node.Id, ConstantKeys.Success);
             }
             catch (Exception e)
@@ -58,11 +52,10 @@ public class PipelineService : IPipelineService
         return result;
     }
 
-    public DataTable GetHeading(Pipeline pipeline, string id)
+    public List<string> GetHeading(Pipeline pipeline, string id)
     {
         Initialize(pipeline);
-        var queryString = pipeline.GetHeading(ExecutionType.Heading, pipeline.Nodes.GetValueOrDefault(id));
-        return _database.RunQuery(queryString);
+        return pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
     }
 
     public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
