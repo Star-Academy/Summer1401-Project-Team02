@@ -1,12 +1,16 @@
 .wrapper {
     position: relative;
 
+    display: grid;
+    place-items: center;
+
     block-size: 100%;
 
     section {
         overflow: auto;
 
         block-size: 100%;
+        inline-size: 100%;
     }
 
     div {
