@@ -23,8 +23,6 @@ public class DataInventoryController : Controller
     [HttpPost]
     public IActionResult AddSourceByFile()
     {
-        
-        
         try
         {
             return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files[0]));
@@ -66,6 +64,19 @@ public class DataInventoryController : Controller
         catch (Exception e)
         {
             return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpPost]
+    public IActionResult deleteDataset([FromBody] string name)
+    {
+        try
+        {
+            return Ok(_dataInventoryService.deleteDataset(name));
+        }
+        catch (Exception e)
+        {
+            return Problem(detail: e.Message);
         }
     }
 }

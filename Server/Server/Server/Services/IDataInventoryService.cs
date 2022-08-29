@@ -8,4 +8,5 @@ public interface IDataInventoryService
     public MemoryStream Download(string tableName, string fileFormat);
     public string AddDestination(string name);
     public List<TableInfo> GetAllTables();
+    public string deleteDataset(string name);
 }

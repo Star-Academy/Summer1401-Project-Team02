@@ -10,4 +10,5 @@ public interface IDatabase
     public DataTable RunQuery(string query);
     public DataTable GetTable(string tableName);
     public void addToAllTablesInventory(TableInfo tableInfo);
+    void deleteDataset(string name);
 }

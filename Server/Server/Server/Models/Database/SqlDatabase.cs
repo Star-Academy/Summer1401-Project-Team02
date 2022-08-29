@@ -48,6 +48,12 @@ public class SqlDatabase : IDatabase
         ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");
     }
 
+    public void deleteDataset(string name)
+    {
+        ExecuteCommand($"DROP TABLE [{name}]");
+        ExecuteCommand($"DELETE FROM {Config.dataInventoryTableName} WHERE tableName = '{name}';");
+    }
+
     private void ExecuteCommand(string command)
     {
         var connection = new SqlConnection(ConnectionString);

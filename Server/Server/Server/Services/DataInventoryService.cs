@@ -66,4 +66,10 @@ public class DataInventoryService :  IDataInventoryService
             select new TableInfo(Convert.ToString(row["tableName"]), Convert.ToDateTime(row["dateAndTime"]))).ToList();
         return tablesList;
     }
+
+    public string deleteDataset(string name)
+    {
+        _database.deleteDataset(name);
+        return $"{{ \"deleted table name\" : \"{name}\" }}";
+    }
 }
