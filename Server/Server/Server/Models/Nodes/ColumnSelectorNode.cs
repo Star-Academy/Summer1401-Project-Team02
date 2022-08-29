@@ -10,7 +10,7 @@ public class ColumnSelectorNode : ProcessorNode
     {
         if (executionType == ExecutionType.Heading && HeaderQueryString != null) return HeaderQueryString;
         var answer = string.Empty;
-        if (_columns.Any())
+        if (!_columns.Any())
         {
             answer = string.Format(QueryStrings.Selector, "*", nodes.GetValueOrDefault(_previousNode)!.Execute(executionType, nodes!));
         }

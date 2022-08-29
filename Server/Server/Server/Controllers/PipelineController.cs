@@ -66,7 +66,6 @@ public class PipelineController : Controller
         }
         catch (Exception e)
         {
-            
             return BadRequest(e.Message);
         }
     }
