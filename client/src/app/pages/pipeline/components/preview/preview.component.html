@@ -3,7 +3,7 @@
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
     <section *ngIf="pipelineService.previewContent">
-        <nz-table>
+        <nz-table [nzData]="pipelineService.previewContent" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th *ngFor="let key of keys">{{ key }}</th>
