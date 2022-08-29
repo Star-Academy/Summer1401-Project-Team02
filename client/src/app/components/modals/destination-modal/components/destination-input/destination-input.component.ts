@@ -17,7 +17,9 @@ export class DestinationInputComponent {
 
     public async submitForm(): Promise<void> {
         const response = await this.datasetService.sendDestination(this.file);
-        if (response) this.messageService.create('success', 'success');
-        else if (!response) this.messageService.create('error', 'error');
+        if (response) {
+            this.messageService.create('success', 'success');
+            this.datasetService.getTables();
+        } else if (!response) this.messageService.create('error', 'error');
     }
 }
