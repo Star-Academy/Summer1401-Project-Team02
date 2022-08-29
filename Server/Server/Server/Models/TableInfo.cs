@@ -4,8 +4,8 @@ namespace Server.Models;
 
 public class TableInfo
 {
-    public string _tableName;
-    public DateTime _dateTime;
+    public string _tableName { get; set; }
+    public DateTime _dateTime { get; set; }
 
     public TableInfo(string tableName, DateTime dateTime)
     {

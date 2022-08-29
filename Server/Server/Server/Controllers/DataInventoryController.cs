@@ -57,13 +57,11 @@ public class DataInventoryController : Controller
     }
     
     [HttpGet]
-    public ActionResult<TableInfo> GetAllTables()
+    public ActionResult<IEnumerable<TableInfo>> GetAllTables()
     {
         try
         {
-            Console.WriteLine(_dataInventoryService.GetAllTables()[1]?._tableName);
-            Console.WriteLine(_dataInventoryService.GetAllTables()[1]?._dateTime);
-            return _dataInventoryService.GetAllTables()[1];
+            return Ok(_dataInventoryService.GetAllTables());
         }
         catch (Exception e)
         {
