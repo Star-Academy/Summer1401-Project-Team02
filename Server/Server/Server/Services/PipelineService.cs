@@ -60,7 +60,8 @@ public class PipelineService : IPipelineService
     public List<string> GetHeading(Pipeline pipeline, string id)
     {
         Initialize(pipeline);
-        return pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
+        var query = pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
+        return _database.RunQuery(query).Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
     }
 
     public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)

@@ -1,3 +1,4 @@
+using System.Data;
 using Newtonsoft.Json;
 using Server.Enums;
 using Server.Models.Nodes;
@@ -25,9 +26,13 @@ public class Pipeline
         return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
     }
 
-    public List<string> GetHeading(Node? node)
+    public string GetHeading(Node? node)
     {
-        return node._NodeType == NodeType.SourceNode ? node.Headers : Nodes[node._previousNode].Headers;
+        if (node._NodeType == NodeType.SourceNode)
+        {
+            return node.Execute(ExecutionType.Heading, Nodes);
+        }
+        return Nodes[node._previousNode].Execute(ExecutionType.Heading, Nodes);
     }
 
     public Tuple<string, string> Preview(ExecutionType executionType, Node node)

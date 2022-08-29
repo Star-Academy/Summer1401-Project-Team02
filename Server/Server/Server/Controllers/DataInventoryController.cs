@@ -22,8 +22,6 @@ public class DataInventoryController : Controller
     [HttpPost]
     public IActionResult AddSourceByFile()
     {
-        
-        
         try
         {
             return Ok(_dataInventoryService.UploadFile(HttpContext.Request.Form.Files[0]));
@@ -33,7 +31,7 @@ public class DataInventoryController : Controller
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpPost]
     public IActionResult AddDestination([FromBody] string name)
     {
@@ -46,12 +44,20 @@ public class DataInventoryController : Controller
             return Problem(detail: e.Message);
         }
     }
-    
-    
+
+
     [HttpGet]
     public IActionResult DownloadFile(string tableName, string fileFormat)
     {
-        return File(_dataInventoryService.Download(tableName, fileFormat), 
-            $"text/{fileFormat}", $"{tableName}.{fileFormat}");
+        try
+        {
+            var stream = _dataInventoryService.Download(tableName, fileFormat);
+            return Ok(File(stream, $"text/{fileFormat}", $"{tableName}.{fileFormat}"));
+        }
+        catch (Exception e)
+        {
+            return Problem(detail: e.Message);
+        }
+
     }
 }
