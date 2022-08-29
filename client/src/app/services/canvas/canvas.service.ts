@@ -147,8 +147,8 @@ export class CanvasService {
         console.log(this.canvasNodes);
         this.pipelineService.nodes.forEach((node) => {
             const current = this.canvasNodes.find((x: any) => x.store.data._ID === node.id);
-            const pre = this.canvasNodes.find((x: any) => x.store.data._ID === node._previousNodesId);
-            console.log(node._previousNodesId, pre, node.id, current);
+            const pre = this.canvasNodes.find((x: any) => x.store.data._ID === node._previousNode);
+            console.log(node._previousNode, pre, node.id, current);
             // if (pre && current) this.createEdge(pre, current, node._previousNodesId, node.id);
             if (pre && current)
                 this.graph.addCell([
@@ -181,7 +181,7 @@ export class CanvasService {
                 }
             });
             this.pipelineService.nodes.forEach((n) => {
-                if (n._previousNodesId === deleteNode?.id) n._previousNodesId = deleteNode?._previousNodesId;
+                if (n._previousNode === deleteNode?.id) n._previousNode = deleteNode?._previousNodesId;
             });
             this.canvasNodes.forEach((n: any, i: any) => {
                 if (n.store.data._ID === deleteNode?.id) {
@@ -207,10 +207,10 @@ export class CanvasService {
 
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                if (!selectedPipelineNode?.tableName) this.modalService.showSource();
+                if (!selectedPipelineNode?._tableName) this.modalService.showSource();
             } else if (node.store.data.type === NodeType.DestinationNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-                if (!selectedPipelineNode?.tableName) this.modalService.showDestination();
+                if (!selectedPipelineNode?._tableName) this.modalService.showDestination();
             }
         });
 

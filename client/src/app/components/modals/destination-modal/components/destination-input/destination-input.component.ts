@@ -27,7 +27,7 @@ export class DestinationInputComponent {
         if (response) {
             this.messageService.create('success', 'success');
             const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-            destinationNode.tableName = response.tableName;
+            destinationNode._tableName = response.tableName;
 
             this.pipelineService.editNode(destinationNode);
         } else if (!response) this.messageService.create('error', 'error');
