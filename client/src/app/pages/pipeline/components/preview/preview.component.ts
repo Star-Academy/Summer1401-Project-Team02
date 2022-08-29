@@ -1,14 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import studentData from 'src/assets/students.json';
-interface Student {
-    id: Number;
-    first_name: String;
-    last_name: String;
-    email: String;
-    gender: String;
-    age: number;
-    average: number;
-}
+import {PipelineService} from '../../../../services/pipeline/pipeline.service';
+
 @Component({
     selector: 'app-preview',
     templateUrl: './preview.component.html',
@@ -16,8 +8,21 @@ interface Student {
 })
 export class PreviewComponent {
     public isCollapse = false;
-    public students: Student[] = studentData;
     @Output() public isCollapseChange = new EventEmitter<boolean>();
+
+    public get keys(): string[] {
+        return Object.keys(this.pipelineService.previewContent[0]);
+    }
+
+    public get values(): any[] {
+        const table: any[] = [];
+        this.pipelineService.previewContent.forEach((obj: any) => {
+            table.push(Object.values(obj));
+        });
+        return table;
+    }
+
+    public constructor(public pipelineService: PipelineService) {}
 
     public changeCollapseState(): void {
         this.isCollapse = !this.isCollapse;

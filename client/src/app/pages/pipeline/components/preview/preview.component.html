@@ -2,30 +2,19 @@
     <div (click)="changeCollapseState()">
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
-    <section>
+    <section *ngIf="pipelineService.previewContent">
         <nz-table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>first_name</th>
-                    <th>last_name</th>
-                    <th>email</th>
-                    <th>gender</th>
-                    <th>age</th>
-                    <th>average</th>
+                    <th *ngFor="let key of keys">{{ key }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let student of students">
-                    <td>{{ student.id }}</td>
-                    <td>{{ student.first_name }}</td>
-                    <td>{{ student.last_name }}</td>
-                    <td>{{ student.email }}</td>
-                    <td>{{ student.gender }}</td>
-                    <td>{{ student.age }}</td>
-                    <td>{{ student.average }}</td>
+                <tr *ngFor="let row of values">
+                    <td *ngFor="let cell of row">{{ cell }}</td>
                 </tr>
             </tbody>
         </nz-table>
     </section>
+    <p *ngIf="!pipelineService.previewContent">nothing!</p>
 </div>
