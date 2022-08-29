@@ -24,9 +24,5 @@ public class SourceNode : Node
             _ => throw new ArgumentOutOfRangeException(nameof(executionType), executionType, null)
         };
     }
-
-    public override string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes)
-    {
-        return this.Execute(executionType, nodes);
-    }
+    
 }

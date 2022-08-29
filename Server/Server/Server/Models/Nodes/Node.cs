@@ -16,5 +16,4 @@ public abstract class Node
     public abstract IEnumerable<Node> GetPath(Dictionary<string, Node?> nodes);
     public abstract string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes);
 
-    // public abstract string GetPreviousQueryString(ExecutionType executionType, Dictionary<string, Node?> nodes);
 }
