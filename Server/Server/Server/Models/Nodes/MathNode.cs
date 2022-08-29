@@ -26,21 +26,23 @@ public class MathNode : ProcessorNode
         List<string> newHeaders = previousNode.Headers.Select(h => $"[{h.Clone()}]").ToList();
         string newColumnExpression = Function switch
         {
-            MathFunction.Abs => string.Format(MathFunctionFormat.Abs, ColumnName, $"{ColumnName}_ABS"),
-            MathFunction.Floor => string.Format(MathFunctionFormat.Floor, ColumnName, $"{ColumnName}_FLOOR"),
-            MathFunction.Ceiling => string.Format(MathFunctionFormat.Ceiling, ColumnName, $"{ColumnName}_CEILING"),
-            MathFunction.Cos => string.Format(MathFunctionFormat.Cos, ColumnName, $"{ColumnName}_COS"),
-            MathFunction.Sin => string.Format(MathFunctionFormat.Sin, ColumnName, $"{ColumnName}_SIN"),
-            MathFunction.Cot => string.Format(MathFunctionFormat.Cot, ColumnName, $"{ColumnName}_COT"),
-            MathFunction.Tan => string.Format(MathFunctionFormat.Tan, ColumnName, $"{ColumnName}_TAN"),
-            MathFunction.Sqrt => string.Format(MathFunctionFormat.Sqrt, ColumnName, $"{ColumnName}_SQRT"),
-            MathFunction.Square => string.Format(MathFunctionFormat.Square, ColumnName, $"{ColumnName}_SQUARE"),
-            MathFunction.Degrees => string.Format(MathFunctionFormat.Degrees, ColumnName, $"{ColumnName}_DEGREES"),
-            MathFunction.Exp => string.Format(MathFunctionFormat.Exp, ColumnName, $"{ColumnName}_EXP"),
-            MathFunction.Log10 => string.Format(MathFunctionFormat.Log10, ColumnName, $"{ColumnName}_LOG10"),
-            MathFunction.Log => string.Format(MathFunctionFormat.Log, ColumnName, Second, $"{ColumnName}_LOG"),
-            MathFunction.Power => string.Format(MathFunctionFormat.Power, ColumnName, Second, $"{ColumnName}_POWER"),
-            MathFunction.Radians => string.Format(MathFunctionFormat.Radians, ColumnName, $"{ColumnName}_RADIANS"),
+            MathFunction.Abs => string.Format(MathFunctionFormat.Abs, ColumnName, $"[{ColumnName}_ABS]"),
+            MathFunction.Floor => string.Format(MathFunctionFormat.Floor, ColumnName, $"[{ColumnName}_FLOOR]"),
+            MathFunction.Ceiling => string.Format(MathFunctionFormat.Ceiling, ColumnName, $"[{ColumnName}_CEILING]"),
+            MathFunction.Cos => string.Format(MathFunctionFormat.Cos, ColumnName, $"[{ColumnName}_COS]"),
+            MathFunction.Sin => string.Format(MathFunctionFormat.Sin, ColumnName, $"[{ColumnName}_SIN]"),
+            MathFunction.Cot => string.Format(MathFunctionFormat.Cot, ColumnName, $"[{ColumnName}_COT]"),
+            MathFunction.Tan => string.Format(MathFunctionFormat.Tan, ColumnName, $"[{ColumnName}_TAN]"),
+            MathFunction.Sqrt => string.Format(MathFunctionFormat.Sqrt, ColumnName, $"[{ColumnName}_SQRT]"),
+            MathFunction.Square => string.Format(MathFunctionFormat.Square, ColumnName, $"[{ColumnName}_SQUARE]"),
+            MathFunction.Degrees => string.Format(MathFunctionFormat.Degrees, ColumnName, $"[{ColumnName}_DEGREES]"),
+            MathFunction.Exp => string.Format(MathFunctionFormat.Exp, ColumnName, $"[{ColumnName}_EXP]"),
+            MathFunction.Log10 => string.Format(MathFunctionFormat.Log10, ColumnName, $"[{ColumnName}_LOG10]"),
+            MathFunction.Log => string.Format(MathFunctionFormat.Log, ColumnName, Second, $"[{ColumnName}_LOG]"),
+            MathFunction.Power => string.Format(MathFunctionFormat.Power, ColumnName, Second, $"[{ColumnName}_POWER]"),
+            MathFunction.Round => string.Format(MathFunctionFormat.Round, ColumnName, Second, $"[{ColumnName}_ROUND]"),
+            MathFunction.Radians => string.Format(MathFunctionFormat.Radians, ColumnName, $"[{ColumnName}_RADIANS]"),
+            MathFunction.Sign => string.Format(MathFunctionFormat.Sign, ColumnName, $"[{ColumnName}_Sign]"),
             _ => throw new ArgumentOutOfRangeException(nameof(Function), Function, null)
         };
         if (NewColumn) newHeaders.Add(newColumnExpression);

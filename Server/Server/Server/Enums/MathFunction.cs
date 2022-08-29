@@ -16,5 +16,7 @@ public enum MathFunction
     Log10,
     Log,
     Power,
+    Round,
     Radians,
+    Sign,
 }
