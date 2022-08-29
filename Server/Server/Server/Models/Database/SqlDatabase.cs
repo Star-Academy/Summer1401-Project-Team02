@@ -6,9 +6,15 @@ namespace Server.Models.Database;
 
 public class SqlDatabase : IDatabase
 {
+    private readonly ILogger<IDatabase> _logger;
+
     private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
 
+    public SqlDatabase(ILogger<IDatabase> logger)
+    {
+        _logger = logger;
+    }
     public void ImportDataTable(DataTable dataTable, string tableName)
     {
         var connection = new SqlConnection(ConnectionString);
@@ -23,6 +29,7 @@ public class SqlDatabase : IDatabase
 
     public DataTable RunQuery(string query)
     {
+        _logger.LogInformation($"query :: {query}");
         var result = new DataTable();
         var connection = new SqlConnection(ConnectionString);
         var command = new SqlCommand(query, connection);

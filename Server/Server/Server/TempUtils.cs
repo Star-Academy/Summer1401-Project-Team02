@@ -47,6 +47,44 @@ public class TempUtils
         return JsonConvert.SerializeObject(p);
     }
     
+    
+    public static string GeneratePipelineJson2()
+    {
+        var s = new SourceNode();
+        var d = new DestinationNode();
+        var split = new SplitNode();
+        
+        split.Id = "custom";
+        split._NodeType = NodeType.Split;
+        split._delimeter = " ";
+        split._columnName = "fullname";
+        split._newNames = new List<string>() { "firstName", "lastName" };
+        split._previousNode = "source";
+        
+        s.Id = "source";
+        s._NodeType = NodeType.SourceNode;
+        s._tableName = "dataset_csv";
+        
+        d.Id = "dest";
+        d.tableName = "output1";
+        d._previousNode = "custom";
+        d._NodeType = NodeType.DestinationNode;
+
+        var nodes = new Dictionary<string, Node>()
+        {
+            { "source", s },
+            { "dest", d },
+            { "custom", split}
+        };
+        var p = new Pipeline
+        {
+            Nodes = nodes!
+        };
+
+        Console.Write(split.Execute(ExecutionType.FullExecution, nodes));
+        return JsonConvert.SerializeObject(p);
+    }
+    
     public static string ConvertDataTableToString(DataTable dataTable)
     {
         var output = new StringBuilder();

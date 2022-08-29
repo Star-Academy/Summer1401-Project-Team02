@@ -19,7 +19,12 @@ public class PipelineService : IPipelineService
         var nodesList = pipeline.GetNodesList();
         foreach (var node in nodesList)
         {
-            var queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            var queryString = string.Empty;
+            if (node._NodeType == NodeType.SourceNode)
+                queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            else
+                queryString = pipeline.Nodes.GetValueOrDefault(node._previousNode)
+                    .Execute(ExecutionType.Heading, pipeline.Nodes);
             var dataTable = _database.RunQuery(queryString);
             node.Headers = dataTable.Columns
                 .Cast<DataColumn>()
