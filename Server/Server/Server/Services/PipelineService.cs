@@ -49,8 +49,8 @@ public class PipelineService : IPipelineService
                 var dataTable = _database.RunQuery(query.Value);
 
                 var tableName = node.tableName;
-                var tableInfo = new TableInfo(tableName, DateTime.Now.ToString(Config.DateTimeFormat));
-                _database.CreateTable(dataTable, tableInfo, false);
+                var tableInfo = new TableInfo(tableName, DateTime.Now);
+                _database.CreateTable(dataTable, tableInfo._tableName);
                 _database.ImportDataTable(dataTable, tableName);
                 result.Add(node.Id, ConstantKeys.Success);
             }

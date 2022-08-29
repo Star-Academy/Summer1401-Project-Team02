@@ -76,7 +76,7 @@ public class DataInventoryController : Controller
     }
     
     [HttpPost]
-    public IActionResult deleteDataset([FromBody] string name)
+    public IActionResult DeleteDataset([FromBody] string name)
     {
         try
         {
@@ -84,7 +84,7 @@ public class DataInventoryController : Controller
         }
         catch (Exception e)
         {
-            return Problem(detail: e.Message);
+            return BadRequest(e.Message);
         }
     }
 }
