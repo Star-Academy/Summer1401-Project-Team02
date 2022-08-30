@@ -67,13 +67,14 @@ public class TempUtils
         math.Id = "custom";
         math._NodeType = NodeType.Math;
         math._previousNode = "source";
-        math.Function = MathFunction.Cos;
+        math.Function = MathFunction.Round;
         math.NewColumn = true;
-        math.ColumnName = "id";
+        math.ColumnName = "average grade";
+        math.Second = "0";
 
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "Iran_csv";
+        s._tableName = "Giant_csv";
         
         d.Id = "dest";
         d.tableName = "output1";
