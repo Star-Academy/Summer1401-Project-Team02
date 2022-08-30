@@ -14,7 +14,6 @@ interface ItemData {
 export class DataInventoryComponent {
     public searchValue = '';
     public visible!: boolean;
-    public listOfDisplayData: ItemData[] = this.datasetService.tables;
 
     public constructor(public modalService: ModalService, public datasetService: DatasetService) {
         this.datasetService.getTables();
