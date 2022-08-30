@@ -5,18 +5,18 @@ public enum MathFunction
     Abs,
     Floor,
     Ceiling,
-    Cos,
-    Sin,
-    Cot,
-    Tan,
-    Sqrt,
-    Square,
-    Degrees,
-    Exp,
-    Log10,
+    Cos,    //tested
+    Sin,    //tested
+    Cot,    //tested
+    Tan,    //tested
+    Sqrt,   //tested
+    Square, //tested
+    Degrees,    //returns floor of the answer
+    Exp,    //tested
+    Log10,  //tested
     Log,
     Power,
     Round,
-    Radians,
+    Radians,    //returns 0 (or again floor?!)
     Sign,
 }

@@ -46,7 +46,7 @@ public class MathNode : ProcessorNode
             _ => throw new ArgumentOutOfRangeException(nameof(Function), Function, null)
         };
         if (NewColumn) newHeaders.Add(newColumnExpression);
-        else newHeaders[newHeaders.IndexOf(ColumnName)] = newColumnExpression;
+        else newHeaders[newHeaders.IndexOf($"[{ColumnName}]")] = newColumnExpression;
         return newHeaders;
     }
 }

@@ -6,5 +6,7 @@ public enum NodeType
     SourceNode,
     Selector,
     Custom,
-    Split
+    Split,
+    Strings,
+    Math,
 }
