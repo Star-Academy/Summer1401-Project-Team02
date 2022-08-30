@@ -1,6 +1,6 @@
 // VARIABLES
 :root {
-    --primary-hue: 220;
+    --primary-hue: 208;
     --secondary-hue: 260;
     --success-hue: 120;
     --warning-hue: 20;
@@ -21,9 +21,9 @@
     --color-default-background: var(--color-gray-98);
     --color-default-foreground: var(--color-gray-10);
 
-    --color-primary: hsl(var(--primary-hue) 100% 56%);
+    --color-primary: hsl(var(--primary-hue) 100% 54%);
     --color-primary-fade: hsl(var(--primary-hue) 100% 96%);
-    --color-primary-lighter: hsl(var(--primary-hue) 100% 60%);
+    --color-primary-lighter: hsl(var(--primary-hue) 100% 92%);
     --color-primary-darker: hsl(var(--primary-hue) 100% 52%);
     --color-primary-opposite: var(--color-gray-98);
 
@@ -155,10 +155,6 @@ input {
     &[type="file"] {
         display: none;
     }
-}
-
-img {
-    display: block;
 }
 
 // MAIN

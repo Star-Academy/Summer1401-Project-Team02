@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -6,11 +7,19 @@ import {Component} from '@angular/core';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-    public dropDownText = 'select an app';
+    public dropDownText: string;
+
+    public isInPipeline: boolean = true;
+    public title: string;
     public executeLoading = false;
 
-    public setDropDownText(text: string): void {
-        this.dropDownText = text;
+    public constructor(private router: Router) {
+        if (this.router.url === '/data-inventory') this.isInPipeline = false;
+        this.title = this.isInPipeline ? 'Pipeline' : 'Data inventory';
+        this.dropDownText = this.isInPipeline ? 'Pipeline' : 'Data inventory';
     }
-    public onBack(): void {}
+
+    public onBack(): void {
+        this.router.navigateByUrl('/');
+    }
 }

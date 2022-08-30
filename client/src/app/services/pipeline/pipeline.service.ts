@@ -4,7 +4,7 @@ import {SourceNodeModel} from '../../models/source-node.model';
 import {ColumnSelectorNodeModel} from '../../models/column-selector-node.model';
 import {NodeType} from '../../enums/node-type';
 import {ApiService} from '../api/api.service';
-import {API_EXECUTE, API_GET_COLUMNS_HEADING} from '../../utils/api.utils';
+import {API_EXECUTE, API_GET_COLUMNS_HEADING, API_PREVIEW} from '../../utils/api.utils';
 
 type PipelineNodeModel = DestinationNodeModel | SourceNodeModel | ColumnSelectorNodeModel;
 
@@ -15,6 +15,7 @@ export class PipelineService {
     public nodes: PipelineNodeModel[] = [];
 
     public lastExecuteResult: any | null = null;
+    public previewContent: any | null = null;
 
     public selectedPreviousNode: string = '';
     public selectedNextNode: string = '';
@@ -93,7 +94,12 @@ export class PipelineService {
         else this.lastExecuteResult = null;
     }
 
-    public preview(): void {}
+    public async preview(): Promise<void> {
+        const requestUrl = `${API_PREVIEW}?pipelineJson=${this.convertToDictionary()}&id=${this.selectedIdNode}`;
+        const response = await this.apiService.getRequest<string>({url: requestUrl});
+
+        if (response) this.previewContent = JSON.parse(response);
+    }
 
     private convertToDictionary(): string {
         const dictionary: any = {};

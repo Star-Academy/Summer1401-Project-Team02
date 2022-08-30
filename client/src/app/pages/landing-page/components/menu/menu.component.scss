@@ -1,0 +1,24 @@
+.container {
+    display: grid;
+    grid-template-areas: "data-inventory pipeline";
+
+    padding: 2rem;
+
+    img {
+        width: 59%;
+    }
+
+    .data-inventory,
+    .pipeline {
+        display: grid;
+        place-items: center;
+    }
+
+    .data-inventory {
+        grid-area: data-inventory;
+    }
+
+    .pipeline {
+        grid-area: pipeline;
+    }
+}
