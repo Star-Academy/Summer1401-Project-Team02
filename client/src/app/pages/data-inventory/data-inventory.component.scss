@@ -44,18 +44,3 @@
 .search-button {
     margin-inline-end: 0.8rem;
 }
-
-.editable-cell {
-    position: relative;
-
-    padding: 0.5rem 1.2rem;
-
-    cursor: pointer;
-}
-
-.editable-row:hover .editable-cell {
-    padding: 0.4rem 1.1rem;
-
-    border: 0.1rem solid var(--color-gray-98);
-    border-radius: 0.4rem;
-}

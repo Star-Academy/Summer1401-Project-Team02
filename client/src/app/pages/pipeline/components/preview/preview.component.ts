@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 
 @Component({
     selector: 'app-preview',
@@ -7,8 +8,21 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class PreviewComponent {
     public isCollapse = false;
-
     @Output() public isCollapseChange = new EventEmitter<boolean>();
+
+    public get keys(): string[] {
+        return Object.keys(this.pipelineService.previewContent[0]);
+    }
+
+    public get values(): any[] {
+        const table: any[] = [];
+        this.pipelineService.previewContent.forEach((obj: any) => {
+            table.push(Object.values(obj));
+        });
+        return table;
+    }
+
+    public constructor(public pipelineService: PipelineService) {}
 
     public changeCollapseState(): void {
         this.isCollapse = !this.isCollapse;

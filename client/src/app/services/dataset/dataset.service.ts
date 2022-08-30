@@ -10,7 +10,7 @@ export class DatasetService {
     public tables: any | null = null;
     public constructor(private apiService: ApiService) {}
 
-    public async sendDestination(file: FileModal): Promise<boolean> {
+    public async sendDestination(file: FileModal): Promise<FileModal | null> {
         const response = await this.apiService.postRequest<FileModal>({
             url: API_SEND_DESTINATION_NAME,
             body: JSON.stringify(file.tableName),
@@ -20,9 +20,8 @@ export class DatasetService {
                 },
             },
         });
-        if (!response) return false;
-
-        return true;
+        if (response) return JSON.parse(response);
+        else return null;
     }
 
     public async getTables(): Promise<void> {

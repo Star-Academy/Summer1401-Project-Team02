@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>select you want to remove or select columns, then select the columns and click save button</p>
+    <br />
+    <div>
+        <div>
+            choose select or remove
+
+            <nz-select [ngModel]="selectType" (ngModelChange)="selectTypeChange($event)">
+                <nz-option [nzValue]="select" [nzLabel]="select"></nz-option>
+
+                <nz-option [nzValue]="remove" [nzLabel]="remove"></nz-option>
+            </nz-select>
+        </div>
+        <div>
+            choose columns
+
+            <nz-select
+                nzMode="multiple"
+                nzPlaceHolder="Select columns"
+                nzAllowClear
+                [ngModel]="selectedColumns"
+                (ngModelChange)="setColumns($event)"
+            >
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+    </div>
+</div>
+<!--<nz-select [(ngModel)]="multipleValue" [nzSize]="size" nzMode="multiple" nzPlaceHolder="Please select">-->
+<!--    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>-->
+<!--</nz-select>-->
+<!--<br />-->
+<!--<br />-->
+<!--<nz-select [(ngModel)]="tagValue" [nzSize]="size" nzMode="tags" nzPlaceHolder="Please select">-->
+<!--    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>-->
+<!--</nz-select>-->

@@ -14,22 +14,22 @@ export class ApiService {
         };
     }
 
-    public async getRequest<T>(options: GetRequestOptions): Promise<T | null> {
+    public async getRequest<T>(options: GetRequestOptions): Promise<string | null> {
         return await this.fetchRequest<T>(options, options.init);
     }
 
-    public async postRequest<T>(options: PostRequestOptions): Promise<T | null> {
+    public async postRequest<T>(options: PostRequestOptions): Promise<string | null> {
         const init = ApiService.generatePostRequestInit(options);
         return await this.fetchRequest<T>(options, init);
     }
 
-    private async fetchRequest<T>(options: RequestOptions, init?: RequestInit): Promise<T | null> {
+    private async fetchRequest<T>(options: RequestOptions, init?: RequestInit): Promise<string | null> {
         const {url, showError = true} = options;
 
         const response = await fetch(url, init);
         const data = await response.text();
 
-        if (response.ok) return data as any;
+        if (response.ok) return data;
 
         return null;
     }

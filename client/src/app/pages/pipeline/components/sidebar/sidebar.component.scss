@@ -1,13 +1,18 @@
 .wrapper {
     position: relative;
 
+    display: flex;
+    flex-direction: column;
+
+    block-size: 100%;
+
     div {
         background-color: var(--color-gray-98);
         box-shadow: -0.3rem 0 0.5rem 0 var(--color-box-shadow-subtle);
 
         position: absolute;
-        inset-block-start: 5rem;
-        inset-inline-start: -6rem;
+        inset-block-start: 4rem;
+        inset-inline-start: -4rem;
 
         block-size: 5.6rem;
         inline-size: 4rem;
@@ -24,5 +29,20 @@
         i.collapsed {
             transform: rotate(180deg);
         }
+    }
+
+    header,
+    footer {
+        padding: 2rem;
+    }
+
+    section {
+        flex: 1;
+    }
+
+    footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 }
