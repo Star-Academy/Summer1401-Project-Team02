@@ -2,7 +2,8 @@ namespace Server.Enums;
 
 public enum MathFunction
 {
-    Abs,
+    //Does not have "second"
+    Abs,    //tested
     Floor,  //tested
     Ceiling,    //tested
     Cos,    //tested
@@ -14,9 +15,11 @@ public enum MathFunction
     Degrees,    //returns floor of the answer if int
     Exp,    //tested
     Log10,  //tested
+    Radians,    //returns floor if int
+    Sign,   //tested
+    
+    //has "second":
     Log,    //tested
     Power,  //tested, but the float error is sometimes big...
     Round,  //tested
-    Radians,    //returns floor if int
-    Sign,
 }

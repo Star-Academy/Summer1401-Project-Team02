@@ -55,7 +55,8 @@ public class TempUtils
         var s = new SourceNode();
         var d = new DestinationNode();
         // var split = new SplitNode();
-        var math = new MathNode();
+        // var math = new MathNode();
+        var strings = new StringsNode();
         
         // split.Id = "custom";
         // split._NodeType = NodeType.Split;
@@ -64,17 +65,24 @@ public class TempUtils
         // split._numberOfParts = 2;
         // split._previousNode = "source";
         // split.replace = false;
-        math.Id = "custom";
-        math._NodeType = NodeType.Math;
-        math._previousNode = "source";
-        math.Function = MathFunction.Round;
-        math.NewColumn = true;
-        math.ColumnName = "average grade";
-        math.Second = "0";
+        // math.Id = "custom";
+        // math._NodeType = NodeType.Math;
+        // math._previousNode = "source";
+        // math.Function = MathFunction.Round;
+        // math.NewColumn = true;
+        // math.ColumnName = "average grade";
+        // math.Second = "0";
+        strings.Id = "custom";
+        strings._NodeType = NodeType.Strings;
+        strings._previousNode = "source";
+        strings.Function = StringsFunction.Lower;
+        strings.NewColumn = true;
+        strings.ColumnName = "email";
+        // strings.Second = "0";
 
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "Giant_csv";
+        s._tableName = "Giant1_csv";
         
         d.Id = "dest";
         d.tableName = "output1";
@@ -86,7 +94,7 @@ public class TempUtils
             { "source", s },
             { "dest", d },
             // { "custom", split}
-            {"custom", math}
+            {"custom", strings}
         };
         var p = new Pipeline
         {
