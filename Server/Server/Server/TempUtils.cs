@@ -55,7 +55,7 @@ public class TempUtils
         var s = new SourceNode();
         var d = new DestinationNode();
         // var split = new SplitNode();
-        // var math = new MathNode();
+        // var math = new NumbersNode();
         // var strings = new StringsNode();
         var filter = new FilterNode();
         
@@ -67,9 +67,9 @@ public class TempUtils
         // split._previousNode = "source";
         // split.replace = false;
         // math.Id = "custom";
-        // math._NodeType = NodeType.Math;
+        // math._NodeType = NodeType.Numbers;
         // math._previousNode = "source";
-        // math.Function = MathFunction.Round;
+        // math.Function = NumbersFunction.Round;
         // math.NewColumn = true;
         // math.ColumnName = "average grade";
         // math.Second = "0";

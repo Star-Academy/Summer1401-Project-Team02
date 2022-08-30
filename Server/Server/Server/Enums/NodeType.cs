@@ -8,6 +8,6 @@ public enum NodeType
     Custom,
     Split,
     Strings,
-    Math,
+    Numbers,
     Filter,
 }

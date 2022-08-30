@@ -1,6 +1,6 @@
 namespace Server.Enums;
 
-public enum MathFunction
+public enum NumbersFunction
 {
     //Does not have "second"
     Abs,    //tested

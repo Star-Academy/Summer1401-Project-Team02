@@ -1,6 +1,6 @@
 namespace Server.Enums;
 
-public static class MathFunctionFormat
+public static class NumbersFunctionFormat
 {
     public const string Abs = $"ABS([{{0}}]) AS {{1}}";
     public const string Floor = $"FLOOR([{{0}}]) AS {{1}}";
