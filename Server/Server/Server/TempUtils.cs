@@ -56,7 +56,8 @@ public class TempUtils
         var d = new DestinationNode();
         // var split = new SplitNode();
         // var math = new MathNode();
-        var strings = new StringsNode();
+        // var strings = new StringsNode();
+        var filter = new FilterNode();
         
         // split.Id = "custom";
         // split._NodeType = NodeType.Split;
@@ -72,13 +73,19 @@ public class TempUtils
         // math.NewColumn = true;
         // math.ColumnName = "average grade";
         // math.Second = "0";
-        strings.Id = "custom";
-        strings._NodeType = NodeType.Strings;
-        strings._previousNode = "source";
-        strings.Function = StringsFunction.Lower;
-        strings.NewColumn = true;
-        strings.ColumnName = "email";
+        // strings.Id = "custom";
+        // strings._NodeType = NodeType.Strings;
+        // strings._previousNode = "source";
+        // strings.Function = StringsFunction.Lower;
+        // strings.NewColumn = true;
+        // strings.ColumnName = "email";
         // strings.Second = "0";
+        filter.Id = "custom";
+        filter._NodeType = NodeType.Filter;
+        filter._previousNode = "source";
+        filter._columnName = "email";
+        filter._operator = ColumnFilteringOperation.IsNull;
+        filter.value = "";
 
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
@@ -94,7 +101,7 @@ public class TempUtils
             { "source", s },
             { "dest", d },
             // { "custom", split}
-            {"custom", strings}
+            {"custom", filter}
         };
         var p = new Pipeline
         {

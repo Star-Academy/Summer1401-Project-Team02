@@ -4,9 +4,9 @@ namespace Server.Models.Nodes;
 
 public class FilterNode : ProcessorNode
 {
-    private readonly string _columnName;
-    private readonly ColumnFilteringOperation _operator;
-    private readonly string value;
+    public string _columnName;
+    public ColumnFilteringOperation _operator;
+    public string value;
     
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node> nodes)

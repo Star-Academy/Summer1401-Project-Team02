@@ -9,4 +9,5 @@ public enum NodeType
     Split,
     Strings,
     Math,
+    Filter,
 }
