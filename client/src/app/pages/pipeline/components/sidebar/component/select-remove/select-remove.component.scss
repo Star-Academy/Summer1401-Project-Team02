@@ -1,13 +1,10 @@
 .wrapper {
-    //background-color: var(--color-gray-90);
-
     overflow: auto;
 
     block-size: 100%;
 
     padding: 1rem 2rem;
 
-    //border-block-start: 0.1rem solid var(--color-gray-85);
     border-block-end: 0.1rem solid var(--color-gray-85);
 
     > div {

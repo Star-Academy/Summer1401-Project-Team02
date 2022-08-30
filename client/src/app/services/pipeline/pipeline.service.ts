@@ -38,28 +38,28 @@ export class PipelineService {
     private creatNode(nodeType: NodeType): PipelineNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
             return {
-                _NodeType: NodeType.SourceNode,
+                _NodeType: nodeType,
                 _previousNode: '',
                 _tableName: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Selector) {
             return {
-                _NodeType: NodeType.Selector,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _columns: [],
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.DestinationNode) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _tableName: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Custom) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _first: '',
                 _second: '',
@@ -67,7 +67,7 @@ export class PipelineService {
             };
         } else if (nodeType === NodeType.Split) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _columnName: '',
                 _delimeter: '',
@@ -77,7 +77,7 @@ export class PipelineService {
             };
         } else if (nodeType === NodeType.Math) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 columnName: '',
                 second: '',
@@ -87,7 +87,7 @@ export class PipelineService {
             };
         } else if (nodeType === NodeType.Strings) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 columnName: '',
                 second: '',
@@ -99,7 +99,6 @@ export class PipelineService {
     }
 
     public addNode(nodeType: NodeType): void {
-        debugger;
         const node = this.creatNode(nodeType);
         if (!node) return;
         this.nodes.forEach((n) => {
