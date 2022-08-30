@@ -53,8 +53,8 @@ public class DataInventoryService :  IDataInventoryService
         
     public MemoryStream Download(string tableName, string format)
     {
-        var dataTable = _database.GetTable(tableName);
         var parser = MapToParser(format);
+        var dataTable = _database.GetTable(tableName);
         var csvString = parser.ParseFromDataTable(dataTable);
         return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
     }
