@@ -13,7 +13,7 @@ public class StringsNode : ProcessorNode
         if (executionType == ExecutionType.Heading && HeaderQueryString != null) return HeaderQueryString;
         var previousNode = nodes.GetValueOrDefault(_previousNode)!; 
         var newHeaders = GetNewHeaders(previousNode);
-        string answer = string.Format(QueryStrings.Numbers, string.Join(", ", newHeaders),
+        string answer = string.Format(QueryStrings.Strings, string.Join(", ", newHeaders),
             previousNode.Execute(executionType, nodes));
         if (executionType == ExecutionType.Heading) HeaderQueryString = answer;
         return answer;
