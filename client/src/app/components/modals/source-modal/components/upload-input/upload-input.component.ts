@@ -11,7 +11,12 @@ import {DatasetService} from '../../../../../services/dataset/dataset.service';
     styleUrls: ['./upload-input.component.scss'],
 })
 export class UploadInputComponent {
-    public constructor(private msg: NzMessageService, public datasetService: DatasetService,private pipelineService: PipelineService) {}
+    private n: number = 1;
+    public constructor(
+        private msg: NzMessageService,
+        public datasetService: DatasetService,
+        private pipelineService: PipelineService
+    ) {}
 
     public uploadH = {
         accept: 'text/plain',
@@ -19,16 +24,21 @@ export class UploadInputComponent {
     public handleChange({file}: NzUploadChangeParam): void {
         const status = file.status;
 
-        if (status !== 'uploading') {
-            const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-            sourceNode._tableName = file.response.tableName;
-
-            this.pipelineService.editNode(sourceNode);
+        if (status === 'uploading') {
+            if (this.n === 1) {
+                this.msg.loading('file uploaded successfully.');
+                this.n++;
+            }
         }
         if (status === 'done') {
             this.msg.success(`${file.name} file uploaded successfully.`);
-            this.datasetService.getTables();
-            this.pipelineService.preview();
+            const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
+            if (sourceNode) {
+                sourceNode._tableName = file.response.tableName;
+
+                this.pipelineService.editNode(sourceNode);
+                this.pipelineService.preview();
+            } else this.datasetService.getTables();
         } else if (status === 'error') {
             this.msg.error(`${file.name} file upload failed.`);
         }
