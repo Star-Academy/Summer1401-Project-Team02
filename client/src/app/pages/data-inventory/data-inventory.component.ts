@@ -14,7 +14,7 @@ interface ItemData {
 export class DataInventoryComponent {
     public searchValue = '';
     public visible!: boolean;
-    public listOfDisplayData!: ItemData[];
+    public listOfDisplayData: ItemData[] = this.datasetService.tables;
 
     public constructor(public modalService: ModalService, public datasetService: DatasetService) {
         this.datasetService.getTables();
@@ -23,10 +23,11 @@ export class DataInventoryComponent {
     public reset(): void {
         this.searchValue = '';
         this.search();
+        this.datasetService.getTables();
     }
     public search(): void {
         this.visible = false;
-        this.listOfDisplayData = this.datasetService.tables.filter(
+        this.datasetService.tables = this.datasetService.tables.filter(
             (item: ItemData) => item._tableName.indexOf(this.searchValue) !== -1
         );
     }
