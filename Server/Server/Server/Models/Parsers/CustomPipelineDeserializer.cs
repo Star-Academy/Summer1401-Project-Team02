@@ -38,6 +38,8 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new NumbersNode();
                 case NodeType.Filter:
                     return new FilterNode();
+                case NodeType.Math:
+                    return new MathNode();
                 default:
                     throw new NotImplementedException();
             }
