@@ -29,6 +29,7 @@ export class SelectRemoveComponent implements OnInit, OnChanges {
         this.columns = await this.pipelineService.getColumnsHeader();
 
         this.selectNode = this.pipelineService.getSelectedNode() as ColumnSelectorNodeModel;
+        this.selectedColumns = this.selectNode._columns;
         this.isLoading = false;
     }
     public ngOnChanges(changes: SimpleChanges): void {
