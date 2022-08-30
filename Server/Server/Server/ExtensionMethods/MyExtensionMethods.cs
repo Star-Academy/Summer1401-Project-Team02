@@ -19,6 +19,11 @@ public static class MyExtensionMethods
     public static string Hash(this IFormFile file)
     {
         return file.FileName.Replace(".", "_");
-    } 
-    
+    }
+
+    public static string CreateId()
+    {
+        return Guid.NewGuid().ToString();
+    }
+
 }

@@ -21,21 +21,23 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-        
-        var tableInfo = new TableInfo(file.Hash(), DateTime.Now);
-        _database.CreateTable(dataTable, file.Hash());
-        _database.ImportDataTable(dataTable, file.Hash());
+
+        string id = MyExtensionMethods.CreateId();
+        var tableInfo = new TableInfo(id, file.Name, DateTime.Now);
+        _database.CreateTable(dataTable, file.Name);
+        _database.ImportDataTable(dataTable, file.Name);
         _database.addToAllTablesInventory(tableInfo);
-        return $"{{ \"tableName\" : \"{file.Hash()}\" }}";
+        return $"{{ \"tableID\" : \"{id}\" }}";
     }
 
 
     public string AddDestination(string name)
     {
-        var tableInfo = new TableInfo(name, DateTime.Now);
+        string id = MyExtensionMethods.CreateId();
+        var tableInfo = new TableInfo(id, name, DateTime.Now);
         _database.CreateTable(name);
         _database.addToAllTablesInventory(tableInfo);
-        return $"{{ \"tableName\" : \"{name}\" }}";
+        return $"{{ \"tableID\" : \"{id}\" }}";
     }
 
     private IParser MapToParser(string fileType)
@@ -63,7 +65,7 @@ public class DataInventoryService :  IDataInventoryService
     {
         var dataTable = _database.GetTable(Config.dataInventoryTableName);
         var tablesList = (from row in dataTable.AsEnumerable()
-            select new TableInfo(Convert.ToString(row["tableName"]), Convert.ToDateTime(row["dateAndTime"]))).ToList();
+            select new TableInfo(Convert.ToString(row["id"]),Convert.ToString(row["tableName"]), Convert.ToDateTime(row["dateAndTime"]))).ToList();
         return tablesList;
     }
 

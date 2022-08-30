@@ -35,12 +35,12 @@ public class SqlDatabase : IDatabase
 
     public void CreateTable(DataTable dataTable, string tableName)
     {
-        ExecuteCommand($"Drop Table if EXISTS {tableName};\n{GenerateCreateTableQuery(tableName, dataTable)}");
+        ExecuteCommand($"Drop Table if EXISTS [{tableName}];\n{GenerateCreateTableQuery(tableName, dataTable)}");
     }
 
     public void CreateTable(string tableName)
     {
-            ExecuteCommand($"Drop Table if EXISTS {tableName};\nCreate Table {tableName} (dummy int);");
+            ExecuteCommand($"Drop Table if EXISTS [{tableName}];\nCreate Table [{tableName}] (dummy int);");
     }
 
     public void addToAllTablesInventory(TableInfo tableInfo)
