@@ -1,9 +1,16 @@
+@import "src/styles";
+
 .wrapper {
-    overflow: auto;
+    @include sidebar-node-wrapper;
 
-    block-size: 100%;
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
 
-    padding: 1rem 2rem;
-
-    border-block-end: 0.1rem solid var(--color-gray-85);
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }

@@ -1,1 +1,47 @@
-<p>split works!</p>
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>Convert your columns to more than a few columns based on the delimiter you want</p>
+    <br />
+
+    <div>
+        <div>
+            choose column name
+            <nz-select [(ngModel)]="columnName" (ngModelChange)="columnNameChange($event)">
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+        <div>
+            write your delimiter
+            <input
+                nz-input
+                autofocus
+                id="second_input"
+                name="delimiter"
+                type="text"
+                [(ngModel)]="delimiter"
+                (ngModelChange)="delimiterChange($event)"
+                required
+            />
+        </div>
+        <div>
+            number of parts
+            <nz-input-number
+                [(ngModel)]="numberOfParts"
+                (ngModelChange)="numberOfPartChange($event)"
+                [nzMin]="0"
+                [nzStep]="1"
+            ></nz-input-number>
+        </div>
+        <div>
+            overwrite this column in dataset
+            <nz-switch [(ngModel)]="wantsToReplace" (ngModelChange)="wantToReplaceChange($event)"></nz-switch>
+        </div>
+    </div>
+</div>

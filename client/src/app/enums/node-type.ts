@@ -5,5 +5,7 @@ export enum NodeType {
     Custom,
     Split,
     Strings,
+    Numbers,
+    Filter,
     Math,
 }

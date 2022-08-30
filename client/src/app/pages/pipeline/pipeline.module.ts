@@ -19,6 +19,9 @@ import {CustomComponent} from './components/sidebar/component/custom/custom.comp
 import {MathComponent} from './components/sidebar/component/math/math.component';
 import {SplitComponent} from './components/sidebar/component/split/split.component';
 import {StringComponent} from './components/sidebar/component/string/string.component';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
+import {NzSwitchModule} from 'ng-zorro-antd/switch';
 
 @NgModule({
     declarations: [
@@ -43,6 +46,9 @@ import {StringComponent} from './components/sidebar/component/string/string.comp
         NzTableModule,
         HeaderModule,
         NzSelectModule,
+        NzInputModule,
+        NzInputNumberModule,
+        NzSwitchModule,
     ],
 })
 export class PipelineModule {}
