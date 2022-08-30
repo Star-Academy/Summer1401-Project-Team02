@@ -25,7 +25,7 @@ public class PipelineController : Controller
     public IActionResult Execute([FromBody] string pipelineJson)
     {
         _logger.LogInformation(TempUtils.GeneratePipelineJson2());
-        //  "{\"Nodes\":{\"source\":{\"_tableName\":\"dataset_csv\",\"Id\":\"source\",\"_NodeType\":1},\"dest\":{\"_previousNode\":\"custom\",\"tableName\":\"output1\",\"Id\":\"dest\",\"_NodeType\":0},\"custom\":{\"first\":\"[short bio]\",\"second\":\" \",\"_previousNode\":\"source\",\"Id\":\"custom\",\"_NodeType\":3}}}\n"
+        // {"Nodes":{"source":{"_tableName":"Iran_csv","Id":"source","_NodeType":1},"dest":{"tableName":"output1","Id":"dest","_NodeType":0,"_previousNode":"custom"},"custom":{"_columnName":"fullname","_delimeter":" ","_numberOfParts":2,"replace":false,"Id":"custom","_NodeType":4,"_previousNode":"source"}}}
         try
         { 
             return Ok(_pipelineService.Execute(CustomPipelineDeserializer.Deserialize(pipelineJson)));
@@ -46,7 +46,7 @@ public class PipelineController : Controller
     [HttpGet]
     public IActionResult GetHeading(string pipelineJson, string id)
     {
-        // {"Nodes":{"source":{"_tableName":"dataset_csv","Id":"source","_NodeType":1},"dest":{"_previousNode":"custom","tableName":"output1","Id":"dest","_NodeType":0},"custom":{"first":"[short bio]","second":" ","_previousNode":"source","Id":"custom","_NodeType":3}}}
+        // {"Nodes":{"source":{"_tableName":"Iran_csv","Id":"source","_NodeType":1},"dest":{"tableName":"output1","Id":"dest","_NodeType":0,"_previousNode":"custom"},"custom":{"_columnName":"fullname","_delimeter":" ","_numberOfParts":2,"replace":false,"Id":"custom","_NodeType":4,"_previousNode":"source"}}}
         try
         {
             return Ok(_pipelineService.GetHeading(CustomPipelineDeserializer.Deserialize(pipelineJson), id));
