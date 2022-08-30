@@ -54,15 +54,22 @@ public class TempUtils
     {
         var s = new SourceNode();
         var d = new DestinationNode();
-        var split = new SplitNode();
+        // var split = new SplitNode();
+        var math = new MathNode();
         
-        split.Id = "custom";
-        split._NodeType = NodeType.Split;
-        split._delimeter = " ";
-        split._columnName = "fullname";
-        split._numberOfParts = 2;
-        split._previousNode = "source";
-        split.replace = false;
+        // split.Id = "custom";
+        // split._NodeType = NodeType.Split;
+        // split._delimeter = " ";
+        // split._columnName = "fullname";
+        // split._numberOfParts = 2;
+        // split._previousNode = "source";
+        // split.replace = false;
+        math.Id = "custom";
+        math._NodeType = NodeType.Math;
+        math._previousNode = "source";
+        math.Function = MathFunction.Cos;
+        math.NewColumn = true;
+        math.ColumnName = "id";
 
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
@@ -77,7 +84,8 @@ public class TempUtils
         {
             { "source", s },
             { "dest", d },
-            { "custom", split}
+            // { "custom", split}
+            {"custom", math}
         };
         var p = new Pipeline
         {
