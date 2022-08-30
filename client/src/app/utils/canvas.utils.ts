@@ -32,6 +32,7 @@ export const canvas: any = {
 
     mousewheel: {
         enabled: true,
+        global: true,
         modifiers: ['ctrl', 'meta'],
     },
 };
@@ -57,6 +58,7 @@ export const REGISTER_EDGE: any = {
             targetMarker: null,
             connection: true,
             fill: 'none',
+            strokeDasharray: '',
         },
         offsetLabelMarker: {
             atConnectionRatio: 0.5,
@@ -73,7 +75,7 @@ export const REGISTER_EDGE: any = {
 };
 export const REGISTER_NODE: any = {
     width: 180,
-    height: 90,
+    height: 100,
 
     markup: [
         {
@@ -96,44 +98,16 @@ export const REGISTER_NODE: any = {
             },
         },
         {
-            tagName: 'g',
+            tagName: 'image',
             attrs: {
-                class: 'btn add',
+                class: 'add',
             },
-            children: [
-                {
-                    tagName: 'circle',
-                    attrs: {
-                        class: 'add',
-                    },
-                },
-                {
-                    tagName: 'text',
-                    attrs: {
-                        class: 'add',
-                    },
-                },
-            ],
         },
         {
-            tagName: 'g',
+            tagName: 'image',
             attrs: {
-                class: 'btn del',
+                class: 'delete',
             },
-            children: [
-                {
-                    tagName: 'circle',
-                    attrs: {
-                        class: 'del',
-                    },
-                },
-                {
-                    tagName: 'text',
-                    attrs: {
-                        class: 'del',
-                    },
-                },
-            ],
         },
     ],
     attrs: {
@@ -149,7 +123,7 @@ export const REGISTER_NODE: any = {
         },
         '.image': {
             x: 60,
-            y: 15,
+            y: 10,
             width: 60,
             height: 60,
             opacity: 0.7,
@@ -157,52 +131,27 @@ export const REGISTER_NODE: any = {
         },
         '.name': {
             refX: 0.5,
-            refY: 100,
+            refY: 77,
             fill: '#000',
             fontFamily: 'Arial',
             fontSize: 14,
             fontWeight: '600',
             textAnchor: 'middle',
         },
-        '.btn.add': {
-            refDx: -16,
-            refY: 16,
+        '.add': {
+            refDx: -25,
+            refDy: -25,
+            width: 0,
+            height: 0,
+            xlinkHref: 'assets/plus.webp',
             event: 'node:add',
         },
-        '.btn.del': {
-            refDx: -44,
-            refY: 16,
+        '.delete': {
+            refDx: -30,
+            width: 0,
+            height: 0,
+            xlinkHref: 'assets/delete.webp',
             event: 'node:delete',
-        },
-        '.btn > circle': {
-            r: 0,
-            strokeWidth: 1,
-        },
-        '.btn.add > circle': {
-            fill: '#28a745',
-            stroke: '#367845',
-        },
-        '.btn.del > circle': {
-            fill: '#dc3545',
-            stroke: '#8c323b',
-        },
-        '.btn.add > text': {
-            fontSize: 0,
-            fontWeight: 800,
-            fill: '#fff',
-            x: -5.5,
-            y: 7,
-            fontFamily: 'Times New Roman',
-            text: '+',
-        },
-        '.btn.del > text': {
-            fontSize: 0,
-            fontWeight: 500,
-            fill: '#fff',
-            x: -4.5,
-            y: 6,
-            fontFamily: 'Times New Roman',
-            text: '-',
         },
     },
 };

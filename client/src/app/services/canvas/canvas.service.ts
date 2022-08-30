@@ -32,6 +32,12 @@ export class CanvasService {
             .x6-cell {
                 cursor: pointer;
             }
+            
+            @keyframes running-line {
+                to {
+                    stroke-dashoffset: -1000;
+                }
+            }
         `);
 
         Graph.registerEdge('org-edge', REGISTER_EDGE, true);
@@ -58,6 +64,19 @@ export class CanvasService {
                 width: 2000,
                 // minVisibleHeight: 20,
                 pannable: true,
+            },
+            mousewheel: {
+                enabled: true,
+                global: true,
+                modifiers: ['ctrl', 'meta'],
+            },
+            selecting: {
+                enabled: true,
+                multiple: true,
+                rubberEdge: true,
+                rubberNode: true,
+                modifiers: ['ctrl', 'alt'],
+                rubberband: true,
             },
             // ...canvas,
         });
@@ -148,13 +167,40 @@ export class CanvasService {
         this.pipelineService.nodes.forEach((node) => {
             const current = this.canvasNodes.find((x: any) => x.store.data._ID === node.id);
             const pre = this.canvasNodes.find((x: any) => x.store.data._ID === node._previousNodesId);
-            console.log(node._previousNodesId, pre, node.id, current);
             // if (pre && current) this.createEdge(pre, current, node._previousNodesId, node.id);
             if (pre && current)
                 this.graph.addCell([
                     current,
                     this.createEdge(pre, current, pre.store.data._ID, current.store.data._ID),
                 ]);
+        });
+    }
+
+    public running(status: boolean): void {
+        const edges = this.graph.getEdges();
+        console.log(edges);
+        edges?.forEach((edge) => {
+            if (status) {
+                edge.attr('line/strokeDasharray', 5);
+                edge.attr('line/style/animation', 'running-line 30s infinite linear');
+            } else {
+                edge.attr('line/strokeDasharray', '');
+                edge.attr('line/style/animation', '');
+            }
+        });
+    }
+
+    public addDestinationsSituation(situations: any): void {
+        this.canvasNodes.forEach((node: any) => {
+            if (node.store.data.type === NodeType.DestinationNode) {
+                if (situations[node.store.data._ID].message === 'success') {
+                    node.attr('.card/stroke', '#019d01');
+                    node.attr('.card/fill', '#eaffea');
+                } else {
+                    node.attr('.card/stroke', '#ff0000');
+                    node.attr('.card/fill', '#ffecec');
+                }
+            }
         });
     }
 
@@ -173,6 +219,11 @@ export class CanvasService {
             e.stopPropagation();
             this.graph.freeze();
             let deleteNode: any;
+            if (node.store.data.type === NodeType.SourceNode) {
+                const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
+                selectedPipelineNode.tableName = '';
+                return;
+            }
             this.pipelineService.nodes.forEach((n, i) => {
                 if (n.id === node.store.data._ID) {
                     deleteNode = {...n};
@@ -215,52 +266,32 @@ export class CanvasService {
         });
 
         this.graph.on('node:mouseenter', ({node}: any) => {
+            this.pipelineService.selectedIdNode = node.store.data._ID;
+            this.pipelineService.selectedTypeNode = node.store.data.type;
             if (node.store.data.type !== NodeType.DestinationNode && node.store.data.type !== NodeType.SourceNode) {
-                node.attr('.btn.del > circle', {
-                    r: 10,
-                });
-                node.attr('.btn.add > circle', {
-                    r: 10,
-                });
-                node.attr('.btn.add > text', {
-                    fontSize: 20,
-                });
-                node.attr('.btn.del > text', {
-                    fontSize: 28,
-                });
+                node.attr('.delete/width', 30);
+                node.attr('.delete/height', 30);
+                node.attr('.add/width', 22);
+                node.attr('.add/height', 22);
             } else if (node.store.data.type === NodeType.SourceNode) {
-                node.attr('.btn.add > circle', {
-                    r: 10,
-                });
-                node.attr('.btn.add > text', {
-                    fontSize: 20,
-                });
+                node.attr('.add/width', 22);
+                node.attr('.add/height', 22);
+                const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
+                if (selectedPipelineNode?.tableName) {
+                    node.attr('.delete/width', 30);
+                    node.attr('.delete/height', 30);
+                }
             } else if (node.store.data.type === NodeType.DestinationNode) {
-                node.attr('.btn.del > circle', {
-                    r: 10,
-                });
-                node.attr('.btn.del > text', {
-                    fontSize: 28,
-                });
-                node.attr('.btn.del', {
-                    refDx: -16,
-                });
+                node.attr('.delete/width', 30);
+                node.attr('.delete/height', 30);
             }
         });
 
         this.graph.on('node:mouseleave', ({node}: any) => {
-            node.attr('.btn.add > circle', {
-                r: 0,
-            });
-            node.attr('.btn.del > circle', {
-                r: 0,
-            });
-            node.attr('.btn.add > text', {
-                fontSize: 0,
-            });
-            node.attr('.btn.del > text', {
-                fontSize: 0,
-            });
+            node.attr('.add/width', 0);
+            node.attr('.add/height', 0);
+            node.attr('.delete/width', 0);
+            node.attr('.delete/height', 0);
         });
     }
 }
