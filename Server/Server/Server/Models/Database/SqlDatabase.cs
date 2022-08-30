@@ -111,6 +111,8 @@ public class SqlDatabase : IDatabase
     {
         switch (type.ToString())
         {
+            case "System.Data.DataTable":
+            case "System.String[]":
             case "System.String":
                 return "nvarchar(max)";
 
@@ -121,6 +123,8 @@ public class SqlDatabase : IDatabase
                     return "BIGINT";
                 else
                     return "INT";
+            case "System.Boolean":
+                return "BIT";
 
             case "System.Double":
             case "System.Single":
