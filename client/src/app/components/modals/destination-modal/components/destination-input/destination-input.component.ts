@@ -26,11 +26,11 @@ export class DestinationInputComponent {
         const response = await this.datasetService.sendDestination(this.file);
         if (response) {
             this.messageService.create('success', 'success');
+            await this.datasetService.getTables();
             const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
             destinationNode._tableName = response.tableName;
 
             this.pipelineService.editNode(destinationNode);
-            this.datasetService.getTables();
         } else if (!response) this.messageService.create('error', 'error');
     }
 }

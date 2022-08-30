@@ -23,12 +23,13 @@
                 </th>
                 <th>Date</th>
                 <th>Download</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of editRowTable.data" class="editable-row">
-                <td>{{ data.tableName }}</td>
-                <td>{{ data.dateAndTime }}</td>
+                <td>{{ data._tableName }}</td>
+                <td>{{ data._dateTime }}</td>
 
                 <td>
                     <button nz-button nzType="link" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
@@ -36,11 +37,23 @@
                     </button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
-                            <a [href]="getDownloadUrl(data.tableName, 'csv')" download> <li nz-menu-item>csv</li></a>
+                            <a [href]="getDownloadUrl(data._tableName, 'csv')" download> <li nz-menu-item>csv</li></a>
 
-                            <a [href]="getDownloadUrl(data.tableName, 'json')" download> <li nz-menu-item>json</li></a>
+                            <a [href]="getDownloadUrl(data._tableName, 'json')" download> <li nz-menu-item>json</li></a>
                         </ul>
                     </nz-dropdown-menu>
+                </td>
+
+                <td>
+                    <button
+                        nz-button
+                        nzType="link"
+                        nz-popconfirm="true"
+                        nzPopconfirmTitle="Sure to delete?"
+                        (nzOnConfirm)="deleteRow(data._tableName)"
+                    >
+                        <span nz-icon nzType="delete" nzTheme="outline"></span>
+                    </button>
                 </td>
             </tr>
         </tbody>
