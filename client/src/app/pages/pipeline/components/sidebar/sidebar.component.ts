@@ -1,7 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 import {NodeType} from '../../../../enums/node-type';
-import {ColumnSelectorNodeModel} from '../../../../models/column-selector-node.model';
 
 @Component({
     selector: 'app-sidebar',
@@ -19,6 +18,14 @@ export class SidebarComponent {
         switch (this.pipelineService.selectedTypeNode) {
             case NodeType.Selector:
                 return 1;
+            case NodeType.Custom:
+                return 2;
+            case NodeType.Split:
+                return 3;
+            case NodeType.Math:
+                return 4;
+            case NodeType.Strings:
+                return 5;
             default:
                 return 0;
         }

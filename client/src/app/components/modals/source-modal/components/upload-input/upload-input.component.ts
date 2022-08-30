@@ -24,6 +24,7 @@ export class UploadInputComponent {
     public handleChange({file}: NzUploadChangeParam): void {
         const status = file.status;
 
+        //TODO ??
         if (status === 'uploading') {
             if (this.n === 1) {
                 this.msg.loading('file uploaded successfully.');

@@ -1,8 +1,9 @@
 <nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon="" [nzTitle]="title">
     <nz-page-header-extra>
         <nz-space>
-            <button *ngIf="isInPipeline" nz-button nzType="primary" nzSize="large">
-                <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+            <button *ngIf="isInPipeline" nz-button nzType="primary" nzSize="large" (click)="execute()">
+                <i *ngIf="!executeLoading" nz-icon nzType="play-circle" nzTheme="outline"></i>
+                <i *ngIf="executeLoading" nz-icon nzType="loading" class="loading-icon"></i>
                 Execute
             </button>
         </nz-space>

@@ -5,8 +5,19 @@ import {ColumnSelectorNodeModel} from '../../models/column-selector-node.model';
 import {NodeType} from '../../enums/node-type';
 import {ApiService} from '../api/api.service';
 import {API_EXECUTE, API_GET_COLUMNS_HEADING, API_PREVIEW} from '../../utils/api.utils';
+import {CustomNodeModel} from '../../models/custom-node.model';
+import {StringNodeModel} from '../../models/string-node.model';
+import {SplitNodeModel} from '../../models/split-node.model';
+import {MathNodeModel} from '../../models/math-node.model';
 
-type PipelineNodeModel = DestinationNodeModel | SourceNodeModel | ColumnSelectorNodeModel;
+type PipelineNodeModel =
+    | DestinationNodeModel
+    | SourceNodeModel
+    | ColumnSelectorNodeModel
+    | CustomNodeModel
+    | StringNodeModel
+    | SplitNodeModel
+    | MathNodeModel;
 
 @Injectable({
     providedIn: 'root',
@@ -24,7 +35,7 @@ export class PipelineService {
 
     public constructor(private apiService: ApiService) {}
 
-    public creatNode(nodeType: NodeType): SourceNodeModel | ColumnSelectorNodeModel | void {
+    private creatNode(nodeType: NodeType): PipelineNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
             return {
                 _NodeType: NodeType.SourceNode,
@@ -46,10 +57,49 @@ export class PipelineService {
                 _tableName: '',
                 id: Math.random().toString(),
             };
+        } else if (nodeType === NodeType.Custom) {
+            return {
+                _NodeType: NodeType.DestinationNode,
+                _previousNode: this.selectedPreviousNode,
+                _first: '',
+                _second: '',
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Split) {
+            return {
+                _NodeType: NodeType.DestinationNode,
+                _previousNode: this.selectedPreviousNode,
+                _columnName: '',
+                _delimeter: '',
+                _numberOfParts: 0,
+                replace: false,
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Math) {
+            return {
+                _NodeType: NodeType.DestinationNode,
+                _previousNode: this.selectedPreviousNode,
+                columnName: '',
+                second: '',
+                function: -1,
+                newColumn: false,
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Strings) {
+            return {
+                _NodeType: NodeType.DestinationNode,
+                _previousNode: this.selectedPreviousNode,
+                columnName: '',
+                second: '',
+                function: -1,
+                newColumn: false,
+                id: Math.random().toString(),
+            };
         }
     }
 
     public addNode(nodeType: NodeType): void {
+        debugger;
         const node = this.creatNode(nodeType);
         if (!node) return;
         this.nodes.forEach((n) => {
