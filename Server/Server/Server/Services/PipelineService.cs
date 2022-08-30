@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
+using Server.Models.Nodes;
 using Server.Models.Parsers;
 
 namespace Server.Services;
@@ -18,10 +19,9 @@ public class PipelineService : IPipelineService
         _database = database;
     }
 
-    private void Initialize(Pipeline pipeline)
+    private void Initialize(Pipeline pipeline, IEnumerable<Node> nodeList)
     {
-        var nodesList = pipeline.GetNodesList();
-        foreach (var node in nodesList)
+        foreach (var node in nodeList)
         {
             var queryString = string.Empty;
             if (node._NodeType == NodeType.SourceNode)
@@ -39,7 +39,7 @@ public class PipelineService : IPipelineService
 
     public Dictionary<string, string> Execute(Pipeline pipeline)
     {
-        Initialize(pipeline);
+        Initialize(pipeline, pipeline.GetNodesList());
         var result = new Dictionary<string, string>();
         foreach (var query in pipeline.Execute(ExecutionType.FullExecution))
         {
@@ -65,14 +65,14 @@ public class PipelineService : IPipelineService
 
     public List<string> GetHeading(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);
+        Initialize(pipeline, pipeline.GetNodePath(pipeline.Nodes.GetValueOrDefault(id)));
         var query = pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
         return _database.RunQuery(query).Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
     }
 
     public DataTable Preview(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);
+        Initialize(pipeline, pipeline.GetNodePath(pipeline.Nodes.GetValueOrDefault(id)));
         var node = pipeline.Nodes.GetValueOrDefault(id);
         var queryString = node.Execute(ExecutionType.Preview, pipeline.Nodes);
         return _database.RunQuery(queryString);

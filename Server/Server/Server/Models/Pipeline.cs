@@ -46,9 +46,14 @@ public class Pipeline
         var destinationNodes = FindDestinationNodes();
         foreach (var destinationNode in destinationNodes)
         {
-            nodesList.AddRange(destinationNode.GetPath(Nodes));
+            nodesList.AddRange(GetNodePath(destinationNode));
         }
 
         return nodesList;
+    }
+
+    public IEnumerable<Node> GetNodePath(Node node)
+    {
+        return node.GetPath(Nodes);
     }
 }
