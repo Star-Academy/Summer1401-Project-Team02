@@ -26,7 +26,7 @@ export class UploadInputComponent {
 
         if (status === 'uploading') {
             if (this.n === 1) {
-                this.msg.loading('file uploaded successfully.');
+                this.msg.loading(`Uploading ${file.name}...`);
                 this.n++;
             }
         }
