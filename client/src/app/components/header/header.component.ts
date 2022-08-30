@@ -7,6 +7,7 @@ import {Component} from '@angular/core';
 })
 export class HeaderComponent {
     public dropDownText = 'select an app';
+    public executeLoading = false;
 
     public setDropDownText(text: string): void {
         this.dropDownText = text;

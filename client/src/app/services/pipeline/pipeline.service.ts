@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
 import {DestinationNodeModel} from '../../models/destination-node.model';
 import {SourceNodeModel} from '../../models/source-node.model';
-import {FilterNodeModel} from '../../models/filter-node.model';
 import {ColumnSelectorNodeModel} from '../../models/column-selector-node.model';
 import {NodeType} from '../../enums/node-type';
 import {ApiService} from '../api/api.service';
-import {API_GET_COLUMNS_HEADING} from '../../utils/api.utils';
-import {CanvasService} from '../canvas/canvas.service';
+import {API_EXECUTE, API_GET_COLUMNS_HEADING} from '../../utils/api.utils';
+
+type PipelineNodeModel = DestinationNodeModel | SourceNodeModel | ColumnSelectorNodeModel;
 
 @Injectable({
     providedIn: 'root',
 })
 export class PipelineService {
-    public nodes: (DestinationNodeModel | SourceNodeModel | FilterNodeModel | ColumnSelectorNodeModel)[] = [];
+    public nodes: PipelineNodeModel[] = [];
+
+    public lastExecuteResult: any | null = null;
 
     public selectedPreviousNode: string = '';
     public selectedNextNode: string = '';
@@ -23,29 +25,26 @@ export class PipelineService {
 
     public creatNode(nodeType: NodeType): SourceNodeModel | ColumnSelectorNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
-            const node: SourceNodeModel = {
+            return {
                 _NodeType: NodeType.SourceNode,
-                _previousNodesId: '',
-                tableName: '',
+                _previousNode: '',
+                _tableName: '',
                 id: Math.random().toString(),
             };
-            return node;
         } else if (nodeType === NodeType.Selector) {
-            const node: ColumnSelectorNodeModel = {
+            return {
                 _NodeType: NodeType.Selector,
-                _previousNodesId: this.selectedPreviousNode,
-                _columnNames: [],
+                _previousNode: this.selectedPreviousNode,
+                _columns: [],
                 id: Math.random().toString(),
             };
-            return node;
         } else if (nodeType === NodeType.DestinationNode) {
-            const node: DestinationNodeModel = {
+            return {
                 _NodeType: NodeType.DestinationNode,
-                _previousNodesId: this.selectedPreviousNode,
-                tableName: '',
+                _previousNode: this.selectedPreviousNode,
+                _tableName: '',
                 id: Math.random().toString(),
             };
-            return node;
         }
     }
 
@@ -53,7 +52,7 @@ export class PipelineService {
         const node = this.creatNode(nodeType);
         if (!node) return;
         this.nodes.forEach((n) => {
-            if (n.id === this.selectedNextNode) n._previousNodesId = node.id;
+            if (n.id === this.selectedNextNode) n._previousNode = node.id;
         });
         this.selectedIdNode = node.id;
         this.selectedTypeNode = node._NodeType;
@@ -64,35 +63,49 @@ export class PipelineService {
         this.nodes = this.nodes.filter((node) => node.id !== id);
     }
 
-    public editNode(data: SourceNodeModel | DestinationNodeModel | ColumnSelectorNodeModel): void {
+    public editNode(data: PipelineNodeModel): void {
         this.nodes.forEach((node, index) => {
-            if (node.id !== this.selectedIdNode) {
+            if (node.id === data.id) {
                 this.nodes[index] = {...data};
                 return;
             }
         });
     }
 
-    public getSelectedNode():
-        | SourceNodeModel
-        | DestinationNodeModel
-        | ColumnSelectorNodeModel
-        | FilterNodeModel
-        | undefined {
+    public getSelectedNode(): PipelineNodeModel | undefined {
         return this.nodes.find((node) => node.id === this.selectedIdNode);
     }
 
-    public async getColumnsHeader(): Promise<string> {
-        const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${JSON.stringify(this.nodes)}&id=${
+    public getSourceNode(): PipelineNodeModel | undefined {
+        return this.nodes.find((n) => n._NodeType === NodeType.SourceNode);
+    }
+
+    public async getColumnsHeader(): Promise<string[]> {
+        const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${this.convertToDictionary()}&id=${
             this.selectedIdNode
         }`;
         const response = await this.apiService.getRequest<string[]>({url: requestUrl});
 
         if (response) return JSON.parse(response);
-        else return '';
+        else return [];
     }
 
-    public execute(): void {}
+    public async execute(): Promise<void> {
+        const response = await this.apiService.postRequest({url: API_EXECUTE, body: this.convertToDictionary()});
+
+        if (response) this.lastExecuteResult = JSON.parse(response);
+        else this.lastExecuteResult = null;
+    }
 
     public preview(): void {}
+
+    private convertToDictionary(): string {
+        const dictionary: any = {};
+
+        for (const node of this.nodes) {
+            dictionary[node.id] = node;
+        }
+
+        return JSON.stringify({Nodes: dictionary});
+    }
 }

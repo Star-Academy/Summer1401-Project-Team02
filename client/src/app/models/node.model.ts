@@ -5,5 +5,5 @@ import {ColumnSelectorNodeModel} from './column-selector-node.model';
 export interface NodeModel {
     id: string;
     _NodeType: NodeType;
-    _previousNodesId?: string;
+    _previousNode?: string;
 }

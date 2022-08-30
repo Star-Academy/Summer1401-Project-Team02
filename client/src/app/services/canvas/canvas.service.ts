@@ -163,11 +163,9 @@ export class CanvasService {
             this.graph.removeEdge(edge.id);
         });
         this.canvasEdges = [];
-        console.log(this.canvasNodes);
         this.pipelineService.nodes.forEach((node) => {
             const current = this.canvasNodes.find((x: any) => x.store.data._ID === node.id);
-            const pre = this.canvasNodes.find((x: any) => x.store.data._ID === node._previousNodesId);
-            // if (pre && current) this.createEdge(pre, current, node._previousNodesId, node.id);
+            const pre = this.canvasNodes.find((x: any) => x.store.data._ID === node._previousNode);
             if (pre && current)
                 this.graph.addCell([
                     current,
@@ -217,32 +215,36 @@ export class CanvasService {
 
         this.graph.on('node:delete', ({e, node}: any) => {
             e.stopPropagation();
-            this.graph.freeze();
-            let deleteNode: any;
             if (node.store.data.type === NodeType.SourceNode) {
-                const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                selectedPipelineNode.tableName = '';
-                return;
+                const selectedPipelineNode = this.pipelineService.getSourceNode() as SourceNodeModel;
+                selectedPipelineNode._tableName = '';
+                this.pipelineService.editNode(selectedPipelineNode);
+                node.attr('.delete/width', 0);
+                node.attr('.delete/height', 0);
+            } else {
+                this.graph.freeze();
+                let deleteNode: any;
+                this.pipelineService.nodes.forEach((n, i) => {
+                    if (n.id === node.store.data._ID) {
+                        deleteNode = {...n};
+                        this.pipelineService.nodes.splice(i, 1);
+                        return;
+                    }
+                });
+                this.pipelineService.nodes.forEach((n) => {
+                    if (n._previousNode === deleteNode?.id) n._previousNode = deleteNode?._previousNode;
+                });
+                console.log(this.pipelineService.nodes);
+                this.canvasNodes.forEach((n: any, i: any) => {
+                    if (n.store.data._ID === deleteNode?.id) {
+                        this.canvasNodes.splice(i, 1);
+                        return;
+                    }
+                });
+                this.graph.removeCell(node);
+                this.resetEdge();
+                this.layout();
             }
-            this.pipelineService.nodes.forEach((n, i) => {
-                if (n.id === node.store.data._ID) {
-                    deleteNode = {...n};
-                    this.pipelineService.nodes.splice(i, 1);
-                    return;
-                }
-            });
-            this.pipelineService.nodes.forEach((n) => {
-                if (n._previousNodesId === deleteNode?.id) n._previousNodesId = deleteNode?._previousNodesId;
-            });
-            this.canvasNodes.forEach((n: any, i: any) => {
-                if (n.store.data._ID === deleteNode?.id) {
-                    this.canvasNodes.splice(i, 1);
-                    return;
-                }
-            });
-            this.graph.removeCell(node);
-            this.resetEdge();
-            this.layout();
         });
 
         this.graph.on('edge:click', ({e, edge}: any) => {
@@ -258,16 +260,14 @@ export class CanvasService {
 
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                if (!selectedPipelineNode?.tableName) this.modalService.showSource();
+                if (!selectedPipelineNode?._tableName) this.modalService.showSource();
             } else if (node.store.data.type === NodeType.DestinationNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-                if (!selectedPipelineNode?.tableName) this.modalService.showDestination();
+                if (!selectedPipelineNode?._tableName) this.modalService.showDestination();
             }
         });
 
         this.graph.on('node:mouseenter', ({node}: any) => {
-            this.pipelineService.selectedIdNode = node.store.data._ID;
-            this.pipelineService.selectedTypeNode = node.store.data.type;
             if (node.store.data.type !== NodeType.DestinationNode && node.store.data.type !== NodeType.SourceNode) {
                 node.attr('.delete/width', 30);
                 node.attr('.delete/height', 30);
@@ -276,8 +276,8 @@ export class CanvasService {
             } else if (node.store.data.type === NodeType.SourceNode) {
                 node.attr('.add/width', 22);
                 node.attr('.add/height', 22);
-                const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                if (selectedPipelineNode?.tableName) {
+                const selectedPipelineNode = this.pipelineService.getSourceNode() as SourceNodeModel;
+                if (selectedPipelineNode._tableName) {
                     node.attr('.delete/width', 30);
                     node.attr('.delete/height', 30);
                 }

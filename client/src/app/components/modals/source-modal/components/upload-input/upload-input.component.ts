@@ -20,7 +20,7 @@ export class UploadInputComponent {
 
         if (status !== 'uploading') {
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-            sourceNode.tableName = file.response.tableName;
+            sourceNode._tableName = file.response.tableName;
 
             this.pipelineService.editNode(sourceNode);
         }
