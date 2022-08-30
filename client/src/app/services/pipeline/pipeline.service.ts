@@ -4,9 +4,20 @@ import {SourceNodeModel} from '../../models/source-node.model';
 import {ColumnSelectorNodeModel} from '../../models/column-selector-node.model';
 import {NodeType} from '../../enums/node-type';
 import {ApiService} from '../api/api.service';
-import {API_EXECUTE, API_GET_COLUMNS_HEADING} from '../../utils/api.utils';
+import {API_EXECUTE, API_GET_COLUMNS_HEADING, API_PREVIEW} from '../../utils/api.utils';
+import {CustomNodeModel} from '../../models/custom-node.model';
+import {StringNodeModel} from '../../models/string-node.model';
+import {SplitNodeModel} from '../../models/split-node.model';
+import {MathNodeModel} from '../../models/math-node.model';
 
-type PipelineNodeModel = DestinationNodeModel | SourceNodeModel | ColumnSelectorNodeModel;
+type PipelineNodeModel =
+    | DestinationNodeModel
+    | SourceNodeModel
+    | ColumnSelectorNodeModel
+    | CustomNodeModel
+    | StringNodeModel
+    | SplitNodeModel
+    | MathNodeModel;
 
 @Injectable({
     providedIn: 'root',
@@ -15,6 +26,7 @@ export class PipelineService {
     public nodes: PipelineNodeModel[] = [];
 
     public lastExecuteResult: any | null = null;
+    public previewContent: any | null = null;
 
     public selectedPreviousNode: string = '';
     public selectedNextNode: string = '';
@@ -23,26 +35,64 @@ export class PipelineService {
 
     public constructor(private apiService: ApiService) {}
 
-    public creatNode(nodeType: NodeType): SourceNodeModel | ColumnSelectorNodeModel | void {
+    private creatNode(nodeType: NodeType): PipelineNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
             return {
-                _NodeType: NodeType.SourceNode,
+                _NodeType: nodeType,
                 _previousNode: '',
                 _tableName: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Selector) {
             return {
-                _NodeType: NodeType.Selector,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _columns: [],
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.DestinationNode) {
             return {
-                _NodeType: NodeType.DestinationNode,
+                _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
                 _tableName: '',
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Custom) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                _first: '',
+                _second: '',
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Split) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                _columnName: '',
+                _delimeter: '',
+                _numberOfParts: 0,
+                replace: false,
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Math) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                columnName: '',
+                second: '',
+                function: -1,
+                newColumn: false,
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Strings) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                columnName: '',
+                second: '',
+                function: -1,
+                newColumn: false,
                 id: Math.random().toString(),
             };
         }
@@ -97,7 +147,12 @@ export class PipelineService {
         else this.lastExecuteResult = null;
     }
 
-    public preview(): void {}
+    public async preview(): Promise<void> {
+        const requestUrl = `${API_PREVIEW}?pipelineJson=${this.convertToDictionary()}&id=${this.selectedIdNode}`;
+        const response = await this.apiService.getRequest<string>({url: requestUrl});
+
+        if (response) this.previewContent = JSON.parse(response);
+    }
 
     private convertToDictionary(): string {
         const dictionary: any = {};

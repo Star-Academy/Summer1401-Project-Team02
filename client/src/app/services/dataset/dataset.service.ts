@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../api/api.service';
 import {FileModal} from '../../models/file.modal';
-import {API_SEND_DESTINATION_NAME, API_UPLOAD_FILE} from '../../utils/api.utils';
+import {API_GET_TABLES, API_SEND_DESTINATION_NAME, API_UPLOAD_FILE} from '../../utils/api.utils';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DatasetService {
+    public tables: any | null = null;
     public constructor(private apiService: ApiService) {}
 
     public async sendDestination(file: FileModal): Promise<FileModal | null> {
@@ -22,18 +23,10 @@ export class DatasetService {
         if (response) return JSON.parse(response);
         else return null;
     }
-    // public async uploadFile(file: FormData): Promise<boolean> {
-    //     const response = await this.apiService.postRequest<FileModal>({
-    //         url: API_UPLOAD_FILE,
-    //         body: file,
-    //         init: {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryTHZKhVaSTpyA3cbU',
-    //             },
-    //         },
-    //     });
-    //     if (!response) return false;
-    //
-    //     return true;
-    // }
+
+    public async getTables(): Promise<void> {
+        const response = await this.apiService.getRequest<string>({url: API_GET_TABLES});
+
+        if (response) this.tables = JSON.parse(response);
+    }
 }

@@ -10,10 +10,15 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {PreviewComponent} from './components/preview/preview.component';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {FormsModule} from '@angular/forms';
+import {NzTableModule} from 'ng-zorro-antd/table';
 import {HeaderModule} from '../../components/header/header.module';
 import {DefaultComponent} from './components/sidebar/component/default/default.component';
 import {SelectRemoveComponent} from './components/sidebar/component/select-remove/select-remove.component';
 import {NzSelectModule} from 'ng-zorro-antd/select';
+import {CustomComponent} from './components/sidebar/component/custom/custom.component';
+import {MathComponent} from './components/sidebar/component/math/math.component';
+import {SplitComponent} from './components/sidebar/component/split/split.component';
+import {StringComponent} from './components/sidebar/component/string/string.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +28,10 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
         PreviewComponent,
         DefaultComponent,
         SelectRemoveComponent,
+        CustomComponent,
+        MathComponent,
+        SplitComponent,
+        StringComponent,
     ],
     imports: [
         CommonModule,
@@ -31,6 +40,7 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
         ProcessModalModule,
         NzIconModule,
         FormsModule,
+        NzTableModule,
         HeaderModule,
         NzSelectModule,
     ],

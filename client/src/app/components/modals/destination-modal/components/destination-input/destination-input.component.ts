@@ -30,6 +30,7 @@ export class DestinationInputComponent {
             destinationNode._tableName = response.tableName;
 
             this.pipelineService.editNode(destinationNode);
+            this.datasetService.getTables();
         } else if (!response) this.messageService.create('error', 'error');
     }
 }

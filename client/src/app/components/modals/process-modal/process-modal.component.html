@@ -15,6 +15,26 @@
                 description="select or remove some columns from your dataset"
                 (click)="addNode(NodeType.Selector)"
             ></app-card>
+            <app-card
+                title="Custom"
+                description="write your custom query on database"
+                (click)="addNode(NodeType.Custom)"
+            ></app-card>
+            <app-card
+                title="Split"
+                description="split your columns to more than one"
+                (click)="addNode(NodeType.Split)"
+            ></app-card>
+            <app-card
+                title="String"
+                description="do some functions on strings"
+                (click)="addNode(NodeType.Strings)"
+            ></app-card>
+            <app-card
+                title="Math"
+                description="do some calculation on your data"
+                (click)="addNode(NodeType.Math)"
+            ></app-card>
         </div>
     </ng-template>
 </nz-modal>
