@@ -28,7 +28,7 @@ export class PipelineService {
             return {
                 _NodeType: NodeType.SourceNode,
                 _previousNode: '',
-                _tableName: '',
+                _tableID: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Selector) {
@@ -42,7 +42,7 @@ export class PipelineService {
             return {
                 _NodeType: NodeType.DestinationNode,
                 _previousNode: this.selectedPreviousNode,
-                _tableName: '',
+                _tableID: '',
                 id: Math.random().toString(),
             };
         }

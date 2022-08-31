@@ -3,7 +3,8 @@ import {ModalService} from '../../services/modal/modal.service';
 import {DatasetService} from '../../services/dataset/dataset.service';
 import {API_DOWNLOAD_FILE} from '../../utils/api.utils';
 interface ItemData {
-    _tableName: string;
+    _id: string;
+    _tableNameEnteredByUser: string;
     _dateTime: string;
 }
 @Component({
@@ -27,16 +28,16 @@ export class DataInventoryComponent {
     public search(): void {
         this.visible = false;
         this.datasetService.tables = this.datasetService.tables.filter(
-            (item: ItemData) => item._tableName.indexOf(this.searchValue) !== -1
+            (item: ItemData) => item._tableNameEnteredByUser.indexOf(this.searchValue) !== -1
         );
     }
 
-    public getDownloadUrl(fileName: string, fileFormat: string): string {
-        return `${API_DOWNLOAD_FILE}?tableName=${fileName}&fileFormat=${fileFormat}`;
+    public getDownloadUrl(fileID: string, fileName: string, fileFormat: string): string {
+        return `${API_DOWNLOAD_FILE}?tableId=${fileID}&tableName=${fileName}&fileFormat=${fileFormat}`;
     }
 
-    public deleteRow(name: string): void {
-        this.datasetService.deleteTable(name);
-        this.datasetService.tables = this.datasetService.tables.filter((d: ItemData) => d._tableName !== name);
+    public deleteRow(id: string): void {
+        this.datasetService.deleteTable(id);
+        this.datasetService.tables = this.datasetService.tables.filter((d: ItemData) => d._id !== id);
     }
 }
