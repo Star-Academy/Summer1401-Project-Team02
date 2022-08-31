@@ -12,7 +12,7 @@ namespace Server;
 public class TempUtils
 {
 
-    public static string GeneratePipelineJson()
+    public static string GeneratePipelineJson2()
     {
         var s = new SourceNode();
         var d = new DestinationNode();
@@ -50,7 +50,7 @@ public class TempUtils
     }
     
     
-    public static string GeneratePipelineJson2()
+    public static string GeneratePipelineJson()
     {
         var s = new SourceNode();
         var d = new DestinationNode();

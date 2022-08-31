@@ -9,7 +9,8 @@ public class SortNode : ProcessorNode
     
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes)
     {
-        return default;
+        var previousExecution = nodes.GetValueOrDefault(_previousNode).Execute(executionType, nodes);
+        return string.Format(QueryStrings.Sort, previousExecution, string.Join(",", _info.Select(x => $"{x.Item1} {(x.Item2 ? "ASC" : "")}")));
     }
 
 }
