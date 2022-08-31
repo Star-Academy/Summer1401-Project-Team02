@@ -1,12 +1,17 @@
 using System.Data;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Server.Enums;
 using Server.Models;
 using Server.Models.Database;
+using Server.Models.Nodes;
+using Server.Models.Parsers;
 
 namespace Server.Services;
 
 public class PipelineService : IPipelineService
 {
+    
     private readonly IDatabase _database;
 
     public PipelineService(IDatabase database)
@@ -14,12 +19,16 @@ public class PipelineService : IPipelineService
         _database = database;
     }
 
-    private void Initialize(Pipeline pipeline)
+    private void Initialize(Pipeline pipeline, IEnumerable<Node> nodeList)
     {
-        var nodesList = pipeline.GetNodesList();
-        foreach (var node in nodesList)
+        foreach (var node in nodeList)
         {
-            var queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            var queryString = string.Empty;
+            if (node._NodeType == NodeType.SourceNode)
+                queryString = node.Execute(ExecutionType.Heading, pipeline.Nodes);
+            else
+                queryString = pipeline.Nodes.GetValueOrDefault(node._previousNode)
+                    .Execute(ExecutionType.Heading, pipeline.Nodes);
             var dataTable = _database.RunQuery(queryString);
             node.Headers = dataTable.Columns
                 .Cast<DataColumn>()
@@ -30,7 +39,7 @@ public class PipelineService : IPipelineService
 
     public Dictionary<string, string> Execute(Pipeline pipeline)
     {
-        Initialize(pipeline);
+        Initialize(pipeline, pipeline.GetNodesList());
         var result = new Dictionary<string, string>();
         foreach (var query in pipeline.Execute(ExecutionType.FullExecution))
         {
@@ -54,16 +63,17 @@ public class PipelineService : IPipelineService
 
     public List<string> GetHeading(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);
-        return pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
+        Initialize(pipeline, pipeline.GetNodePath(pipeline.Nodes.GetValueOrDefault(id)));
+        var query = pipeline.GetHeading(pipeline.Nodes.GetValueOrDefault(id));
+        return _database.RunQuery(query).Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
     }
 
-    public Tuple<DataTable, DataTable> Preview(Pipeline pipeline, string id)
+    public DataTable Preview(Pipeline pipeline, string id)
     {
-        Initialize(pipeline);
-        var (item1, item2) = pipeline.Preview(ExecutionType.Preview, pipeline.Nodes.GetValueOrDefault(id));
-        var dataTable1 = _database.RunQuery(item1);
-        var dataTable2 = _database.RunQuery(item2);
-        return new Tuple<DataTable, DataTable>(dataTable1, dataTable2);
+        Initialize(pipeline, pipeline.GetNodePath(pipeline.Nodes.GetValueOrDefault(id)));
+        var node = pipeline.Nodes.GetValueOrDefault(id);
+        var queryString = node.Execute(ExecutionType.Preview, pipeline.Nodes);
+        return _database.RunQuery(queryString);
     }
+
 }

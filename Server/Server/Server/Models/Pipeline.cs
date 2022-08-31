@@ -1,3 +1,4 @@
+using System.Data;
 using Newtonsoft.Json;
 using Server.Enums;
 using Server.Models.Nodes;
@@ -25,19 +26,18 @@ public class Pipeline
         return Nodes!.Select(keyValuePair => keyValuePair.Value).Where(node => node._NodeType == NodeType.DestinationNode).Cast<DestinationNode>().ToList();
     }
 
-    public List<string> GetHeading(Node? node)
-    {
-        return node._NodeType == NodeType.SourceNode ? node.Headers : Nodes[node._previousNode].Headers;
-    }
-
-    public Tuple<string, string> Preview(ExecutionType executionType, Node node)
+    public string GetHeading(Node? node)
     {
         if (node._NodeType == NodeType.SourceNode)
         {
-            throw new Exception("Source node has not preview !");
+            return node.Execute(ExecutionType.Heading, Nodes);
         }
+        return Nodes[node._previousNode].Execute(ExecutionType.Heading, Nodes);
+    }
 
-        throw new NotImplementedException();
+    public string Preview(ExecutionType executionType, Node node)
+    {
+        return node.Execute(executionType, Nodes);
     }
 
     public IEnumerable<Node> GetNodesList()
@@ -46,9 +46,14 @@ public class Pipeline
         var destinationNodes = FindDestinationNodes();
         foreach (var destinationNode in destinationNodes)
         {
-            nodesList.AddRange(destinationNode.GetPath(Nodes));
+            nodesList.AddRange(GetNodePath(destinationNode));
         }
 
         return nodesList;
+    }
+
+    public IEnumerable<Node> GetNodePath(Node node)
+    {
+        return node.GetPath(Nodes);
     }
 }

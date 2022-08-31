@@ -8,5 +8,11 @@ public static class QueryStrings
     public const string Selector = $"select {{0}} from ({{1}}) as dummy";
     public const string Custom = $"select {{0}} from ({{1}}) as dummy {{2}}";
 
+    public const string Numbers = $"select {{0}} from ({{1}}) as dummy";
+    public const string Strings = $"select {{0}} from ({{1}}) as dummy";
     public const string Math = $"select {{0}} from ({{1}}) as dummy";
+
+    public const string Split = $"select {{0}} from ({{1}}) as dummy";
+
+    public const string SplitColumn = $"REVERSE(PARSENAME(REPLACE(REVERSE([{{0}}]), '{{1}}', '.'), {{2}})) as {{3}}";
 }

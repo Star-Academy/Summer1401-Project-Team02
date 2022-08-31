@@ -30,6 +30,16 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new ColumnSelectorNode();
                 case NodeType.Custom:
                     return new CustomNode();
+                case NodeType.Split:
+                    return new SplitNode();
+                case NodeType.Strings:
+                    return new StringsNode();
+                case NodeType.Numbers:
+                    return new NumbersNode();
+                case NodeType.Filter:
+                    return new FilterNode();
+                case NodeType.Math:
+                    return new MathNode();
                 default:
                     throw new NotImplementedException();
             }

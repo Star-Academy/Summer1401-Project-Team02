@@ -16,20 +16,19 @@ public class TempUtils
     {
         var s = new SourceNode();
         var d = new DestinationNode();
-        var custom = new CustomNode();
+        var custom = new ColumnSelectorNode();
         
         custom.Id = "custom";
-        custom._NodeType = NodeType.Custom;
-        custom.first = "*";
-        custom.second = " ";
+        custom._NodeType = NodeType.Selector;
+        custom._columns = new List<string>() { "name", "gender" };
         custom._previousNode = "source";
-        
+
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableId = "dataset_csv";
+        s._tableName = "Iran_csv";
         
         d.Id = "dest";
-        d.tableId = "output1";
+        d.tableName = "output1";
         d._previousNode = "custom";
         d._NodeType = NodeType.DestinationNode;
 
@@ -44,7 +43,75 @@ public class TempUtils
             Nodes = nodes!
         };
 
-        return JsonConvert.SerializeObject(p);
+        return JsonConvert.SerializeObject(p, new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
+    }
+    
+    
+    public static string GeneratePipelineJson2()
+    {
+        var s = new SourceNode();
+        var d = new DestinationNode();
+        // var split = new SplitNode();
+        // var math = new NumbersNode();
+        // var strings = new StringsNode();
+        var filter = new FilterNode();
+        
+        // split.Id = "custom";
+        // split._NodeType = NodeType.Split;
+        // split._delimeter = " ";
+        // split._columnName = "fullname";
+        // split._numberOfParts = 2;
+        // split._previousNode = "source";
+        // split.replace = false;
+        // math.Id = "custom";
+        // math._NodeType = NodeType.Numbers;
+        // math._previousNode = "source";
+        // math.Function = NumbersFunction.Round;
+        // math.NewColumn = true;
+        // math.ColumnName = "average grade";
+        // math.Second = "0";
+        // strings.Id = "custom";
+        // strings._NodeType = NodeType.Strings;
+        // strings._previousNode = "source";
+        // strings.Function = StringsFunction.Lower;
+        // strings.NewColumn = true;
+        // strings.ColumnName = "email";
+        // strings.Second = "0";
+        filter.Id = "custom";
+        filter._NodeType = NodeType.Filter;
+        filter._previousNode = "source";
+        filter._columnName = "email";
+        filter._operator = ColumnFilteringOperation.IsNull;
+        filter.value = "";
+
+        s.Id = "source";
+        s._NodeType = NodeType.SourceNode;
+        s._tableName = "Giant1_csv";
+        
+        d.Id = "dest";
+        d.tableName = "output1";
+        d._previousNode = "custom";
+        d._NodeType = NodeType.DestinationNode;
+
+        var nodes = new Dictionary<string, Node>()
+        {
+            { "source", s },
+            { "dest", d },
+            // { "custom", split}
+            {"custom", filter}
+        };
+        var p = new Pipeline
+        {
+            Nodes = nodes!
+        };
+
+        return JsonConvert.SerializeObject(p, new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
     
     public static string ConvertDataTableToString(DataTable dataTable)

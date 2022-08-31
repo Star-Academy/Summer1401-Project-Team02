@@ -5,5 +5,10 @@ public enum NodeType
     DestinationNode,
     SourceNode,
     Selector,
-    Custom
+    Custom,
+    Split,
+    Strings,
+    Numbers,
+    Filter,
+    Math,
 }

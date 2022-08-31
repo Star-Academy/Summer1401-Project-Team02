@@ -6,9 +6,15 @@ namespace Server.Models.Database;
 
 public class SqlDatabase : IDatabase
 {
+    private readonly ILogger<IDatabase> _logger;
+
     private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
 
+    public SqlDatabase(ILogger<IDatabase> logger)
+    {
+        _logger = logger;
+    }
     public void ImportDataTable(DataTable dataTable, string tableId)
     {
         var connection = new SqlConnection(ConnectionString);
@@ -24,6 +30,7 @@ public class SqlDatabase : IDatabase
 
     public DataTable RunQuery(string query)
     {
+        _logger.LogInformation($"query :: {query}");
         var result = new DataTable();
         var connection = new SqlConnection(ConnectionString);
         var command = new SqlCommand(query, connection);
@@ -105,6 +112,8 @@ public class SqlDatabase : IDatabase
     {
         switch (type.ToString())
         {
+            case "System.Data.DataTable":
+            case "System.String[]":
             case "System.String":
                 return "nvarchar(max)";
 
@@ -115,6 +124,8 @@ public class SqlDatabase : IDatabase
                     return "BIGINT";
                 else
                     return "INT";
+            case "System.Boolean":
+                return "BIT";
 
             case "System.Double":
             case "System.Single":
@@ -126,8 +137,6 @@ public class SqlDatabase : IDatabase
             case "System.Int16":
             case "System.Int32":
                 return "INT";
-            case "System.Boolean":
-                return "BIT";
 
             case "System.DateTime":
                 return "DATETIME";

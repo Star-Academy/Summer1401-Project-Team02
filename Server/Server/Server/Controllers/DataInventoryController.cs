@@ -29,10 +29,11 @@ public class DataInventoryController : Controller
         }
         catch (Exception e)
         {
+            _logger.LogInformation(e.ToString());
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpPost]
     public IActionResult AddDestination([FromBody] string name)
     {
@@ -45,13 +46,20 @@ public class DataInventoryController : Controller
             return Problem(detail: e.Message);
         }
     }
-    
-    
+
+
     [HttpGet]
     public IActionResult DownloadFile(string tableId, string tableName, string fileFormat)
     {
-        return File(_dataInventoryService.Download(tableId, fileFormat), 
-            $"text/{fileFormat}", $"{tableName}.{fileFormat}");
+        try
+        {
+            return File(_dataInventoryService.Download(tableId, fileFormat),
+                $"text/{fileFormat}", $"{tableName}.{fileFormat}");
+        }
+        catch (Exception e)
+        {
+            return Problem(detail: e.Message);
+        }
     }
     
     [HttpGet]
@@ -68,7 +76,7 @@ public class DataInventoryController : Controller
     }
     
     [HttpPost]
-    public IActionResult deleteDataset([FromBody] string tableId)
+    public IActionResult DeleteDataset([FromBody] string tableId)
     {
         try
         {
@@ -76,7 +84,7 @@ public class DataInventoryController : Controller
         }
         catch (Exception e)
         {
-            return Problem(detail: e.Message);
+            return BadRequest(e.Message);
         }
     }
 }
