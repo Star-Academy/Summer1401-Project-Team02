@@ -1,10 +1,4 @@
-<nz-table
-    #editRowTable
-    [nzData]="this.datasetService.tables"
-    nzTableLayout="fixed"
-    [nzPageSize]="5"
-    nzPaginationType="default"
->
+<nz-table #editRowTable [nzData]="sourceTable" nzTableLayout="fixed" [nzPageSize]="5" nzPaginationType="default">
     <thead>
         <tr>
             <th></th>
