@@ -18,6 +18,17 @@ public class TempUtils
         var d = new DestinationNode();
         var sort = new SortNode();
         var custom = new ColumnSelectorNode();
+        var aggregate = new AggregateNode();
+
+        aggregate._groupingColumns = new List<string>() { "gender" };
+        aggregate._functions = new List<Tuple<AggregateFunction, string, string>>()
+        {
+            Tuple.Create<AggregateFunction, string, string>(AggregateFunction.Count, "gender", null),
+            Tuple.Create<AggregateFunction, string, string>(AggregateFunction.Min, "gender", null)
+        };
+        aggregate._NodeType = NodeType.Aggregate;
+        aggregate._previousNode = "source";
+
 
         sort._previousNode = "source";
         sort._info = new List<Tuple<string, bool>>()
@@ -44,7 +55,7 @@ public class TempUtils
         {
             { "source", s },
             { "dest", d },
-            { "custom", sort}
+            { "custom", aggregate}
         };
         
         var p = new Pipeline
