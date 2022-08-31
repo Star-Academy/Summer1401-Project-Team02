@@ -13,6 +13,7 @@ import {DestinationNodeModel} from '../../../../../models/destination-node.model
 })
 export class DestinationInputComponent {
     public file: FileModal = {
+        tableID: '',
         tableName: '',
     };
 
@@ -26,11 +27,11 @@ export class DestinationInputComponent {
         const response = await this.datasetService.sendDestination(this.file);
         if (response) {
             this.messageService.create('success', 'success');
+            await this.datasetService.getTables();
             const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-            destinationNode._tableName = response.tableName;
+            destinationNode._tableID = response.tableID;
 
             this.pipelineService.editNode(destinationNode);
-            this.datasetService.getTables();
         } else if (!response) this.messageService.create('error', 'error');
     }
 }

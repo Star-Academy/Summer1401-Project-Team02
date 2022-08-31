@@ -3,8 +3,9 @@ import {ModalService} from '../../services/modal/modal.service';
 import {DatasetService} from '../../services/dataset/dataset.service';
 import {API_DOWNLOAD_FILE} from '../../utils/api.utils';
 interface ItemData {
-    tableName: string;
-    dateAndTime: string;
+    _id: string;
+    _tableNameEnteredByUser: string;
+    _dateTime: string;
 }
 @Component({
     selector: 'app-data-inventory',
@@ -13,9 +14,7 @@ interface ItemData {
 })
 export class DataInventoryComponent {
     public searchValue = '';
-    public i = 0;
     public visible!: boolean;
-    public listOfDisplayData!: ItemData[];
 
     public constructor(public modalService: ModalService, public datasetService: DatasetService) {
         this.datasetService.getTables();
@@ -24,15 +23,21 @@ export class DataInventoryComponent {
     public reset(): void {
         this.searchValue = '';
         this.search();
+        this.datasetService.getTables();
     }
     public search(): void {
         this.visible = false;
-        this.listOfDisplayData = this.datasetService.tables.filter(
-            (item: ItemData) => item.tableName.indexOf(this.searchValue) !== -1
+        this.datasetService.tables = this.datasetService.tables.filter(
+            (item: ItemData) => item._tableNameEnteredByUser.indexOf(this.searchValue) !== -1
         );
     }
 
-    public getDownloadUrl(fileName: string, fileFormat: string): string {
-        return `${API_DOWNLOAD_FILE}?tableName=${fileName}&fileFormat=${fileFormat}`;
+    public getDownloadUrl(fileID: string, fileName: string, fileFormat: string): string {
+        return `${API_DOWNLOAD_FILE}?tableId=${fileID}&tableName=${fileName}&fileFormat=${fileFormat}`;
+    }
+
+    public deleteRow(id: string): void {
+        this.datasetService.deleteTable(id);
+        this.datasetService.tables = this.datasetService.tables.filter((d: ItemData) => d._id !== id);
     }
 }

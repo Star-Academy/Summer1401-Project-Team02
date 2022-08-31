@@ -2,23 +2,48 @@
     display: grid;
     grid-template-areas: "data-inventory pipeline";
 
-    padding: 2rem;
+    height: 100%;
 
-    img {
-        width: 59%;
+    a {
+        box-shadow: 0 1px 10px 3px hsl(0deg 0% 0% / 19%);
+
+        display: grid;
+        place-items: center;
+
+        inline-size: 80%;
+
+        border-radius: 0.5rem;
+
+        transition: box-shadow 0.5s;
+    }
+
+    a:hover {
+        box-shadow: 0 1px 10px 3px hsl(0deg 0% 0% / 43%);
     }
 
     .data-inventory,
     .pipeline {
         display: grid;
         place-items: center;
+
+        h2 {
+            padding-block-start: 5rem;
+        }
     }
 
     .data-inventory {
         grid-area: data-inventory;
+
+        img {
+            width: 57%;
+        }
     }
 
     .pipeline {
         grid-area: pipeline;
+
+        img {
+            width: 59%;
+        }
     }
 }

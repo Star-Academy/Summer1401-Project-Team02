@@ -208,10 +208,10 @@ export class CanvasService {
 
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                if (!selectedPipelineNode?._tableName) this.modalService.showSource();
+                if (!selectedPipelineNode?._tableID) this.modalService.showSource();
             } else if (node.store.data.type === NodeType.DestinationNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-                if (!selectedPipelineNode?._tableName) this.modalService.showDestination();
+                if (!selectedPipelineNode?._tableID) this.modalService.showDestination();
             }
         });
 
