@@ -10,16 +10,20 @@ export class PreviewComponent {
     public isCollapse = false;
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
-    public get keys(): string[] {
-        return Object.keys(this.pipelineService.previewContent[0]);
+    public get keys(): string[] | null {
+        if (this.pipelineService.previewContent[0]) return Object.keys(this.pipelineService.previewContent[0]);
+        return null;
     }
 
-    public get values(): any[] {
-        const table: any[] = [];
-        this.pipelineService.previewContent.forEach((obj: any) => {
-            table.push(Object.values(obj));
-        });
-        return table;
+    public get values(): any[] | null {
+        if (this.pipelineService.previewContent) {
+            const table: any[] = [];
+            this.pipelineService.previewContent.forEach((obj: any) => {
+                table.push(Object.values(obj));
+            });
+            return table;
+        }
+        return null;
     }
 
     public constructor(public pipelineService: PipelineService) {}
