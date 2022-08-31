@@ -41,7 +41,7 @@ export class PipelineService {
             return {
                 _NodeType: nodeType,
                 _previousNode: '',
-                _tableID: '',
+                _tableId: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Selector) {
@@ -55,7 +55,7 @@ export class PipelineService {
             return {
                 _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
-                _tableID: '',
+                _tableId: '',
                 id: Math.random().toString(),
             };
         } else if (nodeType === NodeType.Custom) {
@@ -140,7 +140,10 @@ export class PipelineService {
     }
 
     public async execute(): Promise<void> {
-        const response = await this.apiService.postRequest({url: API_EXECUTE, body: this.convertToDictionary()});
+        const response = await this.apiService.postRequest({
+            url: API_EXECUTE,
+            body: this.convertToDictionary().toString(),
+        });
 
         if (response) this.lastExecuteResult = JSON.parse(response);
         else this.lastExecuteResult = null;

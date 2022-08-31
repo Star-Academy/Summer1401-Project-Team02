@@ -8,7 +8,7 @@ import {FileModal} from '../../models/file.modal';
 })
 export class ConnectionComponent {
     public file: FileModal = {
-        tableID: '',
+        tableId: '',
         tableName: '',
     };
     public submitForm(): void {}

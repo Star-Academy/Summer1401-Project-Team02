@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {PipelineService} from '../../services/pipeline/pipeline.service';
+import {CanvasService} from '../../services/canvas/canvas.service';
 
 @Component({
     selector: 'app-header',
@@ -14,7 +15,11 @@ export class HeaderComponent {
     public title: string;
     public executeLoading = false;
 
-    public constructor(private router: Router, private pipelineService: PipelineService) {
+    public constructor(
+        private router: Router,
+        private pipelineService: PipelineService,
+        private canvasService: CanvasService
+    ) {
         if (this.router.url === '/data-inventory') this.isInPipeline = false;
         this.title = this.isInPipeline ? 'Pipeline' : 'Data inventory';
         this.dropDownText = this.isInPipeline ? 'Pipeline' : 'Data inventory';
@@ -26,7 +31,12 @@ export class HeaderComponent {
 
     public async execute(): Promise<void> {
         this.executeLoading = true;
-        await this.pipelineService.execute();
-        this.executeLoading = false;
+        this.canvasService.running(this.executeLoading);
+        setTimeout(async () => {
+            await this.pipelineService.execute();
+            this.canvasService.addDestinationsSituation();
+            this.executeLoading = false;
+            this.canvasService.running(this.executeLoading);
+        }, 2000);
     }
 }

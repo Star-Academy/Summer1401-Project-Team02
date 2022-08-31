@@ -5,6 +5,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {PipelineService} from '../../../../../services/pipeline/pipeline.service';
 import {SourceNodeModel} from '../../../../../models/source-node.model';
 import {DestinationNodeModel} from '../../../../../models/destination-node.model';
+import {CanvasService} from '../../../../../services/canvas/canvas.service';
 
 @Component({
     selector: 'app-destination-input',
@@ -13,14 +14,15 @@ import {DestinationNodeModel} from '../../../../../models/destination-node.model
 })
 export class DestinationInputComponent {
     public file: FileModal = {
-        tableID: '',
+        tableId: '',
         tableName: '',
     };
 
     public constructor(
         public datasetService: DatasetService,
         public messageService: NzMessageService,
-        private pipelineService: PipelineService
+        private pipelineService: PipelineService,
+        private canvasService: CanvasService
     ) {}
 
     public async submitForm(): Promise<void> {
@@ -29,7 +31,8 @@ export class DestinationInputComponent {
             this.messageService.create('success', 'success');
             await this.datasetService.getTables();
             const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-            destinationNode._tableID = response.tableID;
+            destinationNode._tableId = response.tableId;
+            this.canvasService.changeSrcAndDestIcon(destinationNode.id, false);
 
             this.pipelineService.editNode(destinationNode);
         } else if (!response) this.messageService.create('error', 'error');

@@ -188,10 +188,11 @@ export class CanvasService {
         });
     }
 
-    public addDestinationsSituation(situations: any): void {
+    public addDestinationsSituation(): void {
+        if (!this.pipelineService.lastExecuteResult) return;
         this.canvasNodes.forEach((node: any) => {
             if (node.store.data.type === NodeType.DestinationNode) {
-                if (situations[node.store.data._ID].message === 'success') {
+                if (this.pipelineService.lastExecuteResult[node.store.data._ID] === 'success') {
                     node.attr('.card/stroke', '#019d01');
                     node.attr('.card/fill', '#eaffea');
                 } else {
@@ -203,12 +204,12 @@ export class CanvasService {
     }
 
     public changeSrcAndDestIcon(id: string, full: boolean): void {
-        const node: any = this.canvasNodes.find((node: any) => node.store.data.id === id);
+        const node: any = this.canvasNodes.find((node: any) => node.store.data._ID === id);
         let label: string = '';
         if (node.store.data.type === NodeType.SourceNode) label = 'Source';
         else if (node.store.data.type === NodeType.DestinationNode) label = 'Destination';
-        node.store.data.atrrs['.image'].xlinkHref = `assets/${full ? 'source' : 'empty'}.webp`;
-        node.store.data.atrrs['.name'].text = Dom.breakText(`${label} ${full && '(empty)'}`, {
+        node.store.data.attrs['.image'].xlinkHref = `assets/${full ? 'source' : 'empty'}.webp`;
+        node.store.data.attrs['.name'].text = Dom.breakText(`${label}${full ? '' : ' (empty)'}`, {
             width: 160,
             height: 45,
         });
@@ -230,10 +231,11 @@ export class CanvasService {
             e.stopPropagation();
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode: any = this.pipelineService.getSourceNode() as SourceNodeModel;
-                selectedPipelineNode._tableName = '';
+                selectedPipelineNode._tableId = '';
                 this.pipelineService.editNode(selectedPipelineNode);
                 this.pipelineService.previewContent = null;
-                this.changeSrcAndDestIcon(selectedPipelineNode.store.data._ID, false);
+                console.log(111);
+                this.changeSrcAndDestIcon(selectedPipelineNode.id, false);
                 node.attr('.delete/width', 0);
                 node.attr('.delete/height', 0);
             } else {
@@ -276,10 +278,10 @@ export class CanvasService {
 
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-                if (!selectedPipelineNode?._tableID) this.modalService.showSource();
+                if (!selectedPipelineNode?._tableId) this.modalService.showSource();
             } else if (node.store.data.type === NodeType.DestinationNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-                if (!selectedPipelineNode?._tableID) this.modalService.showDestination();
+                if (!selectedPipelineNode?._tableId) this.modalService.showDestination();
             }
         });
 
@@ -293,7 +295,7 @@ export class CanvasService {
                 node.attr('.add/width', 22);
                 node.attr('.add/height', 22);
                 const selectedPipelineNode = this.pipelineService.getSourceNode() as SourceNodeModel;
-                if (selectedPipelineNode._tableName) {
+                if (selectedPipelineNode._tableId) {
                     node.attr('.delete/width', 30);
                     node.attr('.delete/height', 30);
                 }

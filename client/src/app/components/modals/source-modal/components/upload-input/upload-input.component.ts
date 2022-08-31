@@ -5,6 +5,7 @@ import {PipelineService} from '../../../../../services/pipeline/pipeline.service
 import {SourceNodeModel} from '../../../../../models/source-node.model';
 import {DatasetService} from '../../../../../services/dataset/dataset.service';
 import {log} from 'ng-zorro-antd/core/logger';
+import {CanvasService} from '../../../../../services/canvas/canvas.service';
 
 @Component({
     selector: 'app-upload-input',
@@ -16,7 +17,8 @@ export class UploadInputComponent {
     public constructor(
         private msg: NzMessageService,
         public datasetService: DatasetService,
-        private pipelineService: PipelineService
+        private pipelineService: PipelineService,
+        private canvasService: CanvasService
     ) {}
 
     public uploadH = {
@@ -37,7 +39,8 @@ export class UploadInputComponent {
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
             console.log(file);
             if (sourceNode) {
-                sourceNode._tableID = file.response.tableID;
+                sourceNode._tableId = file.response.tableId;
+                this.canvasService.changeSrcAndDestIcon(sourceNode.id, true);
 
                 this.pipelineService.editNode(sourceNode);
                 this.pipelineService.preview();
