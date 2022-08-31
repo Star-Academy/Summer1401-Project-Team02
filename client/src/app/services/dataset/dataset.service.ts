@@ -41,9 +41,12 @@ export class DatasetService {
         } else return null;
     }
 
-    public async getTables(): Promise<void> {
+    public async getTables(): Promise<any> {
         const response = await this.apiService.getRequest<string>({url: API_GET_TABLES});
 
-        if (response) this.tables = JSON.parse(response);
+        if (response) {
+            this.tables = JSON.parse(response);
+            return JSON.parse(response);
+        }
     }
 }

@@ -22,7 +22,7 @@ export class UploadInputComponent {
     public uploadH = {
         accept: 'text/plain',
     };
-    public handleChange({file}: NzUploadChangeParam): void {
+    public async handleChange({file}: NzUploadChangeParam): Promise<void> {
         const status = file.status;
 
         if (status === 'uploading') {
@@ -38,8 +38,8 @@ export class UploadInputComponent {
                 sourceNode._tableID = file.response.tableID;
 
                 this.pipelineService.editNode(sourceNode);
-                this.pipelineService.preview();
-            } else this.datasetService.getTables();
+                await this.pipelineService.preview();
+            } else await this.datasetService.getTables();
         } else if (status === 'error') {
             this.msg.error(`${file.name} file upload failed.`);
         }

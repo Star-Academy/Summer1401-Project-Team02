@@ -14,24 +14,23 @@ export class SourceTableComponent implements OnInit {
     public searchValue = '';
     public visible!: boolean;
     public sourceTable: any;
+    public sourceTableSearch: any;
 
     public constructor(public datasetService: DatasetService, public pipelineService: PipelineService) {}
 
     public async ngOnInit(): Promise<void> {
-        await this.datasetService.getTables();
-        this.sourceTable = this.datasetService.tables;
-        console.log(this.sourceTable);
+        this.sourceTable = await this.datasetService.getTables();
+        this.sourceTableSearch = this.sourceTable;
     }
 
     public async reset(): Promise<void> {
         this.searchValue = '';
         this.search();
-        await this.datasetService.getTables();
     }
 
     public search(): void {
         this.visible = false;
-        this.datasetService.tables = this.datasetService.tables.filter(
+        this.sourceTable = this.sourceTableSearch.filter(
             (item: sourceItemData) => item._tableNameEnteredByUser.indexOf(this.searchValue) !== -1
         );
     }

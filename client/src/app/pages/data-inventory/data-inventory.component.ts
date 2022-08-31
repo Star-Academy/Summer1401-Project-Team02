@@ -9,19 +9,22 @@ import {ItemData} from '../../models/itemData.model';
     templateUrl: './data-inventory.component.html',
     styleUrls: ['./data-inventory.component.scss'],
 })
-export class DataInventoryComponent {
+export class DataInventoryComponent implements OnInit {
     public searchValue = '';
     public visible!: boolean;
 
-    public constructor(public modalService: ModalService, public datasetService: DatasetService) {
-        this.datasetService.getTables();
+    public async ngOnInit(): Promise<void> {
+        await this.datasetService.getTables();
     }
 
-    public reset(): void {
+    public constructor(public modalService: ModalService, public datasetService: DatasetService) {}
+
+    public async reset(): Promise<void> {
         this.searchValue = '';
         this.search();
-        this.datasetService.getTables();
+        await this.datasetService.getTables();
     }
+
     public search(): void {
         this.visible = false;
         this.datasetService.tables = this.datasetService.tables.filter(
@@ -33,8 +36,8 @@ export class DataInventoryComponent {
         return `${API_DOWNLOAD_FILE}?tableId=${fileID}&tableName=${fileName}&fileFormat=${fileFormat}`;
     }
 
-    public deleteRow(id: string): void {
-        this.datasetService.deleteTable(id);
+    public async deleteRow(id: string): Promise<void> {
+        await this.datasetService.deleteTable(id);
         this.datasetService.tables = this.datasetService.tables.filter((d: ItemData) => d._id !== id);
     }
 }
