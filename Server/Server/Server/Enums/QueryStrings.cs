@@ -9,6 +9,8 @@ public static class QueryStrings
     public const string Custom = $"select {{0}} from ({{1}}) as dummy {{2}}";
 
     public const string Numbers = $"select {{0}} from ({{1}}) as dummy";
+    public const string Strings = $"select {{0}} from ({{1}}) as dummy";
+    public const string Math = $"select {{0}} from ({{1}}) as dummy";
 
     public const string Split = $"select {{0}} from ({{1}}) as dummy";
     public const string Sort = $"select * from ({{0}}) as dummy order by {{1}} offset 0 rows";
