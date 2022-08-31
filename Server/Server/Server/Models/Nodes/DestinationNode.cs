@@ -9,6 +9,11 @@ public class DestinationNode : Node
     public string tableId;
     public override IEnumerable<Node> GetPath(Dictionary<string, Node?> nodes)
     {
+        foreach (var node in nodes)
+        {
+            Console.WriteLine(node.Value.Id);
+        }
+
         return nodes!.GetValueOrDefault(_previousNode)!.GetPath(nodes).Append(this);
     }
     
