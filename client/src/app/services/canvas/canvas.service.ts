@@ -202,6 +202,18 @@ export class CanvasService {
         });
     }
 
+    public changeSrcAndDestIcon(id: string, full: boolean): void {
+        const node: any = this.canvasNodes.find((node: any) => node.store.data.id === id);
+        let label: string = '';
+        if (node.store.data.type === NodeType.SourceNode) label = 'Source';
+        else if (node.store.data.type === NodeType.DestinationNode) label = 'Destination';
+        node.store.data.atrrs['.image'].xlinkHref = `assets/${full ? 'source' : 'empty'}.webp`;
+        node.store.data.atrrs['.name'].text = Dom.breakText(`${label} ${full && '(empty)'}`, {
+            width: 160,
+            height: 45,
+        });
+    }
+
     public setup(): void {
         this.graph.on('node:add', ({e, node}: any) => {
             e.stopPropagation();
@@ -211,14 +223,17 @@ export class CanvasService {
             this.graph.freeze();
             this.graph.addCell([member, this.createEdge(node, member, node.store.data._ID, member.store.data._ID)]);
             this.layout();
+            console.log(this.canvasNodes);
         });
 
         this.graph.on('node:delete', ({e, node}: any) => {
             e.stopPropagation();
             if (node.store.data.type === NodeType.SourceNode) {
-                const selectedPipelineNode = this.pipelineService.getSourceNode() as SourceNodeModel;
+                const selectedPipelineNode: any = this.pipelineService.getSourceNode() as SourceNodeModel;
                 selectedPipelineNode._tableName = '';
                 this.pipelineService.editNode(selectedPipelineNode);
+                this.pipelineService.previewContent = null;
+                this.changeSrcAndDestIcon(selectedPipelineNode.store.data._ID, false);
                 node.attr('.delete/width', 0);
                 node.attr('.delete/height', 0);
             } else {
