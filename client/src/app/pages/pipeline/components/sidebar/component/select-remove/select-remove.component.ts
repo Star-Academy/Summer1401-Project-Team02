@@ -37,12 +37,13 @@ export class SelectRemoveComponent implements OnInit, OnChanges {
             this.reset();
         }
     }
-
     public reset(): void {
         this.selectType = 'Select';
         this.selectedColumns = [];
+        this.selectNode._columns = [];
 
         this.isReset = false;
+        this.selectNodeChange.emit(this.selectNode);
         this.isResetChange.emit(this.isReset);
     }
 

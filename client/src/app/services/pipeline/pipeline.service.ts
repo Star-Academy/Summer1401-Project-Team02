@@ -79,8 +79,8 @@ export class PipelineService {
             return {
                 _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
-                columnName: '',
-                second: '',
+                firstColumnName: '',
+                secondColumnName: '',
                 function: -1,
                 newColumn: false,
                 id: Math.random().toString(),

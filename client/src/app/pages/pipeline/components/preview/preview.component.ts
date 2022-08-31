@@ -10,6 +10,9 @@ export class PreviewComponent {
     public isCollapse = false;
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
+    // public keys: string[] = [];
+    //
+    // public values: any[] = [];
     public get keys(): string[] {
         return Object.keys(this.pipelineService.previewContent[0]);
     }

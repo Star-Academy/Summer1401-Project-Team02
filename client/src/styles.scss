@@ -168,3 +168,14 @@ body {
 
     font-size: 1.6rem;
 }
+
+// MIXIN
+@mixin sidebar-node-wrapper {
+    overflow: auto;
+
+    block-size: 100%;
+
+    padding: 1rem 2rem;
+
+    border-block-end: 0.1rem solid var(--color-gray-85);
+}
