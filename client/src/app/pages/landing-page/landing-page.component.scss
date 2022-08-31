@@ -16,12 +16,16 @@
             gap: 2rem;
 
             button {
+                color: var(--color-gray-55);
+
                 padding-block-end: 3rem;
 
-                font-size: 2rem;
+                font-size: 1.75rem;
+                border-block-end: 0.25rem solid transparent;
             }
 
             button:hover {
+                color: var(--color-gray-40);
                 border-block-end: 0.25rem solid;
             }
         }
@@ -32,10 +36,13 @@
         grid-template-areas:
             "box img"
             "menu menu";
+        grid-template-columns: 60% 40%;
         grid-template-rows: 100vh auto;
         place-items: center;
 
         inline-size: 100%;
+
+        padding-inline: 3rem;
 
         .landing-page-pic {
             grid-area: img;
@@ -44,44 +51,31 @@
             aspect-ratio: 6/6;
             object-fit: cover;
 
-            margin-inline-start: auto;
+            margin-block-end: 19%;
         }
 
         .box {
             grid-area: box;
-            align-self: center;
 
-            display: flex;
-            flex-direction: column;
-            gap: 6rem;
+            margin-block-end: 19%;
 
-            padding: 2rem;
+            h1 {
+                color: var(--color-primary);
 
-            .texts {
-                align-self: center;
-                justify-self: center;
+                margin: 0;
+                padding: 0;
 
-                display: grid;
-                gap: 1rem;
+                font-size: 400%;
+                font-weight: bold;
+            }
 
-                h1 {
-                    color: var(--color-primary);
+            p {
+                color: var(--color-gray-40);
+            }
 
-                    font-size: 6rem;
-                    font-weight: bold;
-                }
-
-                p {
-                    color: var(--color-gray-40);
-                }
-
-                button {
-                    align-self: center;
-                    justify-self: center;
-
-                    block-size: 4rem;
-                    inline-size: 13rem;
-                }
+            button {
+                block-size: 4rem;
+                inline-size: 13rem;
             }
         }
 
