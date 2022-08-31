@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StringComponent } from './string.component';
+import { AggregateComponent } from './aggregate.component';
 
-describe('StringComponent', () => {
-  let component: StringComponent;
-  let fixture: ComponentFixture<StringComponent>;
+describe('AggregateComponent', () => {
+  let component: AggregateComponent;
+  let fixture: ComponentFixture<AggregateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StringComponent ]
+      declarations: [ AggregateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StringComponent);
+    fixture = TestBed.createComponent(AggregateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

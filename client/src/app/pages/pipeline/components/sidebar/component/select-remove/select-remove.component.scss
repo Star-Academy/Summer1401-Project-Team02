@@ -2,15 +2,4 @@
 
 .wrapper {
     @include sidebar-node-wrapper;
-
-    > div {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-
-        div {
-            display: flex;
-            flex-direction: column;
-        }
-    }
 }

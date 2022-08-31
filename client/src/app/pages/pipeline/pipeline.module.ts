@@ -22,6 +22,7 @@ import {StringComponent} from './components/sidebar/component/string/string.comp
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzSwitchModule} from 'ng-zorro-antd/switch';
+import { AggregateComponent } from './components/sidebar/component/aggregate/aggregate.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {NzSwitchModule} from 'ng-zorro-antd/switch';
         MathComponent,
         SplitComponent,
         StringComponent,
+        AggregateComponent,
     ],
     imports: [
         CommonModule,
