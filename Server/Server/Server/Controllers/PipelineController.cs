@@ -27,7 +27,7 @@ public class PipelineController : Controller
         _logger.LogInformation(TempUtils.GeneratePipelineJson2());
         // {"Nodes":{"source":{"_tableName":"Iran_csv","Id":"source","_NodeType":1},"dest":{"tableName":"output1","Id":"dest","_NodeType":0,"_previousNode":"custom"},"custom":{"_columnName":"fullname","_delimeter":" ","_numberOfParts":2,"replace":false,"Id":"custom","_NodeType":4,"_previousNode":"source"}}}
         try
-        { 
+        {
             return Ok(_pipelineService.Execute(CustomPipelineDeserializer.Deserialize(pipelineJson)));
         }
         catch (Exception e)
