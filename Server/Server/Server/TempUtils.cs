@@ -16,8 +16,16 @@ public class TempUtils
     {
         var s = new SourceNode();
         var d = new DestinationNode();
+        var sort = new SortNode();
         var custom = new ColumnSelectorNode();
-        
+
+        sort._previousNode = "source";
+        sort._info = new List<Tuple<string, bool>>()
+        {
+            Tuple.Create("age", true)
+        };
+        sort._NodeType = NodeType.Sort;
+
         custom.Id = "custom";
         custom._NodeType = NodeType.Selector;
         custom._columns = new List<string>() { "name", "gender" };
@@ -25,7 +33,7 @@ public class TempUtils
 
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableId = "Iran_csv";
+        s._tableId = "b6080a04-59e1-4dcb-bab1-31f62361095d";
         
         d.Id = "dest";
         d.tableId = "output1";
@@ -36,8 +44,9 @@ public class TempUtils
         {
             { "source", s },
             { "dest", d },
-            { "custom", custom}
+            { "custom", sort}
         };
+        
         var p = new Pipeline
         {
             Nodes = nodes!

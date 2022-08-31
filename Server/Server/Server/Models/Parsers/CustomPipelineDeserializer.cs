@@ -43,6 +43,8 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new AggregateNode();
                 case NodeType.Math:
                     return new MathNode();
+                case NodeType.Sort:
+                    return new SortNode();
                 default:
                     throw new NotImplementedException();
             }
