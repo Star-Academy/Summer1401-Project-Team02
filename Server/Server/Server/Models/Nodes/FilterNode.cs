@@ -19,15 +19,12 @@ public class FilterNode : ProcessorNode
         Console.WriteLine(value);
         switch (_operator)
         {
-            //Just for strings ... for numbers it should be like year = 12 not year = '12' 
+            
             case(ColumnFilteringOperation.lessThan):
                 secondPartOfQuery = $"WHERE [{_columnName}] < {value}";
                 break;
             case(ColumnFilteringOperation.greaterThan):
                 secondPartOfQuery = $"WHERE [{_columnName}] > {value}";
-                break;
-            case(ColumnFilteringOperation.equalTo):
-                secondPartOfQuery = $"WHERE [{_columnName}] = {value}";
                 break;
             case(ColumnFilteringOperation.lessThanOrEqualTo):
                 secondPartOfQuery = $"WHERE [{_columnName}] <= {value}";
