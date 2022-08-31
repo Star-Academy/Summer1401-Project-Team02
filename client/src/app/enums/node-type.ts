@@ -7,5 +7,6 @@ export enum NodeType {
     Strings,
     Numbers,
     Filter,
+    Aggregate,
     Math,
 }
