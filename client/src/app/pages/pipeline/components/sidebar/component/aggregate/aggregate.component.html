@@ -8,5 +8,75 @@
     </p>
     <br />
 
-    <div></div>
+    <div>
+        <div>
+            <p>Add your functions</p>
+
+            <div class="function-input" *ngFor="let operation of functions; let indexNumber = index">
+                <div class="text">
+                    <p>function {{ indexNumber }}</p>
+                    <p (click)="removeFunction(indexNumber)">Remove</p>
+                </div>
+                <div>
+                    choose second column name
+                    <nz-select
+                        [(ngModel)]="operation.Item2"
+                        (ngModelChange)="operationColumnNameChange($event, indexNumber)"
+                    >
+                        <ng-container *ngFor="let column of columns">
+                            <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                        </ng-container>
+                        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div>
+                    choose an operation
+                    <nz-select [(ngModel)]="operation.Item1" (ngModelChange)="operationChange($event, indexNumber)">
+                        <ng-container *ngFor="let aggregateFunction of aggregateFunctionList; let indexOfFunc = index">
+                            <nz-option [nzValue]="indexOfFunc" [nzLabel]="aggregateFunction"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+                <div>
+                    new column name(optional)
+                    <input
+                        nz-input
+                        autofocus
+                        id="first_input"
+                        name="first_query"
+                        type="text"
+                        [(ngModel)]="operation.Item3"
+                        (ngModelChange)="operationNewColumnNameChange($event, indexNumber)"
+                        required
+                    />
+                </div>
+            </div>
+            <button nz-button nzType="dashed" class="add-button" (click)="addFunction()">
+                <span nz-icon nzType="plus"></span>
+                Add function
+            </button>
+        </div>
+        <div>
+            choose grouping columns
+            <nz-select
+                nzMode="multiple"
+                nzPlaceHolder="Select columns"
+                nzAllowClear
+                [ngModel]="groupingColumns"
+                (ngModelChange)="groupingColumnChange($event)"
+            >
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+    </div>
 </div>

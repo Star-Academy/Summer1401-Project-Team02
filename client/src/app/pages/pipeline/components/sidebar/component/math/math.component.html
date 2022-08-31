@@ -37,7 +37,7 @@
             choose an operation
             <nz-select [(ngModel)]="mathFunction" (ngModelChange)="mathFunctionChange($event)">
                 <ng-container *ngFor="let mathFunction of mathFunctionList; let indexOfFunc = index">
-                    <nz-option *ngIf="!isLoading" [nzValue]="indexOfFunc" [nzLabel]="mathFunction"></nz-option>
+                    <nz-option [nzValue]="indexOfFunc" [nzLabel]="mathFunction"></nz-option>
                 </ng-container>
             </nz-select>
         </div>

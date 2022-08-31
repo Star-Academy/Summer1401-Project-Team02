@@ -25,15 +25,16 @@
                 description="split your columns to more than one"
                 (click)="addNode(NodeType.Split)"
             ></app-card>
-            <app-card
-                title="String"
-                description="do some functions on strings"
-                (click)="addNode(NodeType.Strings)"
-            ></app-card>
+
             <app-card
                 title="Math"
                 description="do some calculation on your data"
                 (click)="addNode(NodeType.Math)"
+            ></app-card>
+            <app-card
+                title="Aggregate"
+                description="grouping your columns by functions"
+                (click)="addNode(NodeType.Aggregate)"
             ></app-card>
         </div>
     </ng-template>

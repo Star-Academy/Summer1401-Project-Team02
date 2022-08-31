@@ -15,7 +15,7 @@ export class SidebarComponent {
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
-    // public sideType = 3;
+    // public sideType = 5;
     public get sideType(): number {
         switch (this.pipelineService.selectedTypeNode) {
             case NodeType.Selector:
@@ -26,7 +26,7 @@ export class SidebarComponent {
                 return 3;
             case NodeType.Math:
                 return 4;
-            case NodeType.Strings:
+            case NodeType.Aggregate:
                 return 5;
             default:
                 return 0;

@@ -6,6 +6,11 @@
         <h1>Process Config</h1>
     </header>
     <section>
+        <app-aggregate
+            [(isReset)]="isReset"
+            (selectNodeChange)="editedNode = $event"
+            *ngIf="sideType === 5"
+        ></app-aggregate>
         <app-math [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 4"></app-math>
         <app-split [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 3"></app-split>
         <app-custom [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 2"></app-custom>

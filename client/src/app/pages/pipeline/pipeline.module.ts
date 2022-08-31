@@ -18,11 +18,10 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {CustomComponent} from './components/sidebar/component/custom/custom.component';
 import {MathComponent} from './components/sidebar/component/math/math.component';
 import {SplitComponent} from './components/sidebar/component/split/split.component';
-import {StringComponent} from './components/sidebar/component/string/string.component';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzSwitchModule} from 'ng-zorro-antd/switch';
-import { AggregateComponent } from './components/sidebar/component/aggregate/aggregate.component';
+import {AggregateComponent} from './components/sidebar/component/aggregate/aggregate.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +34,6 @@ import { AggregateComponent } from './components/sidebar/component/aggregate/agg
         CustomComponent,
         MathComponent,
         SplitComponent,
-        StringComponent,
         AggregateComponent,
     ],
     imports: [

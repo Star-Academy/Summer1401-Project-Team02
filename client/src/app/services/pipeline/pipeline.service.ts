@@ -9,13 +9,14 @@ import {CustomNodeModel} from '../../models/custom-node.model';
 import {StringNodeModel} from '../../models/string-node.model';
 import {SplitNodeModel} from '../../models/split-node.model';
 import {MathNodeModel} from '../../models/math-node.model';
+import {AggregateNodeModel} from '../../models/aggregate-node.model';
 
 type PipelineNodeModel =
     | DestinationNodeModel
     | SourceNodeModel
     | ColumnSelectorNodeModel
     | CustomNodeModel
-    | StringNodeModel
+    | AggregateNodeModel
     | SplitNodeModel
     | MathNodeModel;
 
@@ -85,14 +86,12 @@ export class PipelineService {
                 newColumn: false,
                 id: Math.random().toString(),
             };
-        } else if (nodeType === NodeType.Strings) {
+        } else if (nodeType === NodeType.Aggregate) {
             return {
                 _NodeType: nodeType,
                 _previousNode: this.selectedPreviousNode,
-                columnName: '',
-                second: '',
-                function: -1,
-                newColumn: false,
+                _functions: [],
+                _groupingColumns: [],
                 id: Math.random().toString(),
             };
         }
