@@ -5,13 +5,13 @@ namespace Server.Models;
 public class TableInfo
 {
     public string _id { get; set; }
-    public string _tableName { get; set; }
+    public string _tableNameEnteredByUser { get; set; }
     public DateTime _dateTime { get; set; }
 
-    public TableInfo(string id, string tableName, DateTime dateTime)
+    public TableInfo(string id, string tableNameEnteredByUser, DateTime dateTime)
     {
         _id = id;
-        _tableName = tableName;
+        _tableNameEnteredByUser = tableNameEnteredByUser;
         _dateTime = dateTime;
     }
 

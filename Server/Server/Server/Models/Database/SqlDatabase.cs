@@ -9,16 +9,17 @@ public class SqlDatabase : IDatabase
     private const string ConnectionString =
         $"Server={Config.Server};Database={Config.DataBase};User Id={Config.Id};Password={Config.Password};";
 
-    public void ImportDataTable(DataTable dataTable, string tableName)
+    public void ImportDataTable(DataTable dataTable, string tableId)
     {
         var connection = new SqlConnection(ConnectionString);
         connection.Open();
         var bulkCopy = new SqlBulkCopy(connection);
         foreach (DataColumn c in dataTable.Columns) bulkCopy.ColumnMappings.Add(c.ColumnName, c.ColumnName);
-        bulkCopy.DestinationTableName = tableName;
+        bulkCopy.DestinationTableName = $"[{tableId}]";
         bulkCopy.WriteToServer(dataTable);
         connection.Close();
     }
+    
 
 
     public DataTable RunQuery(string query)
@@ -33,25 +34,25 @@ public class SqlDatabase : IDatabase
         return result;
     }
 
-    public void CreateTable(DataTable dataTable, string tableName)
+    public void CreateTable(DataTable dataTable, string tableId)
     {
-        ExecuteCommand($"Drop Table if EXISTS [{tableName}];\n{GenerateCreateTableQuery(tableName, dataTable)}");
+        ExecuteCommand($"Drop Table if EXISTS [{tableId}];\n{GenerateCreateTableQuery(tableId, dataTable)}");
     }
 
-    public void CreateTable(string tableName)
+    public void CreateTable(string tableId)
     {
-            ExecuteCommand($"Drop Table if EXISTS [{tableName}];\nCreate Table [{tableName}] (dummy int);");
+            ExecuteCommand($"Drop Table if EXISTS [{tableId}];\nCreate Table [{tableId}] (dummy int);");
     }
 
     public void addToAllTablesInventory(TableInfo tableInfo)
     {
-        ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._tableName}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");
+        ExecuteCommand($"INSERT INTO {Config.dataInventoryTableName} VALUES ('{tableInfo._id}', '{tableInfo._tableNameEnteredByUser}', '{tableInfo._dateTime.ToString(Config.DateTimeFormat)}');");
     }
 
-    public void deleteDataset(string name)
+    public void deleteDataset(string tableId)
     {
-        ExecuteCommand($"DROP TABLE [{name}]");
-        ExecuteCommand($"DELETE FROM {Config.dataInventoryTableName} WHERE tableName = '{name}';");
+        ExecuteCommand($"DROP TABLE [{tableId}]");
+        ExecuteCommand($"DELETE FROM {Config.dataInventoryTableName} WHERE id = '{tableId}';");
     }
 
     private void ExecuteCommand(string command)
@@ -63,9 +64,9 @@ public class SqlDatabase : IDatabase
         connection.Close();
     }
 
-    public DataTable GetTable(string tableName)
+    public DataTable GetTable(string tableId)
     {
-        return RunQuery($"SELECT * FROM {tableName}");
+        return RunQuery($"SELECT * FROM {tableId}");
     }
 
     public string GenerateCreateTableQuery(string tableName, DataTable table)

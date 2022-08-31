@@ -6,7 +6,7 @@ namespace Server.Models.Nodes;
 [JsonObject]
 public class DestinationNode : Node
 {
-    public string tableName;
+    public string tableId;
     public override IEnumerable<Node> GetPath(Dictionary<string, Node?> nodes)
     {
         return nodes!.GetValueOrDefault(_previousNode)!.GetPath(nodes).Append(this);

@@ -1,4 +1,5 @@
 using System.Data;
+using System.Drawing.Printing;
 using System.Text;
 using Microsoft.VisualBasic;
 using Server.Controllers;
@@ -21,11 +22,10 @@ public class DataInventoryService :  IDataInventoryService
     {
         var parser = MapToParser(file!.ContentType);
         var dataTable = parser.ParseToDataTable(file.ReadAll().ToString());
-
         string id = MyExtensionMethods.CreateId();
-        var tableInfo = new TableInfo(id, file.Name, DateTime.Now);
-        _database.CreateTable(dataTable, file.Name);
-        _database.ImportDataTable(dataTable, file.Name);
+        var tableInfo = new TableInfo(id, file.FileName, DateTime.Now);
+        _database.CreateTable(dataTable, id);
+        _database.ImportDataTable(dataTable, id);
         _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableID\" : \"{id}\" }}";
     }
@@ -35,7 +35,7 @@ public class DataInventoryService :  IDataInventoryService
     {
         string id = MyExtensionMethods.CreateId();
         var tableInfo = new TableInfo(id, name, DateTime.Now);
-        _database.CreateTable(name);
+        _database.CreateTable(id);
         _database.addToAllTablesInventory(tableInfo);
         return $"{{ \"tableID\" : \"{id}\" }}";
     }
@@ -53,9 +53,9 @@ public class DataInventoryService :  IDataInventoryService
     }
 
         
-    public MemoryStream Download(string tableName, string format)
+    public MemoryStream Download(string tableId, string format)
     {
-        var dataTable = _database.GetTable(tableName);
+        var dataTable = _database.GetTable(tableId);
         var parser = MapToParser(format);
         var csvString = parser.ParseFromDataTable(dataTable);
         return new MemoryStream(Encoding.ASCII.GetBytes(csvString));
@@ -69,9 +69,9 @@ public class DataInventoryService :  IDataInventoryService
         return tablesList;
     }
 
-    public string deleteDataset(string name)
+    public string deleteDataset(string tableId)
     {
-        _database.deleteDataset(name);
-        return $"{{ \"deleted table name\" : \"{name}\" }}";
+        _database.deleteDataset(tableId);
+        return $"{{ \"deleted table id\" : \"{tableId}\" }}";
     }
 }

@@ -39,8 +39,8 @@ public class PipelineService : IPipelineService
             {
                 var dataTable = _database.RunQuery(query.Value);
 
-                _database.CreateTable(dataTable, node.tableName);
-                _database.ImportDataTable(dataTable, node.tableName);
+                _database.CreateTable(dataTable, node.tableId);
+                _database.ImportDataTable(dataTable, node.tableId);
                 result.Add(node.Id, ConstantKeys.Success);
             }
             catch (Exception e)

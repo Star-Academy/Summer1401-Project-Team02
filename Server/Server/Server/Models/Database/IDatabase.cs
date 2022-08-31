@@ -4,11 +4,11 @@ namespace Server.Models.Database;
 
 public interface IDatabase
 {
-    public void ImportDataTable(DataTable dataTable, string tableName);
-    public void CreateTable(DataTable dataTable, string tableName);
-    public void CreateTable(string tableName);
+    public void ImportDataTable(DataTable dataTable, string tableId);
+    public void CreateTable(DataTable dataTable, string tableId);
+    public void CreateTable(string tableId);
     public DataTable RunQuery(string query);
-    public DataTable GetTable(string tableName);
+    public DataTable GetTable(string tableId);
     public void addToAllTablesInventory(TableInfo tableInfo);
-    void deleteDataset(string name);
+    void deleteDataset(string tableId);
 }

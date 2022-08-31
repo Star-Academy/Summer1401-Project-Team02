@@ -26,10 +26,10 @@ public class TempUtils
         
         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "dataset_csv";
+        s._tableId = "dataset_csv";
         
         d.Id = "dest";
-        d.tableName = "output1";
+        d.tableId = "output1";
         d._previousNode = "custom";
         d._NodeType = NodeType.DestinationNode;
 

@@ -48,9 +48,9 @@ public class DataInventoryController : Controller
     
     
     [HttpGet]
-    public IActionResult DownloadFile(string tableName, string fileFormat)
+    public IActionResult DownloadFile(string tableId, string tableName, string fileFormat)
     {
-        return File(_dataInventoryService.Download(tableName, fileFormat), 
+        return File(_dataInventoryService.Download(tableId, fileFormat), 
             $"text/{fileFormat}", $"{tableName}.{fileFormat}");
     }
     
@@ -68,11 +68,11 @@ public class DataInventoryController : Controller
     }
     
     [HttpPost]
-    public IActionResult deleteDataset([FromBody] string name)
+    public IActionResult deleteDataset([FromBody] string tableId)
     {
         try
         {
-            return Ok(_dataInventoryService.deleteDataset(name));
+            return Ok(_dataInventoryService.deleteDataset(tableId));
         }
         catch (Exception e)
         {
