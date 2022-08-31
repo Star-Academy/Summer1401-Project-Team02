@@ -4,11 +4,10 @@ public enum ColumnFilteringOperation
 {
     lessThan,
     greaterThan,
-    equalTo,
     lessThanOrEqualTo,
     greaterThanOrEqualTo,
-    Contains,
     Matches,
+    Contains,
     IsEmpty,
     IsNull
 }
