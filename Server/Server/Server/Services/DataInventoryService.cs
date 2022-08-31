@@ -27,7 +27,7 @@ public class DataInventoryService :  IDataInventoryService
         _database.CreateTable(dataTable, id);
         _database.ImportDataTable(dataTable, id);
         _database.addToAllTablesInventory(tableInfo);
-        return $"{{ \"tableID\" : \"{id}\" }}";
+        return $"{{ \"tableId\" : \"{id}\" }}";
     }
 
 
@@ -37,7 +37,7 @@ public class DataInventoryService :  IDataInventoryService
         var tableInfo = new TableInfo(id, name, DateTime.Now);
         _database.CreateTable(id);
         _database.addToAllTablesInventory(tableInfo);
-        return $"{{ \"tableID\" : \"{id}\" }}";
+        return $"{{ \"tableId\" : \"{id}\" }}";
     }
 
     private IParser MapToParser(string fileType)

@@ -47,7 +47,7 @@ public class TempUtils
         s._tableId = "b6080a04-59e1-4dcb-bab1-31f62361095d";
         
         d.Id = "dest";
-        d.tableId = "output1";
+        d._tableId = "output1";
         d._previousNode = "custom";
         d._NodeType = NodeType.DestinationNode;
 
@@ -112,7 +112,7 @@ public class TempUtils
         s._tableId = "Giant1_csv";
         
         d.Id = "dest";
-        d.tableId = "output1";
+        d._tableId = "output1";
         d._previousNode = "custom";
         d._NodeType = NodeType.DestinationNode;
 

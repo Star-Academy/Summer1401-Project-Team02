@@ -13,10 +13,12 @@ public class PipelineService : IPipelineService
 {
     
     private readonly IDatabase _database;
+    private readonly ILogger<IPipelineService> _logger;
 
-    public PipelineService(IDatabase database)
+    public PipelineService(IDatabase database, ILogger<IPipelineService> logger)
     {
         _database = database;
+        _logger = logger;
     }
 
     private void Initialize(Pipeline pipeline, IEnumerable<Node> nodeList)
@@ -48,12 +50,13 @@ public class PipelineService : IPipelineService
             {
                 var dataTable = _database.RunQuery(query.Value);
 
-                _database.CreateTable(dataTable, node.tableId);
-                _database.ImportDataTable(dataTable, node.tableId);
+                _database.CreateTable(dataTable, node._tableId);
+                _database.ImportDataTable(dataTable, node._tableId);
                 result.Add(node.Id, ConstantKeys.Success);
             }
             catch (Exception e)
             {
+                _logger.LogInformation(e.ToString());
                 result.Add(node.Id, e.Message);
             }
         }
