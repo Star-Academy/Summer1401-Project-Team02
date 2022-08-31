@@ -5,7 +5,9 @@ namespace Server.Models.Nodes;
 
 public class CustomNode : ProcessorNode
 {
-    public string _first, _second;
+    public string _first = "*";
+    public string _second;
+    
 
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes)
     {

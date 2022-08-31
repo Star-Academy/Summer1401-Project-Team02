@@ -73,7 +73,7 @@ public class SqlDatabase : IDatabase
 
     public DataTable GetTable(string tableId)
     {
-        return RunQuery($"SELECT * FROM {tableId}");
+        return RunQuery($"SELECT * FROM [{tableId}]");
     }
 
     public string GenerateCreateTableQuery(string tableName, DataTable table)
