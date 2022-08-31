@@ -114,7 +114,7 @@ export class PipelineService {
 
     public editNode(data: PipelineNodeModel): void {
         this.nodes.forEach((node, index) => {
-            if (node.id === this.selectedIdNode) {
+            if (node.id === data.id) {
                 this.nodes[index] = {...data};
                 return;
             }
@@ -123,6 +123,10 @@ export class PipelineService {
 
     public getSelectedNode(): PipelineNodeModel | undefined {
         return this.nodes.find((node) => node.id === this.selectedIdNode);
+    }
+
+    public getSourceNode(): PipelineNodeModel | undefined {
+        return this.nodes.find((n) => n._NodeType === NodeType.SourceNode);
     }
 
     public async getColumnsHeader(): Promise<string[]> {
