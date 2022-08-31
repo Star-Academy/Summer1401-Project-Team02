@@ -17,8 +17,8 @@ public class SourceNode : Node
         return executionType switch
         {
             ExecutionType.FullExecution => string.Format(QueryStrings.Source, _tableId),
-            ExecutionType.Heading => HeaderQueryString = string.Format(QueryStrings.SourceTop, Config.PreviewCapacity, _tableId),
-            ExecutionType.Preview => string.Format(QueryStrings.SourceTop, 0, _tableId),
+            ExecutionType.Heading => HeaderQueryString = string.Format(QueryStrings.SourceTop, 0, _tableId),
+            ExecutionType.Preview => string.Format(QueryStrings.SourceTop,  Config.PreviewCapacity, _tableId),
             // TODO: will implement later
             ExecutionType.Validation => throw new NotImplementedException(),
             _ => throw new ArgumentOutOfRangeException(nameof(executionType), executionType, null)
