@@ -2,7 +2,11 @@ namespace Server.Enums;
 
 public enum ColumnFilteringOperation
 {
-    MathematicalOperators,
+    lessThan,
+    greaterThan,
+    equalTo,
+    lessThanOrEqualTo,
+    greaterThanOrEqualTo,
     Contains,
     Matches,
     IsEmpty,
