@@ -34,7 +34,6 @@ export class UploadInputComponent {
         if (status === 'done') {
             this.msg.success(`${file.name} file uploaded successfully.`);
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-            console.log(file);
             if (sourceNode) {
                 sourceNode._tableID = file.response.tableID;
 

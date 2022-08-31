@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../../services/modal/modal.service';
 import {DatasetService} from '../../services/dataset/dataset.service';
 import {API_DOWNLOAD_FILE} from '../../utils/api.utils';
-interface ItemData {
-    _id: string;
-    _tableNameEnteredByUser: string;
-    _dateTime: string;
-}
+import {ItemData} from '../../models/itemData.model';
+
 @Component({
     selector: 'app-data-inventory',
     templateUrl: './data-inventory.component.html',
