@@ -18,6 +18,7 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
             return base.ReadJson(jobj.CreateReader(), objectType, existingValue, serializer);
         }
 
+        // Todo: simple switch enum refactor
         public override Node Create(Type objectType)
         {
             switch (_currentObjectType)
@@ -37,7 +38,9 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                 case NodeType.Numbers:
                     return new NumbersNode();
                 case NodeType.Filter:
-                    return new FilterNode();
+                    return new FilterNode(); 
+                case NodeType.Aggregate:
+                    return new AggregateNode();
                 case NodeType.Math:
                     return new MathNode();
                 default:

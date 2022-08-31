@@ -42,7 +42,7 @@ public class PipelineController : Controller
         _logger.LogInformation(TempUtils.GeneratePipelineJson2());
         // _logger.LogInformation(TempUtils.GeneratePipelineJson2());
         return Ok();
-    }    
+    }       
     [HttpGet]
     public IActionResult GetHeading(string pipelineJson, string id)
     {

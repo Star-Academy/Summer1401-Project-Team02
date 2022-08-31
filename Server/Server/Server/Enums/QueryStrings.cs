@@ -14,7 +14,7 @@ public static class QueryStrings
 
     public const string Split = $"select {{0}} from ({{1}}) as dummy";
     public const string Sort = $"select * from ({{0}}) as dummy order by {{1}} offset 0 rows";
-    public const string Aggregate = $"select {{0}} from ({{1}}) as dummy group by {{2}} offset 0 rows";
+    public const string Aggregate = $"select {{0}} from ({{1}}) as dummy group by {{2}}";
     public const string AggregateWithoutGrouping = $"select {{0}} from ({{1}}) as dummy";
     
     public const string SplitColumn = $"REVERSE(PARSENAME(REPLACE(REVERSE([{{0}}]), '{{1}}', '.'), {{2}})) as {{3}}";

@@ -12,20 +12,22 @@ namespace Server;
 public class TempUtils
 {
 
-    public static string GeneratePipelineJson()
+    public static string GeneratePipelineJson2()
     {
         var s = new SourceNode();
         var d = new DestinationNode();
-        var custom = new ColumnSelectorNode();
+        var custom = new AggregateNode();
         
         custom.Id = "custom";
-        custom._NodeType = NodeType.Selector;
-        custom._columns = new List<string>() { "name", "gender" };
+        custom._NodeType = NodeType.Aggregate;
+        custom._groupingColumns = new List<string>() {"gender" };
         custom._previousNode = "source";
+        var g1 = Tuple.Create(AggregateFunction.Avg, ""); 
 
-        s.Id = "source";
+
+                                         s.Id = "source";
         s._NodeType = NodeType.SourceNode;
-        s._tableName = "Iran_csv";
+        s._tableName = "Giant1_csv";
         
         d.Id = "dest";
         d.tableName = "output1";
@@ -50,7 +52,7 @@ public class TempUtils
     }
     
     
-    public static string GeneratePipelineJson2()
+    public static string GeneratePipelineJson()
     {
         var s = new SourceNode();
         var d = new DestinationNode();
