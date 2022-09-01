@@ -11,6 +11,7 @@ import {SplitNodeModel} from '../../models/split-node.model';
 import {MathNodeModel} from '../../models/math-node.model';
 import {AggregateNodeModel} from '../../models/aggregate-node.model';
 import {FilterNodeModel} from '../../models/filter-node.model';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 type PipelineNodeModel =
     | DestinationNodeModel
@@ -36,7 +37,7 @@ export class PipelineService {
     public selectedIdNode: string = '';
     public selectedTypeNode: NodeType = -1;
 
-    public constructor(private apiService: ApiService) {}
+    public constructor(private apiService: ApiService, public messageService: NzMessageService) {}
 
     private creatNode(nodeType: NodeType): PipelineNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
@@ -161,8 +162,13 @@ export class PipelineService {
             },
         });
 
-        if (response) this.lastExecuteResult = JSON.parse(response);
-        else this.lastExecuteResult = null;
+        if (response) {
+            this.lastExecuteResult = JSON.parse(response);
+            this.messageService.success('success');
+        } else {
+            this.lastExecuteResult = null;
+            this.messageService.error('Error');
+        }
     }
 
     public async preview(): Promise<void> {

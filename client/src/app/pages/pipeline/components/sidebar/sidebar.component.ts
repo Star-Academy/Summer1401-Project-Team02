@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 import {NodeType} from '../../../../enums/node-type';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-sidebar',
@@ -35,7 +36,7 @@ export class SidebarComponent {
         }
     }
 
-    public constructor(public pipelineService: PipelineService) {
+    public constructor(public pipelineService: PipelineService, public messageService: NzMessageService) {
         this.editedNode = this.pipelineService.getSelectedNode();
     }
 
@@ -46,8 +47,8 @@ export class SidebarComponent {
     }
 
     public onSave(): void {
-        debugger;
         if (this.editedNode) this.pipelineService.editNode(this.editedNode);
+        this.messageService.create('success', 'success');
     }
 
     public onReset(): void {

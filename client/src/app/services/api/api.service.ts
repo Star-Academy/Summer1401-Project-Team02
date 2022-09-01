@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {GetRequestOptions, PostRequestOptions, RequestOptions} from '../../models/request-option.model';
 import {DEFAULT_POST_REQUEST_INIT} from '../../utils/api.utils';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ApiService {
+    public constructor(public messageService: NzMessageService) {}
     private static generatePostRequestInit(options: PostRequestOptions): RequestInit {
         return {
             ...DEFAULT_POST_REQUEST_INIT,
@@ -30,7 +32,8 @@ export class ApiService {
         const data = await response.text();
 
         if (response.ok) return data;
-
+        console.log(response);
+        this.messageService.error(data);
         return null;
     }
 }
