@@ -16,5 +16,6 @@
             </tbody>
         </nz-table>
     </section>
-    <p *ngIf="pipelineService.previewContent.length === 0">No data to show!</p>
+    <p *ngIf="pipelineService.previewContent.length === 0">dataset is empty!</p>
+    <p *ngIf="!pipelineService.previewContent">no data to show!</p>
 </div>
