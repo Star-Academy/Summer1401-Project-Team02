@@ -7,14 +7,14 @@ public class AggregateNode : ProcessorNode
 {
     public List<Tuple<AggregateFunction, string, string>> _functions;
     public List<string> _groupingColumns;
-
+    
     private List<string> GenerateSelectingString()
     {
         var result = new List<string>();
-        foreach (var function in _functions)
+        foreach (var (func, column, newName) in _functions)
         {
-            var renaming = (function.Item3 == null ? $"as [{function.Item2}_{function.Item1}]" : $"as [{function.Item3}]");
-            result.Add($"{function.Item1}([{function.Item2}]) {renaming}");
+            var renaming = (newName is null or "" ? $"as [{column}_{func}]" : $"as [{newName}]");
+            result.Add($"{func}([{column}]) {renaming}");
         }
 
         return result;
