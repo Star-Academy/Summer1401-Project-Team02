@@ -24,7 +24,7 @@ export class UploadInputComponent {
     public uploadH = {
         accept: 'text/plain',
     };
-    public handleChange({file}: NzUploadChangeParam): void {
+    public async handleChange({file}: NzUploadChangeParam): Promise<void> {
         const status = file.status;
 
         //TODO ??
@@ -37,14 +37,13 @@ export class UploadInputComponent {
         if (status === 'done') {
             this.msg.success(`${file.name} file uploaded successfully.`);
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-            console.log(file);
             if (sourceNode) {
                 sourceNode._tableId = file.response.tableId;
                 this.canvasService.changeSrcAndDestIcon(sourceNode.id, true);
 
                 this.pipelineService.editNode(sourceNode);
-                this.pipelineService.preview();
-            } else this.datasetService.getTables();
+                await this.pipelineService.preview();
+            } else await this.datasetService.getTables();
         } else if (status === 'error') {
             this.msg.error(`${file.name} file upload failed.`);
         }

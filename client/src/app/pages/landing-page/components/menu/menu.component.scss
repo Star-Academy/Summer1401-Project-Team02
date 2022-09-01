@@ -1,24 +1,18 @@
 .container {
     display: grid;
     grid-template-areas: "data-inventory pipeline";
+    justify-items: center;
 
     height: 100%;
+    align-items: center;
 
     a {
         box-shadow: 0 1px 10px 3px hsl(0deg 0% 0% / 19%);
-
         display: grid;
         place-items: center;
 
-        inline-size: 80%;
-
-        border-radius: 0.5rem;
-
-        transition: box-shadow 0.5s;
-    }
-
-    a:hover {
-        box-shadow: 0 1px 10px 3px hsl(0deg 0% 0% / 43%);
+        inline-size: 50rem;
+        height: fit-content;
     }
 
     .data-inventory,

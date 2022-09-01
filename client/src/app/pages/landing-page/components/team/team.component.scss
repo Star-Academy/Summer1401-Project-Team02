@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 4rem;
+
+    padding-bottom: 5rem;
+
+    app-card {
+        flex: 1 0 21%;
+
+        display: grid;
+        place-items: center;
+
+        margin: 0;
+    }
+}

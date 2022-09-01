@@ -9,11 +9,10 @@
 >
     <ng-template #modalContent>
         <ng-container>
-            <app-upload-input></app-upload-input>
-            <!--            <nz-tabset nzCentered>-->
-            <!--                <nz-tab nzTitle="Create Source"><app-input></app-input></nz-tab>-->
-            <!--                <nz-tab nzTitle="Connect to a source"><app-connection></app-connection></nz-tab>-->
-            <!--            </nz-tabset>-->
+            <nz-tabset nzCentered>
+                <nz-tab nzTitle="Create Source"><app-upload-input></app-upload-input></nz-tab>
+                <nz-tab nzTitle="Pick a source"><app-source-table></app-source-table></nz-tab>
+            </nz-tabset>
         </ng-container>
     </ng-template>
 

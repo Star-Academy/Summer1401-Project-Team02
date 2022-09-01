@@ -1,23 +1,26 @@
 <div class="container">
-    <div class="data-inventory">
-        <a routerLink="/data-inventory">
-            <h2>Data Inventory</h2>
-            <p>
-                Upload your personal file...<br />
-                or create a new one!
-            </p>
-            <img src="assets/data-inventory.svg" />
-        </a>
-    </div>
-
-    <div class="pipeline">
-        <a routerLink="/pipeline">
-            <h2>Pipeline</h2>
-            <p>
-                Create your own personal <br />
-                pipeline today!
-            </p>
-            <img src="assets/pipeline.svg" />
-        </a>
-    </div>
+    <a routerLink="/data-inventory">
+        <nz-card nzHoverable style="width: 50rem">
+            <div class="data-inventory">
+                <h2>Data Inventory</h2>
+                <p>
+                    Upload your personal file...<br />
+                    or create a new one!
+                </p>
+                <img src="assets/data-inventory.svg" />
+            </div>
+        </nz-card>
+    </a>
+    <a routerLink="/pipeline">
+        <nz-card nzHoverable style="width: 50rem">
+            <div class="pipeline">
+                <h2>Pipeline</h2>
+                <p>
+                    Create your own personal <br />
+                    pipeline today!
+                </p>
+                <img src="assets/pipeline.svg" />
+            </div>
+        </nz-card>
+    </a>
 </div>
