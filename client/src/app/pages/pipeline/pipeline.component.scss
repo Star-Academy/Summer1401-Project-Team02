@@ -32,7 +32,7 @@
         inset-inline-end: var(--sidebar-width);
         z-index: 1;
 
-        block-size: 30rem;
+        block-size: 25rem;
 
         padding: 2rem;
 
@@ -43,7 +43,7 @@
         }
 
         &.collapse {
-            transform: translateY(30rem);
+            transform: translateY(25rem);
         }
     }
 }
