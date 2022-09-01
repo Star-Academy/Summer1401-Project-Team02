@@ -153,7 +153,12 @@ export class PipelineService {
     public async execute(): Promise<void> {
         const response = await this.apiService.postRequest({
             url: API_EXECUTE,
-            body: this.convertToDictionary().toString(),
+            body: JSON.stringify(this.convertToDictionary()),
+            init: {
+                headers: {
+                    'Content-Type': 'text/json',
+                },
+            },
         });
 
         if (response) this.lastExecuteResult = JSON.parse(response);
