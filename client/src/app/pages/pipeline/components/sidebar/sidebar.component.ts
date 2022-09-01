@@ -28,6 +28,8 @@ export class SidebarComponent {
                 return 4;
             case NodeType.Aggregate:
                 return 5;
+            case NodeType.Filter:
+                return 6;
             default:
                 return 0;
         }

@@ -10,6 +10,7 @@ import {StringNodeModel} from '../../models/string-node.model';
 import {SplitNodeModel} from '../../models/split-node.model';
 import {MathNodeModel} from '../../models/math-node.model';
 import {AggregateNodeModel} from '../../models/aggregate-node.model';
+import {FilterNodeModel} from '../../models/filter-node.model';
 
 type PipelineNodeModel =
     | DestinationNodeModel
@@ -18,7 +19,8 @@ type PipelineNodeModel =
     | CustomNodeModel
     | AggregateNodeModel
     | SplitNodeModel
-    | MathNodeModel;
+    | MathNodeModel
+    | FilterNodeModel;
 
 @Injectable({
     providedIn: 'root',
@@ -92,6 +94,15 @@ export class PipelineService {
                 _previousNode: this.selectedPreviousNode,
                 _functions: [],
                 _groupingColumns: [],
+                id: Math.random().toString(),
+            };
+        } else if (nodeType === NodeType.Filter) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                value: '',
+                _columnName: '',
+                _operator: -1,
                 id: Math.random().toString(),
             };
         }
