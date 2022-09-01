@@ -27,7 +27,6 @@ export class UploadInputComponent {
     public async handleChange({file}: NzUploadChangeParam): Promise<void> {
         const status = file.status;
 
-        //TODO ??
         if (status === 'uploading') {
             if (this.n === 1) {
                 this.msg.loading(`Uploading ${file.name}...`);
