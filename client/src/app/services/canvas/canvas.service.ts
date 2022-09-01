@@ -193,6 +193,7 @@ export class CanvasService {
                 node.attr('.card/fill', '#f3f3f3');
                 node.attr('.card/stroke', '#bcbcbc');
             }
+            this.addDestinationsSituation();
         });
     }
 
@@ -202,7 +203,7 @@ export class CanvasService {
             if (node.store.data.type === NodeType.DestinationNode) {
                 if (this.pipelineService.lastExecuteResult[node.store.data._ID] === 'success') {
                     node.attr('.card/stroke', '#019d01');
-                    node.attr('.card/fill', '#eaffea');
+                    node.attr('.card/fill', '#f2fff2');
                 } else {
                     node.attr('.card/stroke', '#ff0000');
                     node.attr('.card/fill', '#ffecec');
@@ -289,8 +290,7 @@ export class CanvasService {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
                 if (!selectedPipelineNode?._tableId) this.modalService.showSource();
             } else if (node.store.data.type === NodeType.DestinationNode) {
-                const selectedPipelineNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
-                if (!selectedPipelineNode?._tableId) this.modalService.showDestination();
+                this.modalService.showDestination();
             }
         });
 
