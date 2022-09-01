@@ -19,6 +19,13 @@ public class TempUtils
         var sort = new SortNode();
         var custom = new ColumnSelectorNode();
         var aggregate = new AggregateNode();
+        var join = new JoinNode();
+
+        join._previousNode = "source";
+        join._secondPreviousNode = "source2";
+        join._primaryColumn = "fullname";
+        join._secondaryColumn = "fullname";
+        
 
         aggregate._groupingColumns = new List<string>() { "gender" };
         aggregate._functions = new List<Tuple<AggregateFunction, string, string>>()
