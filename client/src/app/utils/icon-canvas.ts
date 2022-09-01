@@ -10,4 +10,5 @@ export const canvasUtils = [
     {image: 'assets/aggregate.webp', label: 'Aggregate'},
     {image: 'assets/math.webp', label: 'Math'},
     {image: 'assets/sort.webp', label: 'Sort'},
+    {image: 'assets/join.webp', label: 'Join'},
 ];
