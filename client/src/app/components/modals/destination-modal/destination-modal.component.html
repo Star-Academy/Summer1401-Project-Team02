@@ -11,10 +11,12 @@
         <ng-container>
             <nz-tabset nzCentered>
                 <nz-tab nzTitle="Create destination"><app-destination-input></app-destination-input></nz-tab>
-                <nz-tab nzTitle="Pick a destination"
-                    ><app-source-table></app-source-table>
-                    <button nz-button nzType="primary" (click)="handleHide()">ok</button></nz-tab
-                >
+                <nz-tab nzTitle="Pick a destination">
+                    <div class="table-list">
+                        <app-source-table></app-source-table>
+                        <button nz-button nzType="primary" (click)="handleHide()">ok</button>
+                    </div>
+                </nz-tab>
             </nz-tabset>
         </ng-container>
     </ng-template>
