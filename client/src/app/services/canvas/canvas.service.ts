@@ -139,7 +139,6 @@ export class CanvasService {
             type,
         });
         this.canvasNodes.unshift(newNode);
-        console.log(this.canvasNodes);
         return newNode;
     }
 
@@ -176,7 +175,6 @@ export class CanvasService {
 
     public running(status: boolean): void {
         const edges = this.graph.getEdges();
-        console.log(edges);
         edges?.forEach((edge) => {
             if (status) {
                 edge.attr('line/strokeDasharray', 5);
@@ -219,12 +217,12 @@ export class CanvasService {
         this.graph.on('node:add', ({e, node}: any) => {
             e.stopPropagation();
             this.pipelineService.selectedPreviousNode = node.store.data._ID;
+            this.pipelineService.selectedNextNode = '';
             this.pipelineService.addNode(NodeType.DestinationNode);
             const member = this.createNode(this.pipelineService.selectedIdNode, NodeType.DestinationNode);
             this.graph.freeze();
             this.graph.addCell([member, this.createEdge(node, member, node.store.data._ID, member.store.data._ID)]);
             this.layout();
-            console.log(this.canvasNodes);
         });
 
         this.graph.on('node:delete', ({e, node}: any) => {
@@ -234,7 +232,6 @@ export class CanvasService {
                 selectedPipelineNode._tableId = '';
                 this.pipelineService.editNode(selectedPipelineNode);
                 this.pipelineService.previewContent = null;
-                console.log(111);
                 this.changeSrcAndDestIcon(selectedPipelineNode.id, false);
                 node.attr('.delete/width', 0);
                 node.attr('.delete/height', 0);
@@ -251,7 +248,6 @@ export class CanvasService {
                 this.pipelineService.nodes.forEach((n) => {
                     if (n._previousNode === deleteNode?.id) n._previousNode = deleteNode?._previousNode;
                 });
-                console.log(this.pipelineService.nodes);
                 this.canvasNodes.forEach((n: any, i: any) => {
                     if (n.store.data._ID === deleteNode?.id) {
                         this.canvasNodes.splice(i, 1);
