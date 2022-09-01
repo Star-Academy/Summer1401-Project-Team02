@@ -15,26 +15,6 @@ export class SidebarComponent {
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
-    // public sideType = 5;
-    public get sideType(): number {
-        switch (this.pipelineService.selectedTypeNode) {
-            case NodeType.Selector:
-                return 1;
-            case NodeType.Custom:
-                return 2;
-            case NodeType.Split:
-                return 3;
-            case NodeType.Math:
-                return 4;
-            case NodeType.Aggregate:
-                return 5;
-            case NodeType.Filter:
-                return 6;
-            default:
-                return 0;
-        }
-    }
-
     public constructor(public pipelineService: PipelineService) {
         this.editedNode = this.pipelineService.getSelectedNode();
     }

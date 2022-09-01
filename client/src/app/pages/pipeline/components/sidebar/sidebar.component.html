@@ -3,26 +3,42 @@
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
     <header>
-        <h1>Process Config</h1>
+        <h1>{{ pipelineService.selectedTypeNode | sidebarHeader }}</h1>
     </header>
     <section>
-        <app-filter [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 6"></app-filter>
+        <app-filter
+            [(isReset)]="isReset"
+            (selectNodeChange)="editedNode = $event"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 6"
+        ></app-filter>
         <app-aggregate
             [(isReset)]="isReset"
             (selectNodeChange)="editedNode = $event"
-            *ngIf="sideType === 5"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 5"
         ></app-aggregate>
-        <app-math [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 4"></app-math>
-        <app-split [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 3"></app-split>
-        <app-custom [(isReset)]="isReset" (selectNodeChange)="editedNode = $event" *ngIf="sideType === 2"></app-custom>
+        <app-math
+            [(isReset)]="isReset"
+            (selectNodeChange)="editedNode = $event"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 4"
+        ></app-math>
+        <app-split
+            [(isReset)]="isReset"
+            (selectNodeChange)="editedNode = $event"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 3"
+        ></app-split>
+        <app-custom
+            [(isReset)]="isReset"
+            (selectNodeChange)="editedNode = $event"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 2"
+        ></app-custom>
         <app-select-remove
             [(isReset)]="isReset"
             (selectNodeChange)="editedNode = $event"
-            *ngIf="sideType === 1"
+            *ngIf="pipelineService.selectedTypeNode | sideType: 1"
         ></app-select-remove>
-        <app-default *ngIf="sideType === 0"></app-default>
+        <app-default *ngIf="pipelineService.selectedTypeNode | sideType: 0"></app-default>
     </section>
-    <footer *ngIf="sideType !== 0">
+    <footer *ngIf="!(pipelineService.selectedTypeNode | sideType: 0)">
         <button nz-button nzType="default" nzSize="large" (click)="onReset()">reset</button>
         <button nz-button nzType="primary" nzSize="large" (click)="onSave()">save</button>
     </footer>
