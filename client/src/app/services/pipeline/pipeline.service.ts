@@ -31,6 +31,7 @@ export class PipelineService {
 
     public lastExecuteResult: any | null = null;
     public previewContent: any | null = null;
+    public previewLoading: boolean = false;
 
     public selectedPreviousNode: string = '';
     public selectedNextNode: string = '';
@@ -173,9 +174,14 @@ export class PipelineService {
 
     public async preview(): Promise<void> {
         const requestUrl = `${API_PREVIEW}?pipelineJson=${this.convertToDictionary()}&id=${this.selectedIdNode}`;
+        this.previewLoading = true;
+
         const response = await this.apiService.getRequest<string>({url: requestUrl});
 
         if (response) this.previewContent = JSON.parse(response);
+        else this.previewContent = null;
+
+        this.previewLoading = false;
     }
 
     private convertToDictionary(): string {

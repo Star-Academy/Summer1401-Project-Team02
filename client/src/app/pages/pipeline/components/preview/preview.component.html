@@ -3,7 +3,11 @@
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
     <section *ngIf="pipelineService.previewContent && pipelineService.previewContent?.length !== 0">
-        <nz-table [nzData]="pipelineService.previewContent" [nzShowPagination]="false">
+        <nz-table
+            [nzData]="pipelineService.previewContent"
+            [nzShowPagination]="false"
+            [nzLoading]="pipelineService.previewLoading"
+        >
             <thead>
                 <tr>
                     <th *ngFor="let key of pipelineService.previewContent | previewKey">{{ key }}</th>
