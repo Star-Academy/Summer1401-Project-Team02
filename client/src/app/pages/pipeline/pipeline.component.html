@@ -13,4 +13,6 @@
 
     <app-destination-modal></app-destination-modal>
     <app-process-modal></app-process-modal>
+    <button class="savebtn" nz-button nzType="dashed" (click)="canvasService.saveToLocalStorage()">Save</button>
+    <button class="resetbtn" nz-button nzType="dashed" (click)="canvasService.deleteLocalStorage()">Reset</button>
 </div>

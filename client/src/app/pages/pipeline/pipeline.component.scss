@@ -46,6 +46,18 @@
             transform: translateY(30rem);
         }
     }
+
+    >button{
+        position: absolute;
+    }
+    .savebtn{
+        top: 8rem;
+        left: 8rem;
+    }
+    .resetbtn{
+        top: 8rem;
+        left: 0.5rem;
+    }
 }
 
 @media screen and (min-width: 1200px) {

@@ -8,7 +8,6 @@ import {PipelineService} from '../pipeline/pipeline.service';
 import {canvasUtils} from '../../utils/icon-canvas';
 import {NodeType} from '../../enums/node-type';
 import {SourceNodeModel} from '../../models/source-node.model';
-import {DestinationNodeModel} from '../../models/destination-node.model';
 import {REGISTER_EDGE, REGISTER_NODE} from '../../utils/canvas.utils';
 
 @Injectable({
@@ -89,6 +88,15 @@ export class CanvasService {
         this.layout();
         this.graph.zoomTo(0.85);
         this.setup();
+        this.readFromLocalStorage();
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            if (e.ctrlKey && e.key === 's') {
+                this.saveToLocalStorage();
+            } else if (e.ctrlKey && e.key === 'r') {
+                this.deleteLocalStorage();
+            }
+        });
     }
 
     public layout(): void {
@@ -139,6 +147,7 @@ export class CanvasService {
             type,
         });
         this.canvasNodes.unshift(newNode);
+        this.resetDestinationsSituation();
         return newNode;
     }
 
@@ -174,6 +183,7 @@ export class CanvasService {
     }
 
     public running(status: boolean): void {
+        debugger;
         const edges = this.graph.getEdges();
         const nodes = this.graph.getNodes();
         edges?.forEach((edge) => {
@@ -193,8 +203,8 @@ export class CanvasService {
                 node.attr('.card/fill', '#f3f3f3');
                 node.attr('.card/stroke', '#bcbcbc');
             }
-            this.addDestinationsSituation();
         });
+        this.addDestinationsSituation();
     }
 
     public addDestinationsSituation(): void {
@@ -209,6 +219,14 @@ export class CanvasService {
                     node.attr('.card/fill', '#ffecec');
                 }
             }
+        });
+    }
+
+    public resetDestinationsSituation(): void {
+        const nodes = this.graph.getNodes();
+        nodes?.forEach((node) => {
+            node.attr('.card/fill', '#f3f3f3');
+            node.attr('.card/stroke', '#bcbcbc');
         });
     }
 
@@ -272,6 +290,7 @@ export class CanvasService {
                 this.resetEdge();
                 this.layout();
             }
+            this.resetDestinationsSituation();
         });
 
         this.graph.on('edge:click', ({e, edge}: any) => {
@@ -320,5 +339,51 @@ export class CanvasService {
             node.attr('.delete/width', 0);
             node.attr('.delete/height', 0);
         });
+    }
+
+    public saveToLocalStorage(): void {
+        localStorage.setItem('nodes', JSON.stringify(this.pipelineService.nodes));
+    }
+
+    public readFromLocalStorage(): void {
+        let nodes = JSON.parse(localStorage.getItem('nodes') as string);
+        if (nodes) {
+            this.pipelineService.nodes = nodes;
+            this.canvasNodes = [];
+            this.canvasEdges = [];
+
+            let src = this.pipelineService.getSourceNode();
+            const source = this.createNode(src.id, src._NodeType);
+            this.graph.resetCells([source]);
+
+            this.pipelineService.nodes.forEach((node) => {
+                if (node._NodeType !== NodeType.SourceNode) {
+                    const newNode: any = this.createNode(node.id, node._NodeType);
+                    this.graph.resetCells([...this.graph.getCells(), newNode]);
+                }
+            });
+            this.resetEdge();
+            this.layout();
+            this.pipelineService.nodes.forEach((node: any) => {
+                if (node._NodeType === NodeType.SourceNode || node._NodeType === NodeType.DestinationNode) {
+                    this.changeSrcAndDestIcon(node.id, !!node._tableId);
+                }
+            });
+        }
+    }
+
+    public deleteLocalStorage(): void {
+        localStorage.removeItem('nodes');
+        this.graph.removeCells(this.graph.getCells());
+        this.canvasNodes = [];
+        this.canvasEdges = [];
+        this.pipelineService.nodes = [];
+
+        this.pipelineService.addNode(NodeType.SourceNode);
+        const source = this.createNode(this.pipelineService.selectedIdNode, this.pipelineService.selectedTypeNode);
+
+        this.graph.resetCells([source]);
+        this.resetEdge();
+        this.layout();
     }
 }

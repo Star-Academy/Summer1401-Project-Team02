@@ -31,6 +31,7 @@ export class HeaderComponent {
 
     public async execute(): Promise<void> {
         this.executeLoading = true;
+        this.pipelineService.lastExecuteResult = null;
         this.canvasService.running(this.executeLoading);
         setTimeout(async () => {
             await this.pipelineService.execute();

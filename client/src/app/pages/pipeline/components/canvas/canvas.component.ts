@@ -11,30 +11,12 @@ import {CanvasService} from '../../../../services/canvas/canvas.service';
 export class CanvasComponent implements AfterViewInit {
     @ViewChild('pipeLineContainer') pipeLineContainer!: ElementRef<HTMLDivElement>;
 
-    public constructor(private canvasService: CanvasService) {
+    public constructor(public canvasService: CanvasService) {
         this.canvasService.initComponent(this);
     }
 
     public ngAfterViewInit(): void {
         const doc = this.pipeLineContainer.nativeElement;
         this.canvasService.graphSetting(doc);
-        // function clipBoard(): void {
-        //     graph.bindKey('ctrl+c', () => {
-        //         const cells = graph.getSelectedCells();
-        //         if (cells.length) {
-        //             graph.copy(cells);
-        //         }
-        //     });
-        //
-        //     graph.bindKey('ctrl+v', () => {
-        //         if (!graph.isClipboardEmpty()) {
-        //             const cells = graph.paste({offset: 32});
-        //             graph.cleanSelection();
-        //             graph.select(cells);
-        //         }
-        //     });
-        // }
-
-        ///////////////////////////////
     }
 }
