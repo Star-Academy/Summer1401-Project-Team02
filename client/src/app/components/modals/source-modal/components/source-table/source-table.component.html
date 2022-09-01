@@ -1,4 +1,11 @@
-<nz-table #editRowTable [nzData]="sourceTable" nzTableLayout="fixed" [nzPageSize]="5" nzPaginationType="default">
+<nz-table
+    #editRowTable
+    [nzData]="sourceTable"
+    nzTableLayout="fixed"
+    [nzLoading]="datasetService.loading"
+    [nzPageSize]="5"
+    nzPaginationType="default"
+>
     <thead>
         <tr>
             <th class="checkBox"></th>
