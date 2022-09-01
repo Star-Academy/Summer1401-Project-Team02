@@ -4,6 +4,7 @@ import {API_DOWNLOAD_FILE} from '../../../../../utils/api.utils';
 import {sourceItemData} from '../../../../../models/itemData.model';
 import {SourceNodeModel} from '../../../../../models/source-node.model';
 import {PipelineService} from '../../../../../services/pipeline/pipeline.service';
+import {CanvasService} from '../../../../../services/canvas/canvas.service';
 
 @Component({
     selector: 'app-source-table',
@@ -16,7 +17,11 @@ export class SourceTableComponent implements OnInit {
     public sourceTable: any;
     public sourceTableSearch: any;
 
-    public constructor(public datasetService: DatasetService, public pipelineService: PipelineService) {}
+    public constructor(
+        public datasetService: DatasetService,
+        public pipelineService: PipelineService,
+        private canvasService: CanvasService
+    ) {}
 
     public async ngOnInit(): Promise<void> {
         this.sourceTable = await this.datasetService.getTables();
@@ -50,6 +55,7 @@ export class SourceTableComponent implements OnInit {
         const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
         if (sourceNode) {
             sourceNode._tableId = id;
+            this.canvasService.changeSrcAndDestIcon(sourceNode.id, true);
 
             this.pipelineService.editNode(sourceNode);
             await this.pipelineService.preview();
