@@ -6,11 +6,11 @@
         <nz-table [nzData]="pipelineService.previewContent" [nzShowPagination]="false">
             <thead>
                 <tr>
-                    <th *ngFor="let key of keys">{{ key }}</th>
+                    <th *ngFor="let key of pipelineService.previewContent | previewKey">{{ key }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of values">
+                <tr *ngFor="let row of pipelineService.previewContent | previewValue">
                     <td *ngFor="let cell of row">{{ cell }}</td>
                 </tr>
             </tbody>

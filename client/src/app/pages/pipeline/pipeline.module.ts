@@ -22,6 +22,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzSwitchModule} from 'ng-zorro-antd/switch';
 import {AggregateComponent} from './components/sidebar/component/aggregate/aggregate.component';
+import {PipeModule} from '../../pipe/pipe.module';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import {AggregateComponent} from './components/sidebar/component/aggregate/aggre
         NzInputModule,
         NzInputNumberModule,
         NzSwitchModule,
+        PipeModule,
     ],
 })
 export class PipelineModule {}
