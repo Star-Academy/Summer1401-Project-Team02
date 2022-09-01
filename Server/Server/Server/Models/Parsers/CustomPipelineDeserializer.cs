@@ -45,6 +45,8 @@ public class CustomPipelineDeserializer : CustomCreationConverter<Node>
                     return new MathNode();
                 case NodeType.Sort:
                     return new SortNode();
+                case NodeType.Join:
+                    return new JoinNode();
                 default:
                     throw new NotImplementedException();
             }

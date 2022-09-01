@@ -36,6 +36,13 @@ public class PipelineService : IPipelineService
                 .Cast<DataColumn>()
                 .Select(x => x.ColumnName)
                 .ToList();
+            if (node._NodeType == NodeType.Join)
+            {
+                var dualInputNode = (JoinNode)node;
+                var secondQuery = pipeline.Nodes.GetValueOrDefault(dualInputNode._secondPreviousNode).Execute(ExecutionType.Heading, pipeline.Nodes);
+                var heading = _database.RunQuery(secondQuery);
+                dualInputNode.SecondHeaders = heading.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+            }
         }
     }
 

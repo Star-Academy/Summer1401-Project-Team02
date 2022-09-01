@@ -12,5 +12,6 @@ public enum NodeType
     Filter,
     Aggregate,
     Math,
-    Sort
+    Sort,
+    Join
 }

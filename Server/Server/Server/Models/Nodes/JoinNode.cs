@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Server.Enums;
 
 namespace Server.Models.Nodes;
@@ -8,6 +9,7 @@ public class JoinNode : ProcessorNode
     public string _primaryColumn; 
     public string _secondaryColumn;
     public string _secondPreviousNode;
+    [JsonIgnore]
     public List<string> SecondHeaders;
     public JoinMode _joinMode;
     public override string Execute(ExecutionType executionType, Dictionary<string, Node?> nodes)
