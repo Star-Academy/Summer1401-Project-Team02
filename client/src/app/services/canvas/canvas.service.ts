@@ -206,11 +206,14 @@ export class CanvasService {
         let label: string = '';
         if (node.store.data.type === NodeType.SourceNode) label = 'Source';
         else if (node.store.data.type === NodeType.DestinationNode) label = 'Destination';
-        node.store.data.attrs['.image'].xlinkHref = `assets/${full ? 'source' : 'empty'}.webp`;
-        node.store.data.attrs['.name'].text = Dom.breakText(`${label}${full ? '' : ' (empty)'}`, {
-            width: 160,
-            height: 45,
-        });
+        node.attr('.image/xlinkHref', `assets/${full ? 'source' : 'empty'}.webp`);
+        node.attr(
+            '.name/text',
+            Dom.breakText(`${label}${full ? '' : ' (empty)'}`, {
+                width: 160,
+                height: 45,
+            })
+        );
     }
 
     public setup(): void {
