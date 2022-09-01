@@ -34,7 +34,6 @@ export class HeaderComponent {
         this.canvasService.running(this.executeLoading);
         setTimeout(async () => {
             await this.pipelineService.execute();
-            this.canvasService.addDestinationsSituation();
             this.executeLoading = false;
             this.canvasService.running(this.executeLoading);
         }, 2000);
