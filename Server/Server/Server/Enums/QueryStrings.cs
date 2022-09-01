@@ -17,5 +17,7 @@ public static class QueryStrings
     public const string Aggregate = $"select {{0}} from ({{1}}) as dummy group by {{2}}";
     public const string AggregateWithoutGrouping = $"select {{0}} from ({{1}}) as dummy";
     
+    public const string Join = $"select {{0}} from ({{1}}) as first {{2}} join ({{3}}) as second on {{4}}";
+    
     public const string SplitColumn = $"REVERSE(PARSENAME(REPLACE(REVERSE([{{0}}]), '{{1}}', '.'), {{2}})) as {{3}}";
 }
