@@ -284,7 +284,7 @@ export class CanvasService {
         this.graph.on('node:click', ({e, node}: any) => {
             this.pipelineService.selectedIdNode = node.store.data._ID;
             this.pipelineService.selectedTypeNode = node.store.data.type;
-            this.pipelineService.preview();
+            if (this.pipelineService.getSourceNode()._tableId) this.pipelineService.preview();
 
             if (node.store.data.type === NodeType.SourceNode) {
                 const selectedPipelineNode = this.pipelineService.getSelectedNode() as SourceNodeModel;

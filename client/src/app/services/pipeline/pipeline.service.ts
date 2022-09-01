@@ -136,8 +136,8 @@ export class PipelineService {
         return this.nodes.find((node) => node.id === this.selectedIdNode);
     }
 
-    public getSourceNode(): PipelineNodeModel | undefined {
-        return this.nodes.find((n) => n._NodeType === NodeType.SourceNode);
+    public getSourceNode(): SourceNodeModel {
+        return this.nodes.find((n) => n._NodeType === NodeType.SourceNode) as SourceNodeModel;
     }
 
     public async getColumnsHeader(): Promise<string[]> {
