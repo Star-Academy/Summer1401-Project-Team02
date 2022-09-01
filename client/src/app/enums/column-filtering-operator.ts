@@ -1,7 +1,10 @@
 export enum ColumnFilteringOperation {
-    MathematicalOperators,
-    Contains,
+    lessThan,
+    greaterThan,
+    lessThanOrEqualTo,
+    greaterThanOrEqualTo,
     Matches,
+    Contains,
     IsEmpty,
     IsNull,
 }

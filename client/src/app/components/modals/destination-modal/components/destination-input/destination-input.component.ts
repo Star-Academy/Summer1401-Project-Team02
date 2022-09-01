@@ -32,7 +32,7 @@ export class DestinationInputComponent {
             await this.datasetService.getTables();
             const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
             destinationNode._tableId = response.tableId;
-            this.canvasService.changeSrcAndDestIcon(destinationNode.id, false);
+            this.canvasService.changeSrcAndDestIcon(destinationNode.id, true);
 
             this.pipelineService.editNode(destinationNode);
         } else if (!response) this.messageService.create('error', 'error');

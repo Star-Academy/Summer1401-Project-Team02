@@ -1,7 +1,7 @@
 <nz-upload
     nzType="drag"
-    nzFileType="text/csv"
-    nzAccept="text/csv"
+    nzFileType="text/csv,application/JSON"
+    nzAccept="text/csv,application/JSON"
     [nzHeaders]="uploadH"
     [nzMultiple]="true"
     (nzChange)="handleChange($event)"

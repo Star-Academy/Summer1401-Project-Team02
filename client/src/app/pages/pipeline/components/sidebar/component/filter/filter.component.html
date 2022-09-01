@@ -1,0 +1,43 @@
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>Choose a column, a value, and an operation and filter your data based on that</p>
+
+    <br />
+
+    <div>
+        <div>
+            choose column name
+            <nz-select [(ngModel)]="columnName" (ngModelChange)="columnNameChange($event)">
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+        <div>
+            choose an operation
+            <nz-select [(ngModel)]="filterFunction" (ngModelChange)="filterFunctionChange($event)">
+                <ng-container *ngFor="let mathFunction of filterFunctionList; let indexOfFunc = index">
+                    <nz-option [nzValue]="indexOfFunc" [nzLabel]="mathFunction"></nz-option>
+                </ng-container>
+            </nz-select>
+        </div>
+        <div>
+            enter a value to perform operation
+            <input
+                nz-input
+                autofocus
+                id="first_input"
+                name="first_query"
+                type="text"
+                [(ngModel)]="value"
+                (ngModelChange)="valueChange($event)"
+                required
+            />
+        </div>
+    </div>
+</div>
