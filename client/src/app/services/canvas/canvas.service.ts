@@ -175,6 +175,7 @@ export class CanvasService {
 
     public running(status: boolean): void {
         const edges = this.graph.getEdges();
+        const nodes = this.graph.getNodes();
         edges?.forEach((edge) => {
             if (status) {
                 edge.attr('line/strokeDasharray', 5);
@@ -182,6 +183,15 @@ export class CanvasService {
             } else {
                 edge.attr('line/strokeDasharray', '');
                 edge.attr('line/style/animation', '');
+            }
+        });
+        nodes?.forEach((node) => {
+            if (status) {
+                node.attr('.card/fill', '#eff5ff');
+                node.attr('.card/stroke', '#3493ff');
+            } else {
+                node.attr('.card/fill', '#f3f3f3');
+                node.attr('.card/stroke', '#bcbcbc');
             }
         });
     }
