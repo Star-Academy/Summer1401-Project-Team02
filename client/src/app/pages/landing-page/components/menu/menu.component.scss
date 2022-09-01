@@ -11,7 +11,7 @@
         display: grid;
         place-items: center;
 
-        inline-size: 50rem;
+        inline-size: 86%;
         height: fit-content;
     }
 
@@ -24,20 +24,14 @@
             padding-block-start: 5rem;
         }
     }
-
+    img {
+        width: 57%;
+    }
     .data-inventory {
         grid-area: data-inventory;
-
-        img {
-            width: 57%;
-        }
     }
 
     .pipeline {
         grid-area: pipeline;
-
-        img {
-            width: 59%;
-        }
     }
 }
