@@ -49,7 +49,7 @@ export class SourceTableComponent implements OnInit {
         }
         const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
         if (sourceNode) {
-            sourceNode._tableID = id;
+            sourceNode._tableId = id;
 
             this.pipelineService.editNode(sourceNode);
             await this.pipelineService.preview();
