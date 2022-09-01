@@ -32,7 +32,7 @@ export class ApiService {
         const data = await response.text();
 
         if (response.ok) return data;
-        console.log(response);
+
         this.messageService.error(data);
         return null;
     }

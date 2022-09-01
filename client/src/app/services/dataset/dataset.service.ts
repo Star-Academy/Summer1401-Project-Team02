@@ -9,6 +9,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 })
 export class DatasetService {
     public tables: any | null = null;
+    public loading: boolean = false;
     public constructor(private apiService: ApiService, private msg: NzMessageService) {}
 
     public async sendDestination(file: FileModal): Promise<FileModal | null> {
@@ -42,10 +43,12 @@ export class DatasetService {
     }
 
     public async getTables(): Promise<any> {
+        this.loading = true;
         const response = await this.apiService.getRequest<string>({url: API_GET_TABLES});
 
         if (response) {
             this.tables = JSON.parse(response);
+            this.loading = false;
             return JSON.parse(response);
         }
     }

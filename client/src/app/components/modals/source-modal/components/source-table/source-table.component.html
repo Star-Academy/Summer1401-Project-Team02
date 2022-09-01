@@ -1,7 +1,7 @@
 <nz-table #editRowTable [nzData]="sourceTable" nzTableLayout="fixed" [nzPageSize]="5" nzPaginationType="default">
     <thead>
         <tr>
-            <th></th>
+            <th class="checkBox"></th>
             <th nzCustomFilter>
                 Name
                 <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let data of editRowTable.data; let i = index" class="editable-row">
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
             <td>
                 <label
                     nz-checkbox
@@ -22,7 +22,7 @@
                 ></label>
             </td>
             <td class="table-name" [title]="data._tableNameEnteredByUser">{{ data._tableNameEnteredByUser }}</td>
-            <td>{{ data._dateTime }}</td>
+            <td class="date">{{ data._dateTime | dateAndTime }}</td>
 
             <td>
                 <button nz-button nzType="link" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
