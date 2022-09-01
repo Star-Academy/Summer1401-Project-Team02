@@ -21,7 +21,7 @@
                     [(ngModel)]="data._checked"
                 ></label>
             </td>
-            <td>{{ data._tableNameEnteredByUser }}</td>
+            <td class="table-name" [title]="data._tableNameEnteredByUser">{{ data._tableNameEnteredByUser }}</td>
             <td>{{ data._dateTime }}</td>
 
             <td>
