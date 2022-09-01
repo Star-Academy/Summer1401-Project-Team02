@@ -5,6 +5,8 @@ import {sourceItemData} from '../../../../../models/itemData.model';
 import {SourceNodeModel} from '../../../../../models/source-node.model';
 import {PipelineService} from '../../../../../services/pipeline/pipeline.service';
 import {CanvasService} from '../../../../../services/canvas/canvas.service';
+import {NodeType} from '../../../../../enums/node-type';
+import {DestinationNodeModel} from '../../../../../models/destination-node.model';
 
 @Component({
     selector: 'app-source-table',
@@ -52,13 +54,25 @@ export class SourceTableComponent implements OnInit {
                 }
             }
         }
-        const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
-        if (sourceNode) {
-            sourceNode._tableId = id;
-            this.canvasService.changeSrcAndDestIcon(sourceNode.id, true);
 
-            this.pipelineService.editNode(sourceNode);
-            await this.pipelineService.preview();
+        if (this.pipelineService.selectedTypeNode === NodeType.SourceNode) {
+            const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
+            if (sourceNode) {
+                sourceNode._tableId = id;
+                this.canvasService.changeSrcAndDestIcon(sourceNode.id, true);
+
+                this.pipelineService.editNode(sourceNode);
+                await this.pipelineService.preview();
+            }
+        } else if (this.pipelineService.selectedTypeNode === NodeType.DestinationNode) {
+            const destinationNode = this.pipelineService.getSelectedNode() as DestinationNodeModel;
+            if (destinationNode) {
+                console.log(destinationNode);
+                destinationNode._tableId = id;
+                this.canvasService.changeSrcAndDestIcon(destinationNode.id, false);
+
+                this.pipelineService.editNode(destinationNode);
+            }
         }
     }
 }

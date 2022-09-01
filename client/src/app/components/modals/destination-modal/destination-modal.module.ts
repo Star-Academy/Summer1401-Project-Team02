@@ -9,6 +9,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {ConnectionModule} from '../../connection/connection.module';
+import {SourceModalModule} from '../source-modal/source-modal.module';
 
 @NgModule({
     declarations: [DestinationModalComponent, DestinationInputComponent],
@@ -22,6 +23,7 @@ import {ConnectionModule} from '../../connection/connection.module';
         NzFormModule,
         NzTabsModule,
         ConnectionModule,
+        SourceModalModule,
     ],
     exports: [DestinationModalComponent, DestinationInputComponent],
 })

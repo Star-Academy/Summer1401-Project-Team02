@@ -34,6 +34,6 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
         NzInputModule,
         NzCheckboxModule,
     ],
-    exports: [SourceModalComponent],
+    exports: [SourceModalComponent, SourceTableComponent],
 })
 export class SourceModalModule {}
