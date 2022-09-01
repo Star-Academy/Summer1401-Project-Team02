@@ -7,14 +7,15 @@
 
     .table {
         overflow: auto;
-        padding: 1rem;
 
         block-size: 100%;
         inline-size: 100%;
+
+        padding: 1rem;
     }
 
     div {
-        background-color: var(--color-gray-98);
+        background-color: var(--color-gray-100);
         box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
 
         position: absolute;
