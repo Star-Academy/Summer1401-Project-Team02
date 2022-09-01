@@ -191,3 +191,13 @@ body {
         }
     }
 }
+
+// ant style
+
+.ant-modal-body {
+    place-items: unset !important;
+
+    [nz-tab-body] {
+        block-size: fit-content;
+    }
+}

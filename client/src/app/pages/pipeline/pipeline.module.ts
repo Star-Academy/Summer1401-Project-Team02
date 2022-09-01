@@ -23,7 +23,8 @@ import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzSwitchModule} from 'ng-zorro-antd/switch';
 import {AggregateComponent} from './components/sidebar/component/aggregate/aggregate.component';
 import {PipeModule} from '../../pipe/pipe.module';
-import { FilterComponent } from './components/sidebar/component/filter/filter.component';
+import {FilterComponent} from './components/sidebar/component/filter/filter.component';
+import {JoinComponent} from './components/sidebar/component/join/join.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { FilterComponent } from './components/sidebar/component/filter/filter.co
         SplitComponent,
         AggregateComponent,
         FilterComponent,
+        JoinComponent,
     ],
     imports: [
         CommonModule,
