@@ -23,7 +23,7 @@
     }
 
     app-preview {
-        background-color: var(--color-gray-98);
+        background-color: var(--color-gray-100);
         box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
 
         position: fixed;
@@ -33,8 +33,6 @@
         z-index: 1;
 
         block-size: 25rem;
-
-        padding: 2rem;
 
         transition: transform ease-in-out var(--animation-duration-fast);
 

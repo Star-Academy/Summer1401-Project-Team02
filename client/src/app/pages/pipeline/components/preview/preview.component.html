@@ -2,7 +2,7 @@
     <div (click)="changeCollapseState()">
         <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
     </div>
-    <section *ngIf="pipelineService.previewContent && pipelineService.previewContent?.length !== 0">
+    <section class="table" *ngIf="pipelineService.previewContent && pipelineService.previewContent?.length !== 0">
         <nz-table
             [nzData]="pipelineService.previewContent"
             [nzShowPagination]="false"
@@ -20,5 +20,11 @@
             </tbody>
         </nz-table>
     </section>
-    <p *ngIf="!pipelineService.previewContent || pipelineService.previewContent?.length === 0">No data to show!</p>
+    <section
+        class="empty-table"
+        *ngIf="!pipelineService.previewContent || pipelineService.previewContent?.length === 0"
+    >
+        <img src="assets/empty-box.svg" />
+        <p>No data to show!</p>
+    </section>
 </div>
