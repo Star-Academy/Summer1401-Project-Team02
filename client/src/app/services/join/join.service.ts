@@ -34,7 +34,7 @@ export class JoinService {
         };
 
         this.selectNode._secondPreviousNode = secondaryNode.id;
-        this.pipelineService.nodes.unshift(secondaryNode);
+        this.pipelineService.nodes.push(secondaryNode);
 
         return secondaryNode.id;
     }

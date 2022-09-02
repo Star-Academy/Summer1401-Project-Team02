@@ -38,7 +38,6 @@ export class UploadInputComponent {
             }
         }
         if (status === 'done') {
-            debugger;
             this.msg.success(`${file.name} file uploaded successfully.`);
             if (this.router.url === '/pipeline') {
                 if (this.pipelineService.selectedTypeNode === NodeType.SourceNode) {

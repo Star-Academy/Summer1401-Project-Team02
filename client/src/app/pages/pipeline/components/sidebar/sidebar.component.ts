@@ -32,7 +32,6 @@ export class SidebarComponent {
     }
 
     public onSave(): void {
-        debugger;
         if (this.pipelineService.selectedTypeNode === NodeType.Join) {
             this.editedNode = this.joinService.emit();
         }

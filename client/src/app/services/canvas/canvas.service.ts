@@ -184,7 +184,6 @@ export class CanvasService {
     }
 
     public running(status: boolean): void {
-        debugger;
         const edges = this.graph.getEdges();
         const nodes = this.graph.getNodes();
         edges?.forEach((edge) => {

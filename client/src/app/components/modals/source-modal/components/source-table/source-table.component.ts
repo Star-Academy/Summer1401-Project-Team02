@@ -56,7 +56,6 @@ export class SourceTableComponent implements OnInit {
                 }
             }
         }
-        debugger;
         if (this.pipelineService.selectedTypeNode === NodeType.SourceNode) {
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
             if (sourceNode) {
