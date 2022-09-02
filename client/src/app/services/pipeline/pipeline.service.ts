@@ -161,13 +161,8 @@ export class PipelineService {
         if (response) return JSON.parse(response);
         else return [];
     }
-    public async getSecondaryNodeColumnHeader(tableId: string): Promise<string[]> {
-        const tempId = Math.random();
-        const tempPipeline = {
-            Nodes: {[tempId]: {_NodeType: NodeType.SourceNode, _previousNode: '', _tableId: tableId, id: tempId}},
-        };
-
-        const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${JSON.stringify(tempPipeline)}&id=${tempId}`;
+    public async getSecondaryNodeColumnHeader(nodeId: string): Promise<string[]> {
+        const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${this.convertToDictionary()}&id=${nodeId}`;
         const response = await this.apiService.getRequest<string[]>({url: requestUrl});
 
         if (response) return JSON.parse(response);

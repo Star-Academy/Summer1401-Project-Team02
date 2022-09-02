@@ -47,6 +47,7 @@ export class JoinComponent implements OnChanges {
     public reset(): void {
         this.joinService.selectNode._primaryColumn = '';
         this.joinService.selectNode._secondaryColumn = '';
+        this.joinService.selectNode._joinMode = -1;
 
         this.isReset = false;
         this.selectNodeChange.emit(this.joinService.selectNode);
