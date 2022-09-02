@@ -71,7 +71,7 @@ export class SourceTableComponent implements OnInit {
             if (destinationNode) {
                 console.log(destinationNode);
                 destinationNode._tableId = id;
-                this.canvasService.changeSrcAndDestIcon(destinationNode.id, false);
+                this.canvasService.changeSrcAndDestIcon(destinationNode.id, true);
 
                 this.pipelineService.editNode(destinationNode);
             }

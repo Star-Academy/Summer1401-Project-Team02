@@ -15,6 +15,7 @@ import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {FormsModule} from '@angular/forms';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {PipeModule} from '../../../pipe/pipe.module';
 
 @NgModule({
     declarations: [SourceModalComponent, SourceTableComponent],
@@ -33,6 +34,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
         FormsModule,
         NzInputModule,
         NzCheckboxModule,
+        PipeModule,
     ],
     exports: [SourceModalComponent, SourceTableComponent],
 })

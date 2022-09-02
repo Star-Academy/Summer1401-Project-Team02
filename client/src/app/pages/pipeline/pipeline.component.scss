@@ -23,7 +23,7 @@
     }
 
     app-preview {
-        background-color: var(--color-gray-98);
+        background-color: var(--color-gray-100);
         box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
 
         position: fixed;
@@ -32,9 +32,7 @@
         inset-inline-end: var(--sidebar-width);
         z-index: 1;
 
-        block-size: 30rem;
-
-        padding: 2rem;
+        block-size: 25rem;
 
         transition: transform ease-in-out var(--animation-duration-fast);
 
@@ -43,18 +41,20 @@
         }
 
         &.collapse {
-            transform: translateY(30rem);
+            transform: translateY(25rem);
         }
     }
 
-    >button{
+    > button {
         position: absolute;
     }
-    .savebtn{
+
+    .savebtn {
         top: 8rem;
         left: 8rem;
     }
-    .resetbtn{
+
+    .resetbtn {
         top: 8rem;
         left: 0.5rem;
     }

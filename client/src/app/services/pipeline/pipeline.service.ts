@@ -12,6 +12,7 @@ import {MathNodeModel} from '../../models/math-node.model';
 import {AggregateNodeModel} from '../../models/aggregate-node.model';
 import {FilterNodeModel} from '../../models/filter-node.model';
 import {JoinNodeModel} from '../../models/join-node.model';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 type PipelineNodeModel =
     | DestinationNodeModel
@@ -32,13 +33,14 @@ export class PipelineService {
 
     public lastExecuteResult: any | null = null;
     public previewContent: any | null = null;
+    public previewLoading: boolean = false;
 
     public selectedPreviousNode: string = '';
     public selectedNextNode: string = '';
     public selectedIdNode: string = '';
     public selectedTypeNode: NodeType = -1;
 
-    public constructor(private apiService: ApiService) {}
+    public constructor(private apiService: ApiService, public messageService: NzMessageService) {}
 
     private creatNode(nodeType: NodeType): PipelineNodeModel | void {
         if (nodeType === NodeType.SourceNode) {
@@ -180,15 +182,25 @@ export class PipelineService {
             },
         });
 
-        if (response) this.lastExecuteResult = JSON.parse(response);
-        else this.lastExecuteResult = null;
+        if (response) {
+            this.lastExecuteResult = JSON.parse(response);
+            this.messageService.success('success');
+        } else {
+            this.lastExecuteResult = null;
+            this.messageService.error('Error');
+        }
     }
 
     public async preview(): Promise<void> {
         const requestUrl = `${API_PREVIEW}?pipelineJson=${this.convertToDictionary()}&id=${this.selectedIdNode}`;
+        this.previewLoading = true;
+
         const response = await this.apiService.getRequest<string>({url: requestUrl});
 
         if (response) this.previewContent = JSON.parse(response);
+        else this.previewContent = null;
+
+        this.previewLoading = false;
     }
 
     private convertToDictionary(): string {

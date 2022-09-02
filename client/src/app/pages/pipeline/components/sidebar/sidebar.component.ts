@@ -2,6 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 import {NodeType} from '../../../../enums/node-type';
 import {JoinService} from '../../../../services/join/join.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-sidebar',
@@ -16,7 +17,11 @@ export class SidebarComponent {
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
-    public constructor(public pipelineService: PipelineService, private joinService: JoinService) {
+    public constructor(
+        public pipelineService: PipelineService,
+        private joinService: JoinService,
+        public messageService: NzMessageService
+    ) {
         this.editedNode = this.pipelineService.getSelectedNode();
     }
 
@@ -32,6 +37,7 @@ export class SidebarComponent {
             this.editedNode = this.joinService.emit();
         }
         if (this.editedNode) this.pipelineService.editNode(this.editedNode);
+        this.messageService.create('success', 'success');
     }
 
     public onReset(): void {

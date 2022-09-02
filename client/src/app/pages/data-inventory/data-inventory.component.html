@@ -4,7 +4,8 @@
 
     <nz-table
         #editRowTable
-        [nzData]="this.datasetService.tables"
+        [nzData]="datasetService.tables"
+        [nzLoading]="datasetService.loading"
         nzTableLayout="fixed"
         [nzPageSize]="10"
         nzPaginationType="default"
@@ -29,7 +30,7 @@
         <tbody>
             <tr *ngFor="let data of editRowTable.data" class="editable-row">
                 <td>{{ data._tableNameEnteredByUser }}</td>
-                <td>{{ data._dateTime }}</td>
+                <td>{{ data._dateTime | dateAndTime }}</td>
 
                 <td>
                     <button nz-button nzType="link" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
