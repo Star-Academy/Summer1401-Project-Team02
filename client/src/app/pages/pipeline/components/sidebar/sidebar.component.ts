@@ -37,7 +37,7 @@ export class SidebarComponent {
             this.editedNode = this.joinService.emit();
         }
         if (this.editedNode) this.pipelineService.editNode(this.editedNode);
-        this.messageService.create('success', 'success');
+        this.messageService.create('success', 'saved successfully!');
     }
 
     public onReset(): void {
