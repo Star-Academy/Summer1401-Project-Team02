@@ -26,6 +26,9 @@ export class SideTypePipe implements PipeTransform {
             case NodeType.Filter:
                 value = 6;
                 break;
+            case NodeType.Join:
+                value = 7;
+                break;
             default:
                 value = 0;
         }

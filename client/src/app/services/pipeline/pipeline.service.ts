@@ -11,6 +11,7 @@ import {SplitNodeModel} from '../../models/split-node.model';
 import {MathNodeModel} from '../../models/math-node.model';
 import {AggregateNodeModel} from '../../models/aggregate-node.model';
 import {FilterNodeModel} from '../../models/filter-node.model';
+import {JoinNodeModel} from '../../models/join-node.model';
 
 type PipelineNodeModel =
     | DestinationNodeModel
@@ -20,7 +21,8 @@ type PipelineNodeModel =
     | AggregateNodeModel
     | SplitNodeModel
     | MathNodeModel
-    | FilterNodeModel;
+    | FilterNodeModel
+    | JoinNodeModel;
 
 @Injectable({
     providedIn: 'root',
@@ -105,6 +107,16 @@ export class PipelineService {
                 _operator: -1,
                 id: Math.random().toString(),
             };
+        } else if (nodeType === NodeType.Join) {
+            return {
+                _NodeType: nodeType,
+                _previousNode: this.selectedPreviousNode,
+                _secondaryColumn: '',
+                _primaryColumn: '',
+                _secondPreviousNode: '',
+                _joinMode: -1,
+                id: Math.random().toString(),
+            };
         }
     }
 
@@ -144,6 +156,18 @@ export class PipelineService {
         const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${this.convertToDictionary()}&id=${
             this.selectedIdNode
         }`;
+        const response = await this.apiService.getRequest<string[]>({url: requestUrl});
+
+        if (response) return JSON.parse(response);
+        else return [];
+    }
+    public async getSecondaryNodeColumnHeader(tableId: string): Promise<string[]> {
+        const tempId = Math.random();
+        const tempPipeline = {
+            Nodes: {[tempId]: {_NodeType: NodeType.SourceNode, _previousNode: '', _tableId: tableId, id: tempId}},
+        };
+
+        const requestUrl = `${API_GET_COLUMNS_HEADING}?pipelineJson=${JSON.stringify(tempPipeline)}&id=${tempId}`;
         const response = await this.apiService.getRequest<string[]>({url: requestUrl});
 
         if (response) return JSON.parse(response);

@@ -9,4 +9,6 @@ export enum NodeType {
     Filter,
     Aggregate,
     Math,
+    Sort,
+    Join,
 }

@@ -3,14 +3,16 @@ import {CustomNodeModel} from '../../../../../../models/custom-node.model';
 import {PipelineService} from '../../../../../../services/pipeline/pipeline.service';
 import {AggregateFunction} from '../../../../../../enums/aggregate-function';
 import {AggregateNodeModel} from '../../../../../../models/aggregate-node.model';
+import {ColumnSelectorNodeModel} from '../../../../../../models/column-selector-node.model';
 
 @Component({
     selector: 'app-aggregate',
     templateUrl: './aggregate.component.html',
     styleUrls: ['./aggregate.component.scss'],
 })
-export class AggregateComponent implements OnInit, OnChanges {
+export class AggregateComponent implements OnChanges {
     @Input() public isReset = false;
+    @Input() public nodeId = '';
 
     @Output() public selectNodeChange = new EventEmitter<AggregateNodeModel>();
     @Output() public isResetChange = new EventEmitter<boolean>();
@@ -28,19 +30,28 @@ export class AggregateComponent implements OnInit, OnChanges {
 
     public constructor(private pipelineService: PipelineService) {}
 
-    public async ngOnInit(): Promise<void> {
-        this.isLoading = true;
-        this.columns = await this.pipelineService.getColumnsHeader();
-        this.isLoading = false;
+    // public async ngOnInit(): Promise<void> {
+    //     this.isLoading = true;
+    //     this.columns = await this.pipelineService.getColumnsHeader();
+    //     this.isLoading = false;
+    //
+    //     this.selectNode = this.pipelineService.getSelectedNode() as AggregateNodeModel;
+    //
+    //     if (this.selectNode._functions.length !== 0) this.functions = this.selectNode._functions;
+    //     this.groupingColumns = this.selectNode._groupingColumns;
+    // }
 
-        this.selectNode = this.pipelineService.getSelectedNode() as AggregateNodeModel;
+    public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (changes.nodeId && this.nodeId !== changes.nodeId.previousValue) {
+            this.isLoading = true;
+            this.columns = await this.pipelineService.getColumnsHeader();
+            this.isLoading = false;
 
-        if (this.selectNode._functions.length !== 0) this.functions = this.selectNode._functions;
-        this.groupingColumns = this.selectNode._groupingColumns;
-    }
+            this.selectNode = this.pipelineService.getSelectedNode() as AggregateNodeModel;
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (this.isReset && !changes.isReset.previousValue) {
+            if (this.selectNode._functions.length !== 0) this.functions = this.selectNode._functions;
+            this.groupingColumns = this.selectNode._groupingColumns;
+        } else if (this.isReset && !changes.isReset.previousValue) {
             this.reset();
         }
     }

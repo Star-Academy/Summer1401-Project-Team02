@@ -7,7 +7,7 @@ import {ColumnSelectorNodeModel} from '../../../../../../models/column-selector-
     templateUrl: './select-remove.component.html',
     styleUrls: ['./select-remove.component.scss'],
 })
-export class SelectRemoveComponent implements OnInit, OnChanges {
+export class SelectRemoveComponent implements OnChanges {
     public isLoading = false;
     public select = 'Select';
     public remove = 'Remove';
@@ -18,22 +18,22 @@ export class SelectRemoveComponent implements OnInit, OnChanges {
     public selectNode!: ColumnSelectorNodeModel;
 
     @Input() public isReset = false;
+    @Input() public nodeId = '';
 
     @Output() public selectNodeChange = new EventEmitter<ColumnSelectorNodeModel>();
     @Output() public isResetChange = new EventEmitter<boolean>();
 
     public constructor(private pipelineService: PipelineService) {}
 
-    public async ngOnInit(): Promise<void> {
-        this.isLoading = true;
-        this.columns = await this.pipelineService.getColumnsHeader();
+    public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (changes.nodeId && this.nodeId !== changes.nodeId.previousValue) {
+            this.isLoading = true;
+            this.columns = await this.pipelineService.getColumnsHeader();
 
-        this.selectNode = this.pipelineService.getSelectedNode() as ColumnSelectorNodeModel;
-        this.selectedColumns = this.selectNode._columns;
-        this.isLoading = false;
-    }
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (this.isReset && !changes.isReset.previousValue) {
+            this.selectNode = this.pipelineService.getSelectedNode() as ColumnSelectorNodeModel;
+            this.selectedColumns = this.selectNode._columns;
+            this.isLoading = false;
+        } else if (this.isReset && !changes.isReset.previousValue) {
             this.reset();
         }
     }

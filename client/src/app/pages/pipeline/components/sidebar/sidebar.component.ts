@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {PipelineService} from '../../../../services/pipeline/pipeline.service';
 import {NodeType} from '../../../../enums/node-type';
+import {JoinService} from '../../../../services/join/join.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -15,7 +16,7 @@ export class SidebarComponent {
 
     @Output() public isCollapseChange = new EventEmitter<boolean>();
 
-    public constructor(public pipelineService: PipelineService) {
+    public constructor(public pipelineService: PipelineService, private joinService: JoinService) {
         this.editedNode = this.pipelineService.getSelectedNode();
     }
 
@@ -27,6 +28,9 @@ export class SidebarComponent {
 
     public onSave(): void {
         debugger;
+        if (this.pipelineService.selectedTypeNode === NodeType.Join) {
+            this.editedNode = this.joinService.emit();
+        }
         if (this.editedNode) this.pipelineService.editNode(this.editedNode);
     }
 

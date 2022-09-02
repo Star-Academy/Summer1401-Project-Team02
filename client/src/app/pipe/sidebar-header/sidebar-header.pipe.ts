@@ -19,6 +19,8 @@ export class SidebarHeaderPipe implements PipeTransform {
                 return 'Aggregate Process';
             case NodeType.Filter:
                 return 'Filter Process';
+            case NodeType.Join:
+                return 'Join process';
             default:
                 return 'Process Config';
         }

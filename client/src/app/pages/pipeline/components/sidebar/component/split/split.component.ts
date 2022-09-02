@@ -2,14 +2,16 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {PipelineService} from '../../../../../../services/pipeline/pipeline.service';
 import {SplitNodeModel} from '../../../../../../models/split-node.model';
 import {CustomNodeModel} from '../../../../../../models/custom-node.model';
+import {ColumnSelectorNodeModel} from '../../../../../../models/column-selector-node.model';
 
 @Component({
     selector: 'app-split',
     templateUrl: './split.component.html',
     styleUrls: ['./split.component.scss'],
 })
-export class SplitComponent implements OnInit, OnChanges {
+export class SplitComponent implements OnChanges {
     @Input() public isReset = false;
+    @Input() public nodeId = '';
 
     @Output() public selectNodeChange = new EventEmitter<SplitNodeModel>();
     @Output() public isResetChange = new EventEmitter<boolean>();
@@ -27,20 +29,18 @@ export class SplitComponent implements OnInit, OnChanges {
 
     public constructor(private pipelineService: PipelineService) {}
 
-    public async ngOnInit(): Promise<void> {
-        this.isLoading = true;
-        this.columns = await this.pipelineService.getColumnsHeader();
-        this.isLoading = false;
+    public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (changes.nodeId && this.nodeId !== changes.nodeId.previousValue) {
+            this.isLoading = true;
+            this.columns = await this.pipelineService.getColumnsHeader();
+            this.isLoading = false;
 
-        this.selectNode = this.pipelineService.getSelectedNode() as SplitNodeModel;
-        this.columnName = this.selectNode._columnName;
-        this.delimiter = this.selectNode._delimeter;
-        this.numberOfParts = this.selectNode._numberOfParts;
-        this.wantsToReplace = this.selectNode.replace;
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (this.isReset && !changes.isReset.previousValue) {
+            this.selectNode = this.pipelineService.getSelectedNode() as SplitNodeModel;
+            this.columnName = this.selectNode._columnName;
+            this.delimiter = this.selectNode._delimeter;
+            this.numberOfParts = this.selectNode._numberOfParts;
+            this.wantsToReplace = this.selectNode.replace;
+        } else if (this.isReset && !changes.isReset.previousValue) {
             this.reset();
         }
     }

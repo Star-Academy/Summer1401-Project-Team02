@@ -4,14 +4,16 @@ import {PipelineService} from '../../../../../../services/pipeline/pipeline.serv
 import {FilterNodeModel} from '../../../../../../models/filter-node.model';
 import {MathFunction} from '../../../../../../enums/math-function';
 import {ColumnFilteringOperation} from '../../../../../../enums/column-filtering-operator';
+import {ColumnSelectorNodeModel} from '../../../../../../models/column-selector-node.model';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent implements OnInit, OnChanges {
+export class FilterComponent implements OnChanges {
     @Input() public isReset = false;
+    @Input() public nodeId = '';
 
     @Output() public selectNodeChange = new EventEmitter<FilterNodeModel>();
     @Output() public isResetChange = new EventEmitter<boolean>();
@@ -39,19 +41,28 @@ export class FilterComponent implements OnInit, OnChanges {
 
     public constructor(private pipelineService: PipelineService) {}
 
-    public async ngOnInit(): Promise<void> {
-        this.isLoading = true;
-        this.columns = await this.pipelineService.getColumnsHeader();
-        this.isLoading = false;
+    // public async ngOnInit(): Promise<void> {
+    //     this.isLoading = true;
+    //     this.columns = await this.pipelineService.getColumnsHeader();
+    //     this.isLoading = false;
+    //
+    //     this.selectNode = this.pipelineService.getSelectedNode() as FilterNodeModel;
+    //     this.columnName = this.selectNode._columnName;
+    //     this.value = this.selectNode.value;
+    //     this.filterFunction = this.selectNode._operator;
+    // }
 
-        this.selectNode = this.pipelineService.getSelectedNode() as FilterNodeModel;
-        this.columnName = this.selectNode._columnName;
-        this.value = this.selectNode.value;
-        this.filterFunction = this.selectNode._operator;
-    }
+    public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+        if (changes.nodeId && this.nodeId !== changes.nodeId.previousValue) {
+            this.isLoading = true;
+            this.columns = await this.pipelineService.getColumnsHeader();
+            this.isLoading = false;
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (this.isReset && !changes.isReset.previousValue) {
+            this.selectNode = this.pipelineService.getSelectedNode() as FilterNodeModel;
+            this.columnName = this.selectNode._columnName;
+            this.value = this.selectNode.value;
+            this.filterFunction = this.selectNode._operator;
+        } else if (this.isReset && !changes.isReset.previousValue) {
             this.reset();
         }
     }

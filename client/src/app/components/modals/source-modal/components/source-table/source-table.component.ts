@@ -7,6 +7,7 @@ import {PipelineService} from '../../../../../services/pipeline/pipeline.service
 import {CanvasService} from '../../../../../services/canvas/canvas.service';
 import {NodeType} from '../../../../../enums/node-type';
 import {DestinationNodeModel} from '../../../../../models/destination-node.model';
+import {JoinService} from '../../../../../services/join/join.service';
 
 @Component({
     selector: 'app-source-table',
@@ -22,7 +23,8 @@ export class SourceTableComponent implements OnInit {
     public constructor(
         public datasetService: DatasetService,
         public pipelineService: PipelineService,
-        private canvasService: CanvasService
+        private canvasService: CanvasService,
+        private joinService: JoinService
     ) {}
 
     public async ngOnInit(): Promise<void> {
@@ -54,7 +56,7 @@ export class SourceTableComponent implements OnInit {
                 }
             }
         }
-
+        debugger;
         if (this.pipelineService.selectedTypeNode === NodeType.SourceNode) {
             const sourceNode = this.pipelineService.getSelectedNode() as SourceNodeModel;
             if (sourceNode) {
@@ -73,6 +75,8 @@ export class SourceTableComponent implements OnInit {
 
                 this.pipelineService.editNode(destinationNode);
             }
+        } else if (this.pipelineService.selectedTypeNode === NodeType.Join) {
+            await this.joinService.setTableId(id);
         }
     }
 }
