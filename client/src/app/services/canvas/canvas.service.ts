@@ -90,10 +90,11 @@ export class CanvasService {
         this.setup();
         this.readFromLocalStorage();
         document.addEventListener('keydown', (e) => {
-            e.preventDefault();
             if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
                 this.saveToLocalStorage();
             } else if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
                 this.deleteLocalStorage();
             }
         });
