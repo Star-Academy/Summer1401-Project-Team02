@@ -76,15 +76,15 @@
 ### بکند
 
 سید محمدحسین حسینی
-[گیت‌هاب](https://github.com/ArefHbb)
+[گیت‌هاب](https://github.com/smhh22)
 
 سجاد سلطانیان
-[گیت‌هاب](https://github.com/ArefHbb)
+[گیت‌هاب](https://github.com/Soltaniant)
 
-مهدی مرادی
-[گیت‌هاب](https://github.com/ArefHbb)
+متین مرادی
+[گیت‌هاب](https://github.com/matinmoradi80)
 
 حسین مسعودی
-[گیت‌هاب](https://github.com/ArefHbb)
+[گیت‌هاب](https://github.com/hosseinmasoodi)
 
 
