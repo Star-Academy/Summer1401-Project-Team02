@@ -1,0 +1,49 @@
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>
+        Select two columns and then perform the desired operation on them by selecting a mathematical operation from the
+        list.
+    </p>
+    <p>Note that if you don't want to create a new column, the results will be stored on the first column</p>
+    <br />
+
+    <div>
+        <div>
+            choose first column name
+            <nz-select [(ngModel)]="firstColumnName" (ngModelChange)="firstColumnNameChange($event)">
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+        <div>
+            choose second column name
+            <nz-select [(ngModel)]="secondColumnName" (ngModelChange)="secondColumnNameChange($event)">
+                <ng-container *ngFor="let column of columns">
+                    <nz-option *ngIf="!isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                </ng-container>
+                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                    Loading Data...
+                </nz-option>
+            </nz-select>
+        </div>
+        <div>
+            choose an operation
+            <nz-select [(ngModel)]="mathFunction" (ngModelChange)="mathFunctionChange($event)">
+                <ng-container *ngFor="let mathFunction of mathFunctionList; let indexOfFunc = index">
+                    <nz-option [nzValue]="indexOfFunc" [nzLabel]="mathFunction"></nz-option>
+                </ng-container>
+            </nz-select>
+        </div>
+        <div>
+            create new column in dataset
+            <nz-switch [(ngModel)]="wantsToNotReplace" (ngModelChange)="wantToNotReplaceChange($event)"></nz-switch>
+        </div>
+    </div>
+</div>

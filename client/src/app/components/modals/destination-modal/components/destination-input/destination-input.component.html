@@ -1,0 +1,7 @@
+<form (submit)="submitForm()" name="tableNameForm" ngNativeValidate>
+    <nz-form-label nzFor="tableName" nzRequired>Dataset Name </nz-form-label>
+    <div>
+        <input nz-input autofocus id="tableName" name="tableName" [(ngModel)]="file.tableName" type="text" required />
+        <button nz-button nzType="primary" type="submit">Register</button>
+    </div>
+</form>

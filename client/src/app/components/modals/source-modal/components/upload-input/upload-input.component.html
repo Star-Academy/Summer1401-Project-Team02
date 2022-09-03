@@ -1,0 +1,17 @@
+<nz-upload
+    nzType="drag"
+    nzFileType="text/csv,application/JSON"
+    nzAccept="text/csv,application/JSON"
+    [nzHeaders]="uploadH"
+    [nzMultiple]="true"
+    (nzChange)="handleChange($event)"
+    nzAction="https://localhost:7113/DataInventory/AddSourceByFile"
+>
+    <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="inbox"></i>
+    </p>
+    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+    </p>
+</nz-upload>

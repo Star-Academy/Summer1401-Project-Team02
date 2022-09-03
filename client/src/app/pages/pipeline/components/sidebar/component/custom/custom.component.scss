@@ -1,0 +1,5 @@
+@import "src/styles";
+
+.wrapper {
+    @include sidebar-node-wrapper;
+}

@@ -1,0 +1,61 @@
+<nz-table
+    #editRowTable
+    [nzData]="sourceTable"
+    nzTableLayout="fixed"
+    [nzLoading]="datasetService.loading"
+    [nzPageSize]="5"
+    nzPaginationType="default"
+>
+    <thead>
+        <tr>
+            <th class="checkBox"></th>
+            <th nzCustomFilter>
+                Name
+                <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                    <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+            </th>
+            <th>Date</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
+            <td>
+                <label
+                    nz-checkbox
+                    (ngModelChange)="checkBoxChanged($event, data._id)"
+                    [(ngModel)]="data._checked"
+                ></label>
+            </td>
+            <td class="table-name" [title]="data._tableNameEnteredByUser">{{ data._tableNameEnteredByUser }}</td>
+            <td class="date">{{ data._dateTime | dateAndTime }}</td>
+
+            <td>
+                <button nz-button nzType="link" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                    <span nz-icon nzType="download" nzTheme="outline"></span>
+                </button>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <a [href]="getDownloadUrl(data._id, data._tableNameEnteredByUser, 'csv')" download>
+                            <li nz-menu-item>csv</li></a
+                        >
+
+                        <a [href]="getDownloadUrl(data._id, data._tableNameEnteredByUser, 'json')" download>
+                            <li nz-menu-item>json</li></a
+                        >
+                    </ul>
+                </nz-dropdown-menu>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+            <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+            <button nz-button nzSize="small" (click)="reset()">Reset</button>
+        </div>
+    </div>
+</nz-dropdown-menu>

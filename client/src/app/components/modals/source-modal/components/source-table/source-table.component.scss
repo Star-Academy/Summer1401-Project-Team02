@@ -1,0 +1,38 @@
+.search-box {
+    padding: 0.8rem;
+}
+
+.table-name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.checkBox {
+    width: 4rem;
+}
+
+.date {
+    color: var(--color-gray-40);
+
+    font-size: 1.2rem;
+
+    white-space: nowrap;
+}
+
+.search-box input {
+    display: block;
+
+    inline-size: 18.8rem;
+
+    margin-block-end: 0.8rem;
+}
+
+.search-box button {
+    inline-size: 9rem;
+}
+
+.search-button {
+    margin-inline-end: 0.8rem;
+}
