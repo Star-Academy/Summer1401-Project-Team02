@@ -1,0 +1,46 @@
+.wrapper {
+    background-color: var(--color-gray-100);
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    block-size: 100vh;
+
+    :not(app-header) {
+        margin-inline: 3rem;
+    }
+
+    app-header {
+        inline-size: 100%;
+    }
+
+    button {
+        align-self: start;
+
+        margin-inline: 3rem;
+    }
+}
+
+.search-box {
+    padding: 0.8rem;
+}
+
+.search-box input {
+    display: block;
+
+    inline-size: 18.8rem;
+
+    margin-block-end: 0.8rem;
+}
+
+.search-box button {
+    inline-size: 9rem;
+}
+
+.search-button {
+    margin-inline-end: 0.8rem;
+}

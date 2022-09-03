@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>complete this query</p>
+    <p>SELECT __ FROM [previous node table] __</p>
+    <br />
+
+    <div>
+        <div>
+            first empty part
+            <input
+                nz-input
+                autofocus
+                id="first_input"
+                name="first_query"
+                type="text"
+                [(ngModel)]="firstInput"
+                (ngModelChange)="firstInputChange($event)"
+                required
+            />
+        </div>
+        <div>
+            second empty part
+            <input
+                nz-input
+                autofocus
+                id="second_input"
+                name="second_query"
+                type="text"
+                [(ngModel)]="secondInput"
+                (ngModelChange)="secondInputChange($event)"
+                required
+            />
+        </div>
+    </div>
+</div>

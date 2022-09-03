@@ -1,0 +1,111 @@
+.wrapper {
+    background-color: var(--color-gray-100);
+
+    overflow: auto;
+
+    height: 100vh;
+
+    nav {
+        background-color: var(--color-gray-100);
+
+        margin-inline-start: 25rem;
+        padding-block-start: 1rem;
+        padding-inline-start: 1rem;
+
+        ul {
+            display: flex;
+            gap: 2rem;
+
+            button {
+                color: var(--color-gray-55);
+
+                padding-block-end: 3rem;
+
+                font-size: 1.75rem;
+                border-block-end: 0.25rem solid transparent;
+            }
+
+            button:hover {
+                color: var(--color-gray-40);
+                border-block-end: 0.25rem solid;
+            }
+        }
+    }
+
+    main {
+        display: grid;
+        grid-template-areas:
+            "box img"
+            "menu menu"
+            "team team";
+        grid-template-columns: 60% 40%;
+        grid-template-rows: 100vh auto;
+        place-items: center;
+
+        inline-size: 100%;
+
+        padding-inline: 3rem;
+
+        .landing-page-pic {
+            grid-area: img;
+
+            inline-size: 100%;
+            aspect-ratio: 6/6;
+            object-fit: cover;
+
+            margin-block-end: 19%;
+            margin-inline-end: 36rem;
+        }
+
+        .box {
+            grid-area: box;
+
+            margin-block-end: 19%;
+
+            h1 {
+                color: var(--color-primary);
+
+                margin: 0;
+                padding: 0;
+
+                font-size: 485%;
+                font-weight: bold;
+            }
+
+            .heading {
+                margin-block-start: -3rem;
+                margin-block-end: 1rem;
+            }
+
+            p {
+                color: var(--color-gray-40);
+            }
+
+            button {
+                block-size: 4rem;
+                inline-size: 13rem;
+            }
+        }
+
+        .menu {
+            grid-area: menu;
+
+            block-size: 100vh;
+            inline-size: 100%;
+        }
+
+        .team {
+            grid-area: team;
+
+            display: grid;
+            place-items: center;
+            gap: 2rem;
+
+            h2 {
+                color: var(--color-primary);
+
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<nz-card nzHoverable style="width: 24rem; cursor: default" [nzCover]="coverTemplate">
+    <nz-card-meta [nzTitle]="title" [nzDescription]="description"></nz-card-meta>
+    <div class="links">
+        {{ emailLink }}
+        <a [href]="githubLink" target="_blank">GitHub</a>
+    </div>
+</nz-card>
+<ng-template #coverTemplate>
+    <img alt="example" [src]="src" />
+</ng-template>

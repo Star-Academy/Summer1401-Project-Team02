@@ -1,0 +1,62 @@
+.wrapper {
+    position: relative;
+
+    display: flex;
+
+    block-size: 100%;
+
+    .table {
+        overflow: auto;
+
+        block-size: 100%;
+        inline-size: 100%;
+
+        padding: 1rem;
+    }
+
+    div {
+        background-color: var(--color-gray-100);
+        box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
+
+        position: absolute;
+        inset-block-start: -4rem;
+        inset-inline-start: 5rem;
+
+        block-size: 4rem;
+        inline-size: 5.6rem;
+
+        padding: 1.1rem;
+
+        border-top-right-radius: 999rem;
+        border-top-left-radius: 999rem;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        i {
+            transform: rotate(90deg);
+
+            &.collapsed {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    .empty-table {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        p {
+            color: var(--color-gray-40);
+        }
+
+        img {
+            height: 7rem;
+        }
+    }
+}

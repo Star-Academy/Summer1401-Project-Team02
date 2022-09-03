@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <h3>Description</h3>
+
+    <p>upload a dataset then choose the join columns on two datasets and save configs</p>
+    <br />
+
+    <div>
+        <div>
+            <button nz-button nzType="dashed" (click)="modalService.showSource()">Add dataset</button>
+        </div>
+        <ng-container *ngIf="!!joinService.selectNode?._secondPreviousNode">
+            <div>
+                choose first column name
+                <nz-select [(ngModel)]="joinService.selectNode._primaryColumn">
+                    <ng-container *ngFor="let column of joinService.sourceColumns">
+                        <nz-option *ngIf="!joinService.isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                    </ng-container>
+                    <nz-option *ngIf="joinService.isLoading" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
+                </nz-select>
+            </div>
+            <div>
+                choose second column name
+                <nz-select [(ngModel)]="joinService.selectNode._secondaryColumn">
+                    <ng-container *ngFor="let column of joinService.secondaryColumns">
+                        <nz-option *ngIf="!joinService.isLoading" [nzValue]="column" [nzLabel]="column"></nz-option>
+                    </ng-container>
+                    <nz-option *ngIf="joinService.isLoading" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
+                </nz-select>
+            </div>
+            <div>
+                choose join mode
+                <nz-select [(ngModel)]="joinService.selectNode._joinMode">
+                    <ng-container *ngFor="let joinMode of joinService.joinModes; let indexOfFunc = index">
+                        <nz-option [nzValue]="indexOfFunc" [nzLabel]="joinMode"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+        </ng-container>
+    </div>
+</div>

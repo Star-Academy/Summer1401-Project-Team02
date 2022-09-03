@@ -1,0 +1,27 @@
+<nz-page-header class="site-page-header" (nzBack)="onBack()" nzBackIcon="" [nzTitle]="title">
+    <nz-page-header-extra>
+        <nz-space>
+            <button *ngIf="isInPipeline" nz-button nzType="primary" nzSize="large" (click)="execute()">
+                <i *ngIf="!executeLoading" nz-icon nzType="play-circle" nzTheme="outline"></i>
+                <i *ngIf="executeLoading" nz-icon nzType="loading" class="loading-icon"></i>
+                Execute
+            </button>
+        </nz-space>
+    </nz-page-header-extra>
+    <nz-page-header-extra>
+        <nz-space>
+            <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                {{ dropDownText }}
+                <i nz-icon nzType="down"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                    <a routerLink="/data-inventory">
+                        <li nz-menu-item>Data Inventory</li>
+                    </a>
+                    <a routerLink="/pipeline"><li nz-menu-item>Pipeline</li></a>
+                </ul>
+            </nz-dropdown-menu>
+        </nz-space>
+    </nz-page-header-extra>
+</nz-page-header>

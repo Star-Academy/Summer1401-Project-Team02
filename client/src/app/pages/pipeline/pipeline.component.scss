@@ -1,0 +1,73 @@
+.wrapper {
+    --sidebar-width: 30rem;
+
+    app-sidebar {
+        --header-height: 6.9rem;
+
+        background-color: var(--color-gray-98);
+        box-shadow: -0.3rem 0 0.5rem 0 var(--color-box-shadow-subtle);
+
+        position: fixed;
+        inset-block-start: var(--header-height);
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        z-index: 2;
+
+        inline-size: var(--sidebar-width);
+
+        transition: transform ease-in-out var(--animation-duration-fast);
+
+        &.collapse {
+            transform: translateX(var(--sidebar-width));
+        }
+    }
+
+    app-preview {
+        background-color: var(--color-gray-100);
+        box-shadow: 0 -0.3rem 0.5rem 0 var(--color-box-shadow-subtle);
+
+        position: fixed;
+        inset-block-end: 0;
+        inset-inline-start: 0;
+        inset-inline-end: var(--sidebar-width);
+        z-index: 1;
+
+        block-size: 25rem;
+
+        transition: transform ease-in-out var(--animation-duration-fast);
+
+        &.sidebar-collapse {
+            inset-inline-end: 0;
+        }
+
+        &.collapse {
+            transform: translateY(25rem);
+        }
+    }
+
+    > button {
+        position: absolute;
+    }
+
+    .savebtn {
+        top: 8rem;
+        left: 8rem;
+    }
+
+    .resetbtn {
+        top: 8rem;
+        left: 0.5rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .wrapper {
+        --sidebar-width: 35rem;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .wrapper {
+        --sidebar-width: 40rem;
+    }
+}

@@ -1,0 +1,23 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Destination"
+    nzFooter=" "
+    (nzOnCancel)="handleHide()"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <nz-tabset nzCentered>
+                <nz-tab nzTitle="Pick a destination">
+                    <nz-tab nzTitle="Create destination"><app-destination-input></app-destination-input></nz-tab>
+                    <div class="table-list">
+                        <app-source-table></app-source-table>
+                        <button nz-button nzType="primary" (click)="handleHide()">ok</button>
+                    </div>
+                </nz-tab>
+            </nz-tabset>
+        </ng-container>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,30 @@
+<div class="wrapper">
+    <div (click)="changeCollapseState()">
+        <i [class.collapsed]="isCollapse" nz-icon nzType="double-right" nzTheme="outline"></i>
+    </div>
+    <section class="table" *ngIf="pipelineService.previewContent && pipelineService.previewContent?.length !== 0">
+        <nz-table
+            [nzData]="pipelineService.previewContent"
+            [nzShowPagination]="false"
+            [nzLoading]="pipelineService.previewLoading"
+        >
+            <thead>
+                <tr>
+                    <th *ngFor="let key of pipelineService.previewContent | previewKey">{{ key }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of pipelineService.previewContent | previewValue">
+                    <td *ngFor="let cell of row">{{ cell }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </section>
+    <section
+        class="empty-table"
+        *ngIf="!pipelineService.previewContent || pipelineService.previewContent?.length === 0"
+    >
+        <img src="assets/empty-box.svg" alt="empty box" />
+        <p>No data to show!</p>
+    </section>
+</div>

@@ -1,0 +1,58 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Process Menu"
+    nzFooter=" "
+    (nzOnCancel)="handleHide()"
+    nzWidth="80rem"
+>
+    <ng-template #modalContent>
+        <div class="grid">
+            <app-card
+                title="Select"
+                description="select or remove some columns from your dataset"
+                imgSrc="assets/select.webp"
+                (click)="addNode(NodeType.Selector)"
+            ></app-card>
+            <app-card
+                title="Custom"
+                description="write your custom query on database"
+                imgSrc="assets/custom.webp"
+                (click)="addNode(NodeType.Custom)"
+            ></app-card>
+            <app-card
+                title="Split"
+                description="split your columns to more than one"
+                imgSrc="assets/split.webp"
+                (click)="addNode(NodeType.Split)"
+            ></app-card>
+
+            <app-card
+                title="Math"
+                description="do some calculation on your data"
+                imgSrc="assets/math.webp"
+                (click)="addNode(NodeType.Math)"
+            ></app-card>
+            <app-card
+                title="Aggregate"
+                description="grouping your columns by functions"
+                imgSrc="assets/aggregate.webp"
+                (click)="addNode(NodeType.Aggregate)"
+            ></app-card>
+            <app-card
+                title="filter"
+                description="See only the data you need"
+                imgSrc="assets/filter.webp"
+                (click)="addNode(NodeType.Filter)"
+            ></app-card>
+            <app-card
+                title="join"
+                description="join two dataset"
+                imgSrc="assets/join.webp"
+                (click)="addNode(NodeType.Join)"
+            ></app-card>
+        </div>
+    </ng-template>
+</nz-modal>

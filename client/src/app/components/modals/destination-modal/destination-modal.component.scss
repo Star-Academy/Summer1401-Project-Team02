@@ -1,0 +1,12 @@
+app-destination-input {
+    inline-size: 100%;
+}
+
+.table-list {
+    display: flex;
+    flex-direction: column;
+
+    button {
+        align-self: end;
+    }
+}

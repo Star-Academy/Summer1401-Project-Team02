@@ -1,6 +1,13 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/webstorm+all,visualstudiocode,angular
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm+all,visualstudiocode,angular
+
+### Angular ###
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
 
 # dependencies
 node_modules/
@@ -27,6 +34,10 @@ e2e/*.map
 
 ### VisualStudioCode ###
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 *.code-workspace
 
 # Local History for Visual Studio Code
@@ -122,7 +133,7 @@ fabric.properties
 
 
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-
+angu
 *.iml
 modules.xml
 .idea/misc.xml
@@ -134,5 +145,3 @@ modules.xml
 # End of https://www.toptal.com/developers/gitignore/api/webstorm+all,visualstudiocode,angular
 
 .angular/
-
-.idea

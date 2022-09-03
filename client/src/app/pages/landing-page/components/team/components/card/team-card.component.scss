@@ -1,0 +1,15 @@
+.links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding-top: 1rem;
+
+    a {
+        color: var(--color-primary);
+    }
+
+    a:hover {
+        color: var(--color-primary-lighter);
+    }
+}

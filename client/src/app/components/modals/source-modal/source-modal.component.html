@@ -1,0 +1,23 @@
+<nz-modal
+    [nzBodyStyle]="style"
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzContent]="modalContent"
+    nzTitle="Source"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="handleHide()"
+>
+    <ng-template #modalContent>
+        <ng-container>
+            <nz-tabset nzCentered>
+                <nz-tab nzTitle="Pick a source"><app-source-table></app-source-table></nz-tab>
+                <nz-tab nzTitle="Create Source"><app-upload-input></app-upload-input></nz-tab>
+            </nz-tabset>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="link" (click)="handleHide()">cancel</button>
+        <button nz-button nzType="primary" (click)="handleOk()">ok</button>
+    </ng-template>
+</nz-modal>
